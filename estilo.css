@@ -1,0 +1,53 @@
+/* Scalability Systems — hoja única, sin dependencias */
+:root{
+  --bg:#0E1116; --fg:#F3F4F6; --mut:#8A94A2;
+  --acc:#5ED69A; --line:#262B34; --card:#141922;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--fg);
+  font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:720px;margin:0 auto;padding:0 24px}
+
+header{border-bottom:1px solid var(--line);padding:22px 0;position:sticky;top:0;background:rgba(14,17,22,.92);backdrop-filter:blur(8px);z-index:10}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.marca{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--fg);font-weight:700;letter-spacing:-.2px}
+.marca img{width:30px;height:30px;border-radius:7px}
+nav a{color:var(--mut);text-decoration:none;font-size:14px;margin-left:20px}
+nav a:hover{color:var(--fg)}
+
+.hero{padding:88px 0 64px}
+h1{font-size:clamp(30px,5.2vw,46px);line-height:1.14;letter-spacing:-1.1px;font-weight:800}
+h1 .verde{color:var(--acc)}
+.bajada{color:var(--mut);font-size:19px;margin-top:22px;max-width:56ch}
+
+section{padding:44px 0;border-top:1px solid var(--line)}
+h2{font-size:13px;text-transform:uppercase;letter-spacing:1.4px;color:var(--mut);font-weight:700;margin-bottom:22px}
+h3{font-size:19px;margin:26px 0 8px;letter-spacing:-.3px}
+p{margin:12px 0;color:#D7DBE2}
+ul{margin:12px 0 12px 20px;color:#D7DBE2}
+li{margin:7px 0}
+strong{color:var(--fg)}
+a{color:var(--acc)}
+
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:20px}
+.card h3{margin:0 0 7px;font-size:16px}
+.card p{margin:0;font-size:14.5px;color:var(--mut)}
+
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14.5px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{color:var(--mut);font-weight:600;font-size:12.5px;text-transform:uppercase;letter-spacing:.7px}
+td{color:#D7DBE2}
+
+.aviso{background:var(--card);border-left:3px solid var(--acc);border-radius:0 8px 8px 0;padding:16px 18px;margin:22px 0}
+.aviso p{margin:0;font-size:14.5px}
+.pendiente{color:#E8746A;font-weight:600}
+
+footer{border-top:1px solid var(--line);padding:34px 0 54px;color:var(--mut);font-size:14px;margin-top:34px}
+footer a{color:var(--mut)}
+.legal{font-size:13.5px;color:var(--mut);border-top:1px solid var(--line);margin-top:30px;padding-top:20px}
+.fecha{color:var(--mut);font-size:14px;margin-top:8px}
