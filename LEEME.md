@@ -39,14 +39,13 @@ guardado en `C:\Users\Usuario\.cloudflare\scalabilitysystems.token`
 
 ```bash
 cd sitio
-export CLOUDFLARE_API_TOKEN=$(cat /c/Users/Usuario/.cloudflare/scalabilitysystems.token | sed '1s/^\xef\xbb\xbf//')
+export CLOUDFLARE_API_TOKEN=$(cat /c/Users/Usuario/.cloudflare/scalabilitysystems.token)
 export CLOUDFLARE_ACCOUNT_ID=a40806a8bb6fb2b0c40bf29850bf3345
 npx wrangler pages deploy . --project-name scalability-sitio --branch main
 ```
 
 Queda arriba en segundos, sin esperar propagación de DNS (el dominio y el
-certificado ya están conectados). El `sed` le saca un BOM que quedó en el
-archivo del token — sin eso, Wrangler tira un error de header inválido.
+certificado ya están conectados).
 
 Seguí commiteando a `git` igual si querés, es sólo historial — el commit en
 sí no dispara ningún deploy (no hay integración con GitHub armada).
