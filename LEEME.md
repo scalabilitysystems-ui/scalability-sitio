@@ -1,6 +1,21 @@
 # Sitio — Scalability Systems
 
-Tres archivos, sin build ni dependencias. Se publica en GitHub Pages en cinco minutos.
+Tres archivos, sin build ni dependencias.
+
+**Estado: publicado.** Vive en Cloudflare Pages (proyecto `scalability-sitio`),
+con dominio propio conectado — no en GitHub Pages, que era el plan original
+de este documento cuando se escribió (el repo en GitHub sigue existiendo,
+pero ya no es lo que sirve el sitio).
+
+```
+https://scalabilitysystems.com.ar
+https://scalabilitysystems.com.ar/privacidad   ← esta va en Meta
+https://scalabilitysystems.com.ar/terminos
+https://scalabilitysystems.com.ar/eliminacion-datos
+```
+
+> Cloudflare Pages saca el `.html` de las URLs solo (redirect 308 desde
+> `/privacidad.html` a `/privacidad`). Usá siempre la forma sin extensión.
 
 ## Antes de publicar: completar los corchetes
 
@@ -16,36 +31,40 @@ Están marcados **en rojo** en la página para que no se te escapen.
 
 Buscá `[` en los dos HTML y no queda ninguno sin reemplazar.
 
-## Publicar
+## Actualizar el sitio publicado
+
+No hace falta tocar GitHub ni ningún dashboard. Con el token de Cloudflare
+guardado en `C:\Users\Usuario\.cloudflare\scalabilitysystems.token`
+(permiso `Account → Cloudflare Pages → Edit`):
 
 ```bash
 cd sitio
-git init
-git add .
-git commit -m "Sitio inicial"
-git branch -M main
-git remote add origin https://github.com/<usuario>/scalability-sitio.git
-git push -u origin main
+export CLOUDFLARE_API_TOKEN=$(cat /c/Users/Usuario/.cloudflare/scalabilitysystems.token | sed '1s/^\xef\xbb\xbf//')
+export CLOUDFLARE_ACCOUNT_ID=a40806a8bb6fb2b0c40bf29850bf3345
+npx wrangler pages deploy . --project-name scalability-sitio --branch main
 ```
 
-En GitHub: **Settings → Pages → Source: Deploy from a branch → main → / (root) → Save**.
+Queda arriba en segundos, sin esperar propagación de DNS (el dominio y el
+certificado ya están conectados). El `sed` le saca un BOM que quedó en el
+archivo del token — sin eso, Wrangler tira un error de header inválido.
 
-En un par de minutos queda en:
+Seguí commiteando a `git` igual si querés, es sólo historial — el commit en
+sí no dispara ningún deploy (no hay integración con GitHub armada).
+
+## Cómo quedó conectado el dominio (referencia, ya hecho)
+
+Proyecto de Pages `scalability-sitio`, con un CNAME en la zona de
+Cloudflare: `scalabilitysystems.com.ar` → `scalability-sitio.pages.dev`
+(proxied). El certificado lo emite y renueva Cloudflare solo. Si alguna vez
+hay que rehacerlo desde cero, el comando que agrega el dominio es:
 
 ```
-https://<usuario>.github.io/scalability-sitio/
-https://<usuario>.github.io/scalability-sitio/privacidad.html
+POST /accounts/{account_id}/pages/projects/scalability-sitio/domains
+{"name": "scalabilitysystems.com.ar"}
 ```
 
-**Esa segunda URL es la que va en Meta.**
-
-## Dominio propio, cuando lo tengas
-
-1. Crear un archivo `CNAME` con una línea: `torquesystems.com`
-2. En tu proveedor de dominio, apuntar los registros A a las IP de GitHub Pages
-3. En Settings → Pages, cargar el dominio y activar *Enforce HTTPS*
-
-Después de eso, la URL de privacidad pasa a ser `torquesystems.com/privacidad.html` — acordate de actualizarla en Meta.
+Ese llamado NO crea el DNS solo — el CNAME hay que cargarlo aparte (se
+armó a mano la primera vez).
 
 ## Nota
 
