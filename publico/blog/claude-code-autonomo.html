@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cómo hacer que Claude Code trabaje solo — Scalability Systems</title>
+<meta name="description" content="Las 4 piezas que necesitás para dejar de mirar cómo trabaja un agente de código: un lugar donde equivocarse barato, un plan, una definición objetiva de terminado y un loop que se cierre solo.">
+<link rel="canonical" href="https://scalabilitysystems.com.ar/blog/claude-code-autonomo">
+<link rel="icon" href="../icono.png">
+<link rel="stylesheet" href="../estilo.css">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cómo hacer que Claude Code trabaje solo">
+<meta property="og:description" content="Las 4 piezas que necesitás para dejar de mirar cómo trabaja un agente de código.">
+<meta property="og:url" content="https://scalabilitysystems.com.ar/blog/claude-code-autonomo">
+<meta property="og:image" content="https://scalabilitysystems.com.ar/icono.png">
+<meta property="og:locale" content="es_AR">
+<meta property="og:site_name" content="Scalability Systems">
+<meta name="twitter:card" content="summary">
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="marca" href="../index.html"><img src="../icono.png" alt="">Scalability Systems</a>
+    <nav><a href="../index.html#como">Cómo trabajo</a><a href="index.html">Blog</a></nav>
+  </div>
+</header>
+
+<div class="wrap articulo">
+
+  <h1>Cómo hacer que Claude Code trabaje solo</h1>
+  <p class="copete">Las 4 piezas que necesitás para dejar de mirar cómo trabaja un agente de código.</p>
+  <p class="meta">20 de agosto de 2026 · 9 min de lectura</p>
+
+  <p>Si para que Claude haga algo tenés que quedarte sentado mirando la terminal, no tenés un agente autónomo.</p>
+
+  <p>Tenés un copiloto más rápido.</p>
+
+  <p>La diferencia parece pequeña, pero cambia completamente la forma de trabajar.</p>
+
+  <p>En un caso, le das una tarea, mirás qué hace, corregís, volvés a pedir y repetís.</p>
+
+  <p>En el otro, definís un resultado, Claude trabaja, verifica lo que hizo y vuelve a vos solamente cuando necesita una decisión que no puede tomar solo.</p>
+
+  <p><strong>Eso es autonomía.</strong></p>
+
+  <p>Y no aparece simplemente porque el modelo sea más inteligente.</p>
+
+  <p>Aparece cuando diseñás el sistema alrededor del agente.</p>
+
+  <p>En este artículo vas a ver las cuatro piezas que hacen posible ese cambio:</p>
+
+  <ol>
+    <li>Un lugar seguro donde pueda trabajar.</li>
+    <li>Una forma de planificar antes de ejecutar.</li>
+    <li>Una definición objetiva de qué significa "terminado".</li>
+    <li>Un loop que pueda cerrarse sin que tengas que empujarlo en cada paso.</li>
+  </ol>
+
+  <hr>
+
+  <h2>1. Dale un lugar donde equivocarse barato</h2>
+
+  <p>Dejar que un agente modifique tu código sin mirar cada movimiento suena peligroso.</p>
+
+  <p>Lo es si no podés volver atrás.</p>
+
+  <p>Y Claude se va a equivocar.</p>
+
+  <p>Vos también.</p>
+
+  <p>La pregunta importante no es si va a cometer errores.</p>
+
+  <p>Es:</p>
+
+  <p><strong>¿Cuánto te cuesta cuando se equivoca?</strong></p>
+
+  <p>Si un error puede destruir una tarde de trabajo, es lógico que quieras mirar todo lo que hace.</p>
+
+  <p>Pero si podés volver fácilmente a un estado anterior, revisar exactamente qué cambió y aprobar antes de incorporarlo al código principal, la aritmética cambia.</p>
+
+  <p>Ahí es donde entra Git.</p>
+
+  <h3>Git no es lo que hace autónomo a Claude</h3>
+
+  <p>Git es lo que hace que equivocarse sea barato.</p>
+
+  <p>Cada commit guarda un estado del proyecto. Podés comparar cambios, volver atrás y entender qué se modificó.</p>
+
+  <p>GitHub agrega una capa de colaboración y revisión sobre ese historial.</p>
+
+  <p>Para trabajar con agentes, hay tres cosas especialmente importantes:</p>
+
+  <h3>Podés deshacer</h3>
+
+  <p>Si Claude rompe algo, volvés a un commit anterior.</p>
+
+  <p>El error deja de costarte una tarde.</p>
+
+  <p>Puede costarte unos minutos.</p>
+
+  <h3>Podés ver exactamente qué cambió</h3>
+
+  <p>El diff muestra las líneas que se agregaron y eliminaron.</p>
+
+  <p>No necesitás revisar todo el proyecto.</p>
+
+  <p>Revisás el cambio.</p>
+
+  <h3>Tenés una instancia de aprobación</h3>
+
+  <p>El pull request permite que el agente proponga un cambio sin imponerlo.</p>
+
+  <p>El agente trabaja.</p>
+
+  <p>Vos revisás.</p>
+
+  <p>Vos aprobás.</p>
+
+  <p>Ese pequeño cambio de arquitectura es enorme.</p>
+
+  <p><strong>El agente puede trabajar solo sin que vos tengas que confiar ciegamente en él.</strong></p>
+
+  <hr>
+
+  <h2>2. Separá pensar de ejecutar</h2>
+
+  <p>Uno de los errores más caros con agentes no es que escriban código malo.</p>
+
+  <p>Es que escriban código perfecto para resolver el problema equivocado.</p>
+
+  <p>Por eso conviene separar dos etapas:</p>
+
+  <p><strong>primero entender y planificar; después ejecutar.</strong></p>
+
+  <p>Claude Code tiene un modo específico para esto: <strong>Plan Mode</strong>.</p>
+
+  <p>En ese modo puede leer el proyecto y analizarlo sin modificar los archivos.</p>
+
+  <p>Podés pedirle algo como:</p>
+
+<pre><code>Leé /src/auth y entendé cómo manejamos sesiones y login.
+
+Quiero agregar login con Google.
+
+Analizá qué archivos deberían cambiar, qué riesgos ves
+y armá un plan de implementación.
+
+No modifiques ningún archivo todavía.</code></pre>
+
+  <p>El objetivo no es hacer más burocrático el proceso.</p>
+
+  <p>Es hacer que el momento más barato para cambiar de opinión ocurra <strong>antes de escribir código</strong>.</p>
+
+  <p>El circuito queda así:</p>
+
+  <ol>
+    <li><strong>Explorar.</strong> Entender cómo funciona el proyecto.</li>
+    <li><strong>Planificar.</strong> Definir qué debería cambiar.</li>
+    <li><strong>Implementar.</strong> Ejecutar el plan.</li>
+    <li><strong>Verificar.</strong> Comprobar que el resultado funciona.</li>
+    <li><strong>Commitear.</strong> Registrar el cambio y dejarlo listo para revisar.</li>
+  </ol>
+
+  <p>Para cambios pequeños, podés saltarte la planificación.</p>
+
+  <p>Si podés explicar el cambio en una oración y sabés exactamente dónde tocar, probablemente no necesitás un plan.</p>
+
+  <p>Pero cuando el cambio toca varios archivos, tiene casos borde o no conocés bien el código, planificar primero suele ser mucho más barato que corregir después.</p>
+
+  <hr>
+
+  <h2>3. Dale una definición objetiva de "terminado"</h2>
+
+  <p>Esta es probablemente la pieza más importante de todas.</p>
+
+  <p>Claude puede llegar a un punto donde el trabajo <strong>parece</strong> terminado.</p>
+
+  <p>Pero "parece terminado" no es una condición verificable.</p>
+
+  <p>Y si no existe una forma objetiva de comprobarlo, alguien tiene que hacerlo.</p>
+
+  <p>Ese alguien terminás siendo vos.</p>
+
+  <p>La solución es darle al agente una señal que pueda devolver:</p>
+
+  <p><strong>pasa o falla.</strong></p>
+
+  <p>Por ejemplo:</p>
+
+  <ul>
+    <li>los tests pasan;</li>
+    <li>el proyecto compila;</li>
+    <li>el linter no encuentra errores;</li>
+    <li>una API devuelve la respuesta esperada;</li>
+    <li>un screenshot coincide con el diseño;</li>
+    <li>una especificación está completamente implementada.</li>
+  </ul>
+
+  <p>La diferencia está en cómo escribís la tarea.</p>
+
+  <p>En vez de:</p>
+
+  <blockquote><p>"Implementá una función que valide emails."</p></blockquote>
+
+  <p>Podés decir:</p>
+
+<pre><code>Implementá validateEmail.
+
+Debe aceptar:
+- user@example.com
+
+Debe rechazar:
+- invalid
+- user@.com
+
+Escribí los tests y corrélos después de implementar.
+
+Si algún test falla, investigá la causa, corregila
+y volvé a correrlos.</code></pre>
+
+  <p>Ahora Claude no tiene que preguntarse qué significa "terminado".</p>
+
+  <p>Tiene una condición.</p>
+
+  <h3>El revisor no debería ser el mismo que escribió</h3>
+
+  <p>Hay otra idea importante:</p>
+
+  <p><strong>el que escribió el código es un mal juez de su propio código.</strong></p>
+
+  <p>Claude no es la excepción.</p>
+
+  <p>Viene sesgado por el razonamiento que produjo el cambio.</p>
+
+  <p>Por eso una segunda revisión con contexto limpio puede encontrar problemas que el primer proceso pasó por alto.</p>
+
+  <p>Claude Code incluye herramientas para hacer este tipo de revisión.</p>
+
+  <p>Por ejemplo:</p>
+
+<pre><code>/code-review</code></pre>
+
+  <p>También podés hacer una revisión contra una especificación concreta:</p>
+
+<pre><code>Usá un subagente para revisar el diff contra SPEC.md.
+
+Verificá que cada requisito esté implementado,
+que los casos borde tengan test y que no se haya
+tocado nada fuera del alcance.
+
+Reportá huecos de implementación, no preferencias de estilo.</code></pre>
+
+  <p>La clave está en pedirle que busque <strong>errores relevantes</strong>, no que encuentre problemas porque sí.</p>
+
+  <p>Un revisor al que le pedís "encontrá problemas" va a encontrar problemas aunque el trabajo esté bien.</p>
+
+  <p>Por eso hay que definir qué cuenta como problema.</p>
+
+  <h3>Pedí evidencia, no que te diga que sí</h3>
+
+  <p>"Listo, funciona."</p>
+
+  <p>Eso no es evidencia.</p>
+
+  <p>La evidencia es:</p>
+
+  <ul>
+    <li>los tests que corrió;</li>
+    <li>el comando que ejecutó;</li>
+    <li>el resultado obtenido;</li>
+    <li>el screenshot generado;</li>
+    <li>el diff;</li>
+    <li>la condición que verificó.</li>
+  </ul>
+
+  <p>Esto importa especialmente cuando dejás una sesión trabajando sin supervisión.</p>
+
+  <p>Porque revisar evidencia es mucho más rápido que volver a comprobar todo vos.</p>
+
+  <p>Y hay un detalle que suele pasarse por alto:</p>
+
+  <p><strong>las pruebas más importantes muchas veces son las que comprueban lo que NO debería pasar.</strong></p>
+
+  <p>Que un usuario no pueda acceder a los datos de otro.</p>
+
+  <p>Que el sistema no invente información que no tiene.</p>
+
+  <p>Que una acción no ocurra cuando falta una condición.</p>
+
+  <p>Esos errores son peligrosos justamente porque muchas veces no rompen nada visible.</p>
+
+  <p>El sistema sigue funcionando.</p>
+
+  <p>Solo que funciona mal.</p>
+
+  <hr>
+
+  <h2>4. Cerrá el loop</h2>
+
+  <p>Hasta acá tenemos:</p>
+
+  <ul>
+    <li>un lugar seguro donde trabajar;</li>
+    <li>un plan;</li>
+    <li>una forma de verificar.</li>
+  </ul>
+
+  <p>Falta una última pieza:</p>
+
+  <p><strong>que la verificación ocurra automáticamente.</strong></p>
+
+  <p>Hay distintos niveles para hacer esto.</p>
+
+  <h3>Empezá por lo simple</h3>
+
+  <p>Podés incluirlo directamente en el pedido:</p>
+
+<pre><code>Implementá esto.
+
+Corré los tests.
+
+Si fallan, investigá la causa, corregila
+y volvé a correrlos hasta que pasen.
+
+No des por terminada la tarea hasta que
+todos los tests relevantes estén verdes.</code></pre>
+
+  <p>No necesitás montar una infraestructura compleja para empezar.</p>
+
+  <p>De hecho, para muchísimas tareas esto ya resuelve gran parte del problema.</p>
+
+  <h3>Después podés fijar el objetivo</h3>
+
+  <p>Claude Code también permite definir condiciones de finalización para una sesión.</p>
+
+  <p>La idea es sencilla:</p>
+
+  <p><strong>no termina porque Claude cree que terminó.</strong></p>
+
+  <p>Termina cuando se cumple la condición que definiste.</p>
+
+  <h3>Y finalmente aparecen los hooks</h3>
+
+  <p>Los hooks permiten ejecutar acciones automáticamente en determinados momentos.</p>
+
+  <p>Por ejemplo:</p>
+
+  <blockquote><p>Después de cada edición, corré el linter.</p></blockquote>
+
+  <p>O:</p>
+
+  <blockquote><p>No permitas terminar el proceso si los tests no pasan.</p></blockquote>
+
+  <p>Esta diferencia es importante.</p>
+
+  <p>Un archivo como <code>CLAUDE.md</code> contiene instrucciones que Claude debe seguir.</p>
+
+  <p>Un hook puede convertirse en una condición automática del sistema.</p>
+
+  <p><strong>Lo que escribís como instrucción es una regla.<br>
+  Lo que automatizás como hook es una barrera.</strong></p>
+
+  <p>Todo lo que tenga que ocurrir siempre, sin excepciones, merece evaluar si debería estar automatizado.</p>
+
+  <hr>
+
+  <h2>El verdadero objetivo no es que Claude "haga todo"</h2>
+
+  <p>Hay una idea equivocada alrededor de los agentes:</p>
+
+  <blockquote><p>"Quiero que haga todo solo."</p></blockquote>
+
+  <p>Ese no debería ser el objetivo.</p>
+
+  <p>El objetivo es otro:</p>
+
+  <p><strong>que sepa cuándo puede seguir solo y cuándo tiene que llamarte.</strong></p>
+
+  <p>Un buen sistema no intenta eliminar a la persona.</p>
+
+  <p>Elimina el trabajo que no necesita a la persona.</p>
+
+  <p>Por ejemplo:</p>
+
+<pre><code>Objetivo
+   ↓
+Claude investiga
+   ↓
+Claude planifica
+   ↓
+Claude implementa
+   ↓
+Claude verifica
+   ↓
+¿Cumple?
+   ├── No → corrige → vuelve a verificar
+   │
+   └── Sí → propone el cambio
+                ↓
+             Vos revisás
+                ↓
+              Merge</code></pre>
+
+  <p>Ese es el cambio importante.</p>
+
+  <p>No pasás de "hacer código manualmente" a "dejar que una IA haga código".</p>
+
+  <p>Pasás de:</p>
+
+  <p><strong>persona → cada paso → persona → cada paso</strong></p>
+
+  <p>a:</p>
+
+  <p><strong>objetivo → sistema → resultado → decisión humana cuando hace falta</strong></p>
+
+  <hr>
+
+  <h2>La escena que cambia todo</h2>
+
+  <p>Pensá en esto.</p>
+
+  <p>Le das a Claude una tarea antes de levantarte de la computadora.</p>
+
+  <p>No le decís exactamente qué archivo tiene que tocar.</p>
+
+  <p>No le dictás veinte pasos.</p>
+
+  <p>Le explicás el resultado que necesitás.</p>
+
+  <p>Claude investiga.</p>
+
+  <p>Planifica.</p>
+
+  <p>Implementa.</p>
+
+  <p>Corre los tests.</p>
+
+  <p>Detecta un error.</p>
+
+  <p>Lo corrige.</p>
+
+  <p>Vuelve a probar.</p>
+
+  <p>Prepara el cambio.</p>
+
+  <p>Y recién entonces te necesita.</p>
+
+  <p>No porque se haya quedado esperando.</p>
+
+  <p>Porque llegó al único punto donde realmente hace falta una decisión humana.</p>
+
+  <p><strong>Ese es el objetivo.</strong></p>
+
+  <p>No tener una IA que trabaje mientras vos la mirás.</p>
+
+  <p>Tener un sistema que pueda trabajar aunque vos no estés mirando.</p>
+
+  <hr>
+
+  <h2>Y esto no aplica solamente al código</h2>
+
+  <p>El principio es mucho más grande que Claude Code.</p>
+
+  <p>Pensá en cualquier proceso de tu negocio:</p>
+
+  <ul>
+    <li>entra un lead;</li>
+    <li>se clasifica;</li>
+    <li>se responde;</li>
+    <li>se agenda;</li>
+    <li>se actualiza el CRM;</li>
+    <li>se genera una propuesta;</li>
+    <li>se hace seguimiento;</li>
+    <li>se reporta el resultado.</li>
+  </ul>
+
+  <p>Si una persona tiene que empujar manualmente cada uno de esos pasos, esa persona es el sistema.</p>
+
+  <p>Y cuando esa persona no está, el sistema se detiene.</p>
+
+  <p>La autonomía aparece cuando el criterio que hoy está en la cabeza de alguien pasa a estar <strong>escrito, automatizado y verificable</strong>.</p>
+
+  <p>Eso es lo que hace posible que un proceso trabaje solo y te llame únicamente cuando hay una decisión que tomar.</p>
+
+  <hr>
+
+  <h2>Si te llevás una sola idea</h2>
+
+  <blockquote><p><strong>No necesitás un agente que haga todo. Necesitás un sistema que sepa cuándo puede seguir solo y cuándo tiene que llamarte.</strong></p></blockquote>
+
+  <p>Git hace que equivocarse sea barato.</p>
+
+  <p>La planificación define qué hay que hacer.</p>
+
+  <p>La verificación define qué significa hacerlo bien.</p>
+
+  <p>Y el loop permite que el sistema continúe sin que vos tengas que empujarlo en cada paso.</p>
+
+  <p>Claude es una pieza.</p>
+
+  <p><strong>El sistema es el producto.</strong></p>
+
+  <div class="cta-post">
+    <h2>¿Dónde podrías aplicar esto en tu negocio?</h2>
+    <p>Probablemente ya tengas procesos que todavía dependen demasiado de vos.</p>
+    <p>No hace falta automatizar todo. Primero hay que encontrar <strong>qué parte del proceso hoy requiere intervención humana, por qué la requiere y qué tendría que pasar para que pudiera ejecutarse sola.</strong></p>
+    <p>Eso es lo que hacemos en Scalability Systems: diseñamos y construimos sistemas comerciales que reducen la dependencia de la operación manual y hacen que el negocio pueda avanzar sin que tengas que estar encima de cada paso.</p>
+    <div class="acciones">
+      <a class="btn" href="../diagnostico.html">Pedir el diagnóstico</a>
+    </div>
+  </div>
+
+  <h2>Sigue</h2>
+
+  <p>Esta es solamente la primera parte.</p>
+
+  <p>Los loops autónomos dan para mucho más: hooks y eventos, corridas sin supervisión, <code>claude -p</code>, trabajo en paralelo sobre cientos de archivos y distintas formas de dejar agentes trabajando en horarios definidos.</p>
+
+  <p>Pero antes de automatizar más cosas, hay una pregunta que importa mucho más:</p>
+
+  <p><strong>¿Qué proceso debería poder funcionar aunque vos no estés ahí?</strong></p>
+
+  <h2>Fuentes</h2>
+
+  <p>Todo lo técnico de esta guía está basado en la documentación oficial de Claude Code:</p>
+
+  <ul class="fuentes">
+    <li><a href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener">Best practices for Claude Code</a></li>
+    <li><a href="https://code.claude.com/docs/en/common-workflows" target="_blank" rel="noopener">Common workflows</a></li>
+    <li><a href="https://code.claude.com/docs/en/github-actions" target="_blank" rel="noopener">Claude Code GitHub Actions</a></li>
+    <li><a href="https://code.claude.com/docs/en/hooks" target="_blank" rel="noopener">Hooks</a></li>
+    <li><a href="https://code.claude.com/docs/en/sub-agents" target="_blank" rel="noopener">Subagents</a></li>
+    <li><a href="https://code.claude.com/docs/en/memory" target="_blank" rel="noopener">CLAUDE.md y memoria</a></li>
+    <li><a href="https://code.claude.com/docs/en/permission-modes" target="_blank" rel="noopener">Modos de permisos</a></li>
+    <li><a href="https://code.claude.com/docs/en/model-config" target="_blank" rel="noopener">Configuración de modelos</a></li>
+  </ul>
+
+  <p>Las funciones de Claude Code cambian rápido. Si algo de esta guía no coincide con la versión que estás usando, <strong>la documentación oficial manda</strong>.</p>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    Scalability Systems — Argentina ·
+    <a href="../index.html">Inicio</a> ·
+    <a href="index.html">Blog</a> ·
+    <a href="../privacidad.html">Privacidad</a> ·
+    <a href="../terminos.html">Condiciones</a> ·
+    <a href="../eliminacion-datos.html">Eliminar datos</a>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+# Material interno — nunca va al repo público.
+# El sitio que se sirve vive en publico/; todo lo demás es insumo de trabajo.
+ANTECEDENTE.md
+POSICIONAMIENTO.md
+PRODUCT.md
+plan-claude-code-sitio.md
+
+# Herramientas y estado local de la máquina
+.claude/
+.impeccable/
+.wrangler/

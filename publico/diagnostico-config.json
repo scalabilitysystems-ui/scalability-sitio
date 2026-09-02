@@ -1,0 +1,250 @@
+{
+  "_nota": "Copy y scoring del diagnóstico (V1, scoring en el navegador). El endpoint de torque-platform todavía valida los 4 slugs viejos y recalcula el resultado; hasta actualizarlo, el POST acá se hace best-effort y el guardado puede fallar sin afectar la pantalla.",
+
+  "preguntas": [
+    {
+      "slug": "volumen",
+      "pregunta": "¿Cuántas oportunidades comerciales reciben por mes?",
+      "ayuda": "Una oportunidad = una persona o empresa que muestra interés real.",
+      "opciones": [
+        { "etiqueta": "Menos de 50", "peso": 0 },
+        { "etiqueta": "50–150", "peso": 1 },
+        { "etiqueta": "150–500", "peso": 2 },
+        { "etiqueta": "Más de 500", "peso": 3 }
+      ]
+    },
+    {
+      "slug": "respuesta",
+      "pregunta": "¿Qué ocurre cuando entra un nuevo lead?",
+      "opciones": [
+        { "etiqueta": "Una persona lo ve y responde manualmente", "peso": 3 },
+        { "etiqueta": "Tenemos algunas automatizaciones", "peso": 2 },
+        { "etiqueta": "Tenemos un proceso definido que lo clasifica y deriva", "peso": 1 },
+        { "etiqueta": "El sistema captura, clasifica y activa el siguiente paso", "peso": 0 }
+      ]
+    },
+    {
+      "slug": "repetitivas",
+      "pregunta": "¿Quién responde las preguntas repetitivas?",
+      "ayuda": "Precio, disponibilidad, características, documentación, horarios.",
+      "opciones": [
+        { "etiqueta": "El dueño", "peso": 3 },
+        { "etiqueta": "Un vendedor", "peso": 2 },
+        { "etiqueta": "Administración o atención", "peso": 2 },
+        { "etiqueta": "Un sistema", "peso": 0 },
+        { "etiqueta": "Depende del caso", "peso": 1 }
+      ]
+    },
+    {
+      "slug": "seguimiento",
+      "pregunta": "Cuando un lead no responde, ¿qué pasa?",
+      "opciones": [
+        { "etiqueta": "Nada. Si quiere, vuelve", "peso": 4 },
+        { "etiqueta": "El vendedor tiene que acordarse", "peso": 3 },
+        { "etiqueta": "Tenemos recordatorios", "peso": 2 },
+        { "etiqueta": "Hay un proceso automático de seguimiento", "peso": 1 },
+        { "etiqueta": "Proceso definido + intervención humana cuando corresponde", "peso": 0 }
+      ]
+    },
+    {
+      "slug": "registro",
+      "pregunta": "¿Dónde queda registrada la información de cada oportunidad?",
+      "opciones": [
+        { "etiqueta": "En la cabeza del vendedor", "peso": 4 },
+        { "etiqueta": "En WhatsApp", "peso": 3 },
+        { "etiqueta": "En planillas o documentos", "peso": 2 },
+        { "etiqueta": "En un CRM, pero depende de que alguien lo actualice", "peso": 1 },
+        { "etiqueta": "Se registra automáticamente", "peso": 0 }
+      ]
+    },
+    {
+      "slug": "calificacion",
+      "pregunta": "¿Quién decide cuándo un lead está listo para hablar con un vendedor?",
+      "opciones": [
+        { "etiqueta": "El vendedor decide en el momento", "peso": 3 },
+        { "etiqueta": "Depende de cada vendedor", "peso": 3 },
+        { "etiqueta": "Tenemos algunos criterios", "peso": 2 },
+        { "etiqueta": "Criterios claros que se aplican siempre", "peso": 1 },
+        { "etiqueta": "El sistema califica y deriva según esos criterios", "peso": 0 }
+      ]
+    },
+    {
+      "slug": "tiempoNoVender",
+      "pregunta": "¿Cuánto tiempo dedican tus vendedores a tareas que no son vender?",
+      "ayuda": "Responder preguntas básicas, cargar datos, buscar información, seguimiento manual, actualizar el CRM.",
+      "opciones": [
+        { "etiqueta": "Casi nada", "peso": 0 },
+        { "etiqueta": "1 hora al día", "peso": 1 },
+        { "etiqueta": "2–3 horas", "peso": 2 },
+        { "etiqueta": "4+ horas", "peso": 4 }
+      ]
+    },
+    {
+      "slug": "dobleLeads",
+      "pregunta": "Si mañana recibieras el doble de leads, ¿qué pasaría?",
+      "opciones": [
+        { "etiqueta": "Nada. Tenemos capacidad de sobra", "peso": 0 },
+        { "etiqueta": "Tendríamos que organizarnos mejor", "peso": 1 },
+        { "etiqueta": "Necesitaríamos contratar personas", "peso": 3 },
+        { "etiqueta": "Se nos acumularían los leads", "peso": 4 },
+        { "etiqueta": "No podríamos atenderlos correctamente", "peso": 4 }
+      ]
+    },
+    {
+      "slug": "dependenciaDuenio",
+      "pregunta": "¿Cuánto depende hoy el proceso comercial de vos?",
+      "opciones": [
+        { "etiqueta": "Prácticamente nada", "peso": 0 },
+        { "etiqueta": "Intervengo en decisiones importantes", "peso": 1 },
+        { "etiqueta": "Superviso varias etapas", "peso": 2 },
+        { "etiqueta": "Si no estoy, varias cosas se frenan", "peso": 3 },
+        { "etiqueta": "Soy indispensable para que avance", "peso": 4 }
+      ]
+    },
+    {
+      "slug": "procesoDefinido",
+      "pregunta": "¿Qué tan definido está tu proceso comercial?",
+      "opciones": [
+        { "etiqueta": "Cada vendedor trabaja a su manera", "peso": 4 },
+        { "etiqueta": "Algunas reglas, pero no siempre se cumplen", "peso": 3 },
+        { "etiqueta": "Un proceso bastante claro", "peso": 2 },
+        { "etiqueta": "Documentado y medimos cada etapa", "peso": 1 },
+        { "etiqueta": "Sistematizado, modificable sin depender de una persona", "peso": 0 }
+      ]
+    }
+  ],
+
+  "captura": {
+    "titulo": "Ya tenemos lo que hace falta.",
+    "bajada": "Un último dato para prepararte el diagnóstico. ¿A dónde te lo enviamos?",
+    "cta": "Ver mi diagnóstico",
+    "campos": [
+      { "slug": "nombre", "tipo": "texto", "etiqueta": "Nombre", "requerido": true },
+      { "slug": "email", "tipo": "email", "etiqueta": "Email", "requerido": true },
+      { "slug": "whatsapp", "tipo": "texto", "etiqueta": "WhatsApp", "requerido": true },
+      { "slug": "empresa", "tipo": "texto", "etiqueta": "Empresa", "requerido": false },
+      {
+        "slug": "equipo",
+        "tipo": "select",
+        "etiqueta": "¿Cuántas personas participan del proceso comercial?",
+        "requerido": false,
+        "opciones": ["1", "2–5", "6–10", "11–25", "+25"]
+      },
+      { "slug": "facturacion", "tipo": "texto", "etiqueta": "Facturación mensual aproximada (opcional)", "requerido": false }
+    ]
+  },
+
+  "niveles": [
+    {
+      "numero": 1,
+      "clave": "sistema-escalable",
+      "nombre": "Sistema escalable",
+      "min": 0,
+      "max": 6,
+      "titulo": "Tu operación ya está bastante sistematizada.",
+      "texto": "Tu proceso no depende demasiado de personas para avanzar: los leads entran, se procesan y avanzan sin que alguien tenga que intervenir a cada paso.",
+      "mensaje": "No necesitás más automatización. Necesitás encontrar dónde está la próxima restricción."
+    },
+    {
+      "numero": 2,
+      "clave": "sistema-en-construccion",
+      "nombre": "Sistema en construcción",
+      "min": 7,
+      "max": 13,
+      "titulo": "Tenés estructura, pero todavía hay dependencias.",
+      "texto": "Hay partes que funcionan bien y otras que siguen pidiendo intervención manual. Probablemente ya tengas herramientas, pero no todas trabajan como un sistema integrado.",
+      "mensaje": "No necesitás empezar de cero. Necesitás conectar mejor lo que ya tenés."
+    },
+    {
+      "numero": 3,
+      "clave": "sistema-dependiente",
+      "nombre": "Sistema dependiente",
+      "min": 14,
+      "max": 20,
+      "titulo": "Tu empresa puede crecer, pero crecer va a costarte más personas.",
+      "texto": "Los procesos funcionan mientras el volumen es manejable, y empiezan a romperse cuando crece la cantidad de oportunidades.",
+      "mensaje": "El problema no es que necesites más gente. Es que estás usando gente para sostener procesos que podrían sostenerse solos."
+    },
+    {
+      "numero": 4,
+      "clave": "cuello-botella-comercial",
+      "nombre": "Cuello de botella comercial",
+      "min": 21,
+      "max": 27,
+      "titulo": "Tu proceso comercial está limitando cuánto podés crecer.",
+      "texto": "Podés generar más demanda, pero tu capacidad operativa no acompaña. Más leads significan más trabajo, más vendedores, más coordinación, más costo.",
+      "mensaje": "Antes de conseguir más leads, asegurate de que tu sistema pueda absorberlos."
+    },
+    {
+      "numero": 5,
+      "clave": "empresa-atada-a-personas",
+      "nombre": "Empresa atada a personas",
+      "min": 28,
+      "max": 99,
+      "titulo": "Tu principal cuello de botella probablemente sea la dependencia humana.",
+      "texto": "Tu empresa funciona porque determinadas personas hacen que funcione. El seguimiento es manual, la información está dispersa y crecer significa contratar más gente.",
+      "mensaje": "No necesitás reemplazar a las personas. Necesitás dejar de depender de ellas para cada paso del proceso."
+    }
+  ],
+
+  "dimensiones": [
+    {
+      "clave": "captura",
+      "nombre": "Captura y respuesta",
+      "preguntas": ["respuesta", "repetitivas"],
+      "frase": "Tus leads no reciben una respuesta consistente. Cada consulta depende de que alguien esté disponible, y las preguntas que se repiten se contestan a mano.",
+      "pasos": [
+        "Definir qué pasa cuando entra un lead, y que deje de depender de quién esté mirando.",
+        "Responder lo repetitivo con criterio, sin inventar: saber cuándo callarse.",
+        "Clasificar cada lead antes de que hable con una persona."
+      ]
+    },
+    {
+      "clave": "seguimiento",
+      "nombre": "Seguimiento",
+      "preguntas": ["seguimiento"],
+      "frase": "Tus leads entran, pero el avance depende demasiado de que una persona recuerde qué hacer después de la conversación.",
+      "pasos": [
+        "Automatizar el seguimiento de los que no respondieron.",
+        "Centralizar la información de cada oportunidad.",
+        "Definir cuándo interviene un vendedor y cuándo no."
+      ]
+    },
+    {
+      "clave": "operacion",
+      "nombre": "Operación comercial",
+      "preguntas": ["registro", "calificacion", "tiempoNoVender"],
+      "frase": "Tus vendedores dedican demasiado tiempo a tareas que no requieren vender, y la información queda atrapada en conversaciones y planillas.",
+      "pasos": [
+        "Registrar cada oportunidad en un solo lugar, sin depender de que alguien lo cargue.",
+        "Definir criterios de calificación y aplicarlos siempre.",
+        "Sacar a los vendedores de la carga de datos y del trabajo repetitivo."
+      ]
+    },
+    {
+      "clave": "dependencia",
+      "nombre": "Dependencia y escalabilidad",
+      "preguntas": ["dobleLeads", "dependenciaDuenio", "procesoDefinido"],
+      "frase": "Tu crecimiento pide más trabajo proporcional. Si mañana entra el doble de leads, el proceso no lo absorbe sin sumar personas.",
+      "pasos": [
+        "Mapear el proceso de punta a punta y marcar qué depende de quién.",
+        "Sistematizar lo repetible para que no dependa de una persona.",
+        "Dejar la intervención humana solo donde agrega valor."
+      ]
+    }
+  ],
+
+  "cierreDimension": "Y recién después: agentes donde tengan sentido.",
+
+  "ctaFinal": {
+    "titulo": "¿Querés saber por dónde empezar?",
+    "texto": "Ya tenés identificado tu principal cuello de botella. El siguiente paso es convertir este diagnóstico en un sistema.",
+    "boton": "Quiero ver cómo lo haría Scalability",
+    "debajo": "Scalability Systems diseña sistemas comerciales para que tu empresa pueda vender y operar sin depender de una persona."
+  },
+
+  "whatsapp": {
+    "numero": "5493417124688",
+    "mensaje": "Hola, completé el diagnóstico ({nivel} · principal problema: {dimension}) y quiero ver cómo lo resolverían."
+  }
+}
