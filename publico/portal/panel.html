@@ -221,13 +221,14 @@ section{margin-top:30px}
 
 <div class="toast" id="toast"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
+<script type="module">
 /* ============================================================
    Panel de Lu · estado + vistas
    Los datos viven en Supabase y los comparte todo el equipo.
    Lo unico que queda en este navegador es el chat del asistente.
    ============================================================ */
+
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
 const KEY = 'panel-lu-v1';
 const DIAS = ['Lun','Mar','Mié','Jue','Vie'];
@@ -291,7 +292,7 @@ const seed = () => ({
    ============================================================ */
 const SUPABASE_URL      = 'https://plcgklwlncdmvweodwkd.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsY2drbHdsbmNkbXZ3ZW9kd2tkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAyNTE4MjQsImV4cCI6MjEwNTgyNzgyNH0.ZFm00is19JXxSDaEcCC1QVXLrQj5ix2jnAAZNIxnX-M';
-let db = null;                                   // el cliente (window.supabase es la libreria)
+let db = null;                                   // el cliente de Supabase
 let S = { marcas: [], piezas: [], chat: [], semana: 0 };
 let ORIG = { marcas: {}, piezas: {} };           // foto al cargar: sirve para saber que cambio
 let cargado = false;                             // sin esto, no se escribe ni se borra nada
@@ -786,7 +787,7 @@ document.addEventListener('keydown', e=>{
       'Falta configurar Supabase en este archivo (las dos constantes de arriba).</p>';
     return;
   }
-  db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   const { data: { session } } = await db.auth.getSession();
   if(!session){ location.href = 'entrar.html'; return; }
   try { await cargar(); }
