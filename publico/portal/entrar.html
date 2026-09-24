@@ -145,7 +145,14 @@ function pantalla(cual) {
   if (cual === 'recuperar') { $('titulo').textContent='Recuperar'; $('bajada').textContent='Te mandamos un enlace por correo.'; }
   if (cual === 'codigo')    { $('titulo').textContent='Verificá tu correo';
                               $('bajada').textContent='Te mandamos un código de 6 dígitos.'; }
-  if (cual === 'dentro')    { $('dentro').classList.remove('oculto'); return; }
+  if (cual === 'dentro') {
+    // Las de adentro no llevan el titulo de arriba: cada una trae el suyo.
+    // Sin esto quedan los dos a la vez ("Entrar" y "Listo" juntos).
+    $('titulo').classList.add('oculto'); $('bajada').classList.add('oculto');
+    $('dentro').classList.remove('oculto');
+    return;
+  }
+  $('titulo').classList.remove('oculto'); $('bajada').classList.remove('oculto');
   const formularios = { entrar:'f-entrar', crear:'f-crear',
                         recuperar:'f-recuperar', codigo:'f-codigo' };
   $(formularios[cual]).classList.remove('oculto');
