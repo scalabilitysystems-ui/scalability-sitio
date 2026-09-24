@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel · Scalability</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF9F6; --surface:#FFF; --ink:#1C1B19; --muted:#6E6A62; --faint:#9A9488;
+  --border:#E7E3DA; --border2:#F1EEE7;
+  --accent:#4A5D3F; --accent-soft:#EDF0E8; --accent-ink:#33412B;
+  --onb:#8A8579; --onb-bg:#F1EFEA;
+  --arm:#9C6B24; --arm-bg:#FAF1E1;
+  --mar:#4A5D3F; --mar-bg:#EDF0E8;
+  --cam:#A8482C; --cam-bg:#FBEDE8;
+  --rev:#41618A; --rev-bg:#EBF0F6;
+  --r:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:'Instrument Sans',system-ui,sans-serif;
+  font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;display:flex;min-height:100vh}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+.serif{font-family:'Instrument Serif',Georgia,serif;font-weight:400;letter-spacing:-.02em}
+.num{font-variant-numeric:tabular-nums}
+
+/* SIDEBAR */
+.sidebar{width:238px;flex:none;background:var(--surface);border-right:1px solid var(--border);
+  padding:22px 0;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+.brand{padding:0 20px 22px}
+.brand .who{font-size:15px;font-weight:600}
+.brand .role{font-size:12px;color:var(--faint);margin-top:1px}
+.sl{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);
+  padding:15px 20px 6px;font-weight:600}
+.si{display:flex;align-items:center;gap:9px;padding:7px 20px;font-size:13.5px;color:var(--muted);
+  border-left:2px solid transparent;width:100%;text-align:left}
+.si:hover{background:var(--bg);color:var(--ink)}
+.si.on{color:var(--ink);font-weight:500;border-left-color:var(--accent);background:var(--accent-soft)}
+.dot{width:6px;height:6px;border-radius:50%;flex:none}
+.si .cnt{margin-left:auto;font-size:11.5px;color:var(--faint);font-variant-numeric:tabular-nums}
+.sfoot{margin-top:auto;padding:16px 18px 0;border-top:1px solid var(--border2)}
+.mic{display:flex;align-items:center;gap:8px;justify-content:center;background:var(--ink);color:#fff;
+  border-radius:8px;padding:9px 11px;font-size:12.5px;font-weight:500;width:100%}
+.mic:hover{background:#000}
+
+/* MAIN */
+main{flex:1;min-width:0;padding:26px 32px 70px;max-width:1240px}
+.topbar{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;
+  padding-bottom:18px;border-bottom:1px solid var(--border)}
+.topbar h1{font-size:27px;line-height:1.15}
+.topbar .sub{font-size:13px;color:var(--muted);margin-top:3px}
+.kpis{display:flex;gap:26px;text-align:right;flex:none}
+.kpi .v{font-size:20px;font-weight:600;letter-spacing:-.02em}
+.kpi .l{font-size:10.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em}
+section{margin-top:30px}
+.sh{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+.sh h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-weight:600}
+.sh .n{font-size:12px;color:var(--faint);margin-left:auto}
+.sh .lnk{font-size:12px;color:var(--accent);font-weight:500}
+
+/* lista de espera de OK */
+.box{border:1px solid var(--border);border-radius:var(--r);background:var(--surface);overflow:hidden}
+.wrow{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:13px 16px;
+  border-bottom:1px solid var(--border2)}
+.wrow:last-child{border-bottom:0}
+.wrow .t{font-weight:500;font-size:13.5px}
+.wrow .d{font-size:12.5px;color:var(--muted);margin-top:1px}
+.chip{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;white-space:nowrap}
+.c-onb{background:var(--onb-bg);color:var(--onb)} .c-arm{background:var(--arm-bg);color:var(--arm)}
+.c-mar{background:var(--mar-bg);color:var(--mar)} .c-cam{background:var(--cam-bg);color:var(--cam)}
+.c-rev{background:var(--rev-bg);color:var(--rev)}
+.btn{font-size:12px;font-weight:600;padding:6px 12px;border-radius:7px;border:1px solid var(--border);
+  background:var(--surface);color:var(--ink);white-space:nowrap}
+.btn:hover{background:var(--bg)}
+.btn.pri{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn.pri:hover{background:#000}
+.btn.gh{background:transparent;border-color:transparent;color:var(--muted)}
+.btn.gh:hover{background:var(--bg);color:var(--ink)}
+
+/* sugerencias */
+.sugs{display:grid;gap:9px}
+.sug{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:var(--r);
+  background:var(--accent-soft);border:1px solid #DFE4D6}
+.sug.warn{background:var(--arm-bg);border-color:#F0E2C8}
+.sug .txt{font-size:13px;line-height:1.5;flex:1}
+.sug .txt b{font-weight:600}
+
+/* tabla clientes */
+.tbl{border:1px solid var(--border);border-radius:var(--r);background:var(--surface);overflow:hidden}
+.tr{display:grid;grid-template-columns:176px 1fr 128px 104px;gap:14px;align-items:center;
+  padding:12px 16px;border-bottom:1px solid var(--border2);text-align:left;width:100%}
+.tr:last-child{border-bottom:0}
+.tr.head{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);
+  font-weight:600;padding:9px 16px;background:var(--bg)}
+.tr:not(.head):hover{background:#FCFBF9}
+.cn{font-weight:500;display:flex;align-items:center;gap:8px;font-size:13.5px}
+.cn .dot{width:7px;height:7px}
+.rub{font-size:11.5px;color:var(--faint);font-weight:400;margin-top:1px}
+.cnx{font-size:12.5px;color:var(--muted)}
+.cnx b{color:var(--ink);font-weight:500}
+.cw{font-variant-numeric:tabular-nums;font-size:12.5px;color:var(--muted);text-align:right}
+
+/* calendario */
+.cal{border:1px solid var(--border);border-radius:var(--r);background:var(--surface);overflow:hidden}
+.cr{display:grid;grid-template-columns:158px repeat(5,1fr);border-bottom:1px solid var(--border2)}
+.cr:last-child{border-bottom:0}
+.cl{padding:10px 14px;font-size:12.5px;font-weight:500;border-right:1px solid var(--border2);
+  display:flex;align-items:center;gap:7px}
+.cc{padding:8px;border-right:1px solid var(--border2);min-height:52px}
+.cc:last-child{border-right:0}
+.ch{background:var(--bg)}
+.ch .cl,.ch .cc{font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);
+  font-weight:600;padding:8px 10px}
+.ch .cl{padding-left:14px}
+.ch.today .cc,.ch.today .cl{background:#F7F5EF;color:var(--ink)}
+.pub{display:block;width:100%;text-align:left;background:var(--accent-soft);color:var(--accent-ink);
+  border-radius:5px;padding:4px 7px;font-size:11px;font-weight:500;margin-bottom:4px;border:1px solid transparent}
+.pub:hover{border-color:#CBD4BE}
+.pub.r{background:var(--cam-bg);color:var(--cam)}
+.pub.v{background:transparent;border:1px dashed var(--border);color:var(--faint);font-weight:400}
+.pub.ok{background:#E8EEE3;color:var(--accent-ink)}
+.pub .ck{float:right;opacity:.6}
+.cc.today{background:#FCFBF7}
+.legend{display:flex;gap:16px;margin-top:11px;font-size:11.5px;color:var(--faint);flex-wrap:wrap}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:9px;height:9px;border-radius:3px}
+
+/* modal + asistente */
+.ov{position:fixed;inset:0;background:rgba(28,27,25,.34);display:none;z-index:40}
+.ov.on{display:block}
+.modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:min(560px,92vw);
+  background:var(--surface);border-radius:14px;z-index:50;display:none;box-shadow:0 20px 60px rgba(0,0,0,.16);overflow:hidden}
+.modal.on{display:block}
+.mhead{padding:18px 20px 14px;border-bottom:1px solid var(--border2);display:flex;gap:12px;align-items:flex-start}
+.mhead h3{font-size:17px;font-weight:600;flex:1}
+.mbody{padding:18px 20px;max-height:56vh;overflow:auto}
+.mfoot{padding:14px 20px;border-top:1px solid var(--border2);display:flex;gap:8px;justify-content:flex-end;background:#FCFBF9}
+.fld{margin-bottom:16px}
+.fld label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);font-weight:600;margin-bottom:5px}
+.fld .val{font-size:13.5px;line-height:1.55}
+.fld textarea,.fld input,.fld select{width:100%;font:inherit;font-size:13.5px;padding:8px 10px;
+  border:1px solid var(--border);border-radius:7px;background:var(--bg);color:var(--ink);resize:vertical}
+.fld textarea{min-height:88px}
+.drawer{position:fixed;top:0;right:0;height:100vh;width:min(430px,94vw);background:var(--surface);
+  border-left:1px solid var(--border);z-index:50;display:flex;flex-direction:column;transform:translateX(102%);
+  transition:transform .22s ease;box-shadow:-14px 0 40px rgba(0,0,0,.08)}
+.drawer.on{transform:none}
+.dhead{padding:20px;border-bottom:1px solid var(--border2);display:flex;align-items:center;gap:10px}
+.dhead h3{font-size:16px;font-weight:600;flex:1}
+.dbody{flex:1;overflow:auto;padding:18px 20px;display:flex;flex-direction:column;gap:14px}
+.msg{font-size:13.5px;line-height:1.55;padding:11px 13px;border-radius:10px;max-width:92%}
+.msg.me{background:var(--accent-soft);color:var(--accent-ink);align-self:flex-end}
+.msg.sys{background:var(--bg);border:1px solid var(--border2);align-self:flex-start;white-space:pre-wrap}
+.dfoot{padding:14px 18px;border-top:1px solid var(--border2);display:flex;gap:9px}
+.dfoot input{flex:1;font:inherit;font-size:13.5px;padding:10px 12px;border:1px solid var(--border);
+  border-radius:9px;background:var(--bg)}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--ink);color:#fff;font-size:13px;padding:10px 18px;border-radius:9px;z-index:99;
+  transition:transform .2s ease;pointer-events:none}
+.toast.on{transform:translateX(-50%)}
+.empty{padding:34px 20px;text-align:center;color:var(--faint);font-size:13px}
+.hint{font-size:12px;color:var(--faint);margin-top:9px}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="who">Lu Monges</div>
+    <div class="role">Community Manager</div>
+  </div>
+  <div class="sl">Vistas</div>
+  <button class="si on" data-view="hoy">Hoy</button>
+  <button class="si" data-view="calendario">Calendario</button>
+  <button class="si" data-view="clientes">Clientes</button>
+  <div class="sl">Clientes</div>
+  <div id="sideClients"></div>
+  <div class="sfoot">
+    <button class="mic" id="openAssistant">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></svg>
+      Hablar con el asistente
+    </button>
+  </div>
+</aside>
+
+<main>
+  <div class="topbar">
+    <div>
+      <h1 class="serif" id="pageTitle">Miércoles 23 de septiembre</h1>
+      <div class="sub" id="pageSub"></div>
+    </div>
+    <div class="kpis" id="kpis"></div>
+  </div>
+  <div id="view"></div>
+</main>
+
+<div class="ov" id="ov"></div>
+
+<div class="modal" id="modal">
+  <div class="mhead">
+    <h3 id="mTitle">Pieza</h3>
+    <button class="btn gh" id="mClose">Cerrar</button>
+  </div>
+  <div class="mbody" id="mBody"></div>
+  <div class="mfoot" id="mFoot"></div>
+</div>
+
+<div class="drawer" id="drawer">
+  <div class="dhead">
+    <h3>Asistente</h3>
+    <button class="btn gh" id="dClose">Cerrar</button>
+  </div>
+  <div class="dbody" id="dBody"></div>
+  <div class="dfoot">
+    <input id="dInput" placeholder="Escribí o dictá: «armame 5 posts para Almacén Sur»">
+    <button class="btn pri" id="dSend">Enviar</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* ============================================================
+   Panel de Lu · estado + vistas
+   Los datos viven en Supabase y los comparte todo el equipo.
+   Lo unico que queda en este navegador es el chat del asistente.
+   ============================================================ */
+
+const KEY = 'panel-lu-v1';
+const DIAS = ['Lun','Mar','Mié','Jue','Vie'];
+const ESTADOS = {
+  onb:{t:'Onboarding', c:'c-onb'},
+  arm:{t:'Armado', c:'c-arm'},
+  mar:{t:'En marcha', c:'c-mar'},
+  cam:{t:'Campaña', c:'c-cam'},
+  rev:{t:'Revisión', c:'c-rev'}
+};
+const ESTADO_SUG = {
+  onb:'tiene perfil de marca pendiente. Sin eso, lo que se genere va a sonar genérico.',
+  arm:'está en Armado. Con las piezas de prueba aprobadas pasa a producción normal.',
+  mar:'está en marcha: la semana está lista y espera tu OK.',
+  cam:'tiene una campaña activa. Conviene preparar el cierre y el post de resultados.',
+  rev:'está en revisión: métricas listas para ver qué funcionó.'
+};
+
+/* ---- DATOS INICIALES ---- */
+const seed = () => ({
+  marcas: [
+    {id:'alm', nombre:'Almacén Sur', rubro:'Almacén natural', estado:'mar', tono:'Casual, entusiasta · serio',
+     arq:'Cuidador', pilares:['Sin conservantes','Cocina simple','Producto de cerca']},
+    {id:'caf', nombre:'Café Bruma', rubro:'Cafetería de especialidad', estado:'cam', tono:'Casual, cálido · con humor',
+     arq:'Bufón', pilares:['Café de origen','Barrio','Ritual diario']},
+    {id:'ver', nombre:'Verde Nativa', rubro:'Vivero', estado:'arm', tono:'Sereno, informado',
+     arq:'Sabio', pilares:['Plantas que duran','Sin vueltas','Para balcón']},
+    {id:'kpp', nombre:'Estudio Kappa', rubro:'Estudio contable', estado:'onb', tono:'[a definir]',
+     arq:'[a definir]', pilares:[]},
+    {id:'wok', nombre:'Rincón Wok', rubro:'Delivery asiático', estado:'rev', tono:'Directo, entusiasta',
+     arq:'Héroe', pilares:['Listo en 20 min','Wok real','Delivery propio']}
+  ],
+  piezas: [
+    {id:1, marca:'alm', dia:'Lun', titulo:'Post · recetas', tipo:'post', estado:'listo', guion:'3 recetas con lo que ya tenés en la alacena'},
+    {id:2, marca:'alm', dia:'Mar', titulo:'Reel · detrás de escena', tipo:'reel', estado:'listo', guion:'El depósito, 6 AM, cómo llega la mercadería'},
+    {id:3, marca:'alm', dia:'Mié', titulo:'Carrusel · mitos de lo natural', tipo:'carrusel', estado:'listo', guion:'5 mitos sobre productos "naturales" del supermercado'},
+    {id:4, marca:'alm', dia:'Jue', titulo:'Post · producto del mes', tipo:'post', estado:'listo', guion:'La miel que más se vendió, con la historia del productor'},
+    {id:5, marca:'alm', dia:'Vie', titulo:'Reel · respuesta a comentario', tipo:'reel', estado:'listo', guion:'La pregunta que más repiten: "¿tienen sin gluten?"'},
+    {id:6, marca:'caf', dia:'Lun', titulo:'Historia · apertura', tipo:'historia', estado:'publicado', guion:'El primer café del día'},
+    {id:7, marca:'caf', dia:'Mar', titulo:'Post · origen del grano', tipo:'post', estado:'publicado', guion:'De dónde viene el que tomás hoy'},
+    {id:8, marca:'caf', dia:'Mié', titulo:'Reel · nueva carta (borrador)', tipo:'reel', estado:'borrador', guion:'Recorrido por las 4 cosas nuevas de la carta'},
+    {id:9, marca:'caf', dia:'Jue', titulo:'Post · el de siempre', tipo:'post', estado:'listo', guion:'El que pide lo mismo hace 2 años'},
+    {id:10, marca:'caf', dia:'Vie', titulo:'Video · cierre de campaña', tipo:'reel', estado:'borrador', guion:'Resultados de la carta nueva + el agradecimiento'},
+    {id:11, marca:'ver', dia:'Mar', titulo:'Post · prueba de tono', tipo:'post', estado:'borrador', guion:'La planta que no se muere si te olvidás de regar'},
+    {id:12, marca:'ver', dia:'Vie', titulo:'Reel · prueba de tono', tipo:'reel', estado:'borrador', guion:'Cómo saber si tu planta necesita agua (sin app)'},
+    {id:13, marca:'wok', dia:'Mié', titulo:'Post · delivery propio', tipo:'post', estado:'listo', guion:'Por qué el nuestro llega caliente y el de la app no'}
+  ],
+  chat: [
+    {de:'sys', txt:'Panel listo. Podés pedirme contenido, cambiar estados o revisar pendientes.\n\nEjemplos:\n· «armame 5 posts para Almacén Sur»\n· «¿qué tiene pendiente Verde Nativa?»\n· «pasá Café Bruma a revisión»'}
+  ],
+  semana: 0
+});
+
+/* ============================================================
+   LA BASE — antes esto era localStorage, y por eso cada uno veia
+   lo suyo y nadie veia lo del otro.
+
+   S es una copia en memoria de lo que hay en Supabase. render() la
+   dibuja y save() escribe SOLO lo que cambio. La sesion la maneja
+   Supabase Auth: aca no hay contrasenas ni forma de verlas.
+   ============================================================ */
+const SUPABASE_URL      = 'https://plcgklwlncdmvweodwkd.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsY2drbHdsbmNkbXZ3ZW9kd2tkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAyNTE4MjQsImV4cCI6MjEwNTgyNzgyNH0.ZFm00is19JXxSDaEcCC1QVXLrQj5ix2jnAAZNIxnX-M';
+let db = null;                                   // el cliente (window.supabase es la libreria)
+let S = { marcas: [], piezas: [], chat: [], semana: 0 };
+let ORIG = { marcas: {}, piezas: {} };           // foto al cargar: sirve para saber que cambio
+let cargado = false;                             // sin esto, no se escribe ni se borra nada
+const FALTAN_CLAVES = SUPABASE_URL.includes('PEGAR-ACA');
+
+const DIAS_NOMBRE = ['Lun','Mar','Mié','Jue','Vie'];
+
+// La base guarda FECHAS reales; el panel muestra dias de la semana.
+function lunesDeLaSemana(){
+  const d = new Date(); d.setDate(d.getDate() + S.semana*7);
+  const dow = (d.getDay()+6)%7; d.setDate(d.getDate()-dow); d.setHours(0,0,0,0);
+  return d;
+}
+function fechaDeDia(nombre){
+  const d = new Date(lunesDeLaSemana());
+  d.setDate(d.getDate() + Math.max(0, DIAS_NOMBRE.indexOf(nombre)));
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function diaDeFecha(fecha){
+  if(!fecha) return 'Lun';
+  const d = new Date(fecha + 'T12:00:00');
+  return DIAS_NOMBRE[(d.getDay()+6)%7] || 'Lun';
+}
+
+// Una sola forma normalizada por entidad: asi comparar es comparar dos strings.
+const normM = x => ({ nombre:x.nombre||'', rubro:x.rubro||'', estado:x.estado||'onb',
+                      tono:x.tono||'', arquetipo:(x.arq !== undefined ? x.arq : x.arquetipo) || '',
+                      pilares:x.pilares||[] });
+const normP = p => ({ marca_id:p.marca, 
+                      // si el dia de la semana no cambio, se conserva la fecha guardada
+                      dia:(p.fecha && diaDeFecha(p.fecha) === p.dia) ? p.fecha : fechaDeDia(p.dia),
+                      titulo:p.titulo||'', tipo:p.tipo||'post',
+                      estado:p.estado||'borrador', guion:p.guion||'' });
+
+async function cargar(){
+  const { data: fm, error: e1 } = await db.from('marcas').select('*').order('creada',{ascending:true});
+  if(e1) throw new Error('marcas: ' + e1.message);
+  const { data: fp, error: e2 } = await db.from('piezas').select('*').order('creada',{ascending:true});
+  if(e2) throw new Error('piezas: ' + e2.message);
+
+  S.marcas = (fm||[]).map(r => ({ id:r.id, nombre:r.nombre, rubro:r.rubro||'', estado:r.estado||'onb',
+                                  tono:r.tono||'[a definir]', arq:r.arquetipo||'[a definir]',
+                                  pilares:r.pilares||[] }));
+  S.piezas = (fp||[]).map(r => ({ id:r.id, marca:r.marca_id, fecha:r.dia, dia:diaDeFecha(r.dia),
+                                  titulo:r.titulo, tipo:r.tipo||'post',
+                                  estado:r.estado||'borrador', guion:r.guion||'' }));
+  ORIG = { marcas:{}, piezas:{} };
+  S.marcas.forEach(m => ORIG.marcas[m.id] = normM(m));
+  S.piezas.forEach(p => ORIG.piezas[p.id] = normP(p));
+  cargado = true;
+}
+
+// Escribe SOLO lo que cambio, comparando contra la foto. Por eso no hubo que
+// tocar cada boton: render() ya llamaba a save(), y save() llega hasta aca.
+let sincronizando = false;
+async function sincronizar(){
+  if(!cargado || sincronizando || !db || FALTAN_CLAVES) return;
+  sincronizando = true;
+  try{
+    for(const m of S.marcas){
+      const campos = normM(m), antes = ORIG.marcas[m.id];
+      if(!antes){
+        const { data, error } = await db.from('marcas').insert(campos).select('id').single();
+        if(error){ toast('No se pudo guardar: ' + error.message); continue; }
+        const viejo = m.id; m.id = data.id;
+        S.piezas.forEach(p => { if(p.marca === viejo) p.marca = data.id; });
+        ORIG.marcas[data.id] = campos;
+      } else if(JSON.stringify(campos) !== JSON.stringify(antes)){
+        const { error } = await db.from('marcas').update(campos).eq('id', m.id);
+        if(error) toast('No se pudo guardar: ' + error.message); else ORIG.marcas[m.id] = campos;
+      }
+    }
+    for(const p of S.piezas){
+      const campos = normP(p), antes = ORIG.piezas[p.id];
+      if(!antes){
+        const { data, error } = await db.from('piezas').insert(campos).select('id').single();
+        if(error){ toast('No se pudo guardar la pieza: ' + error.message); continue; }
+        p.id = data.id; ORIG.piezas[data.id] = campos;
+      } else if(JSON.stringify(campos) !== JSON.stringify(antes)){
+        const { error } = await db.from('piezas').update(campos).eq('id', p.id);
+        if(error) toast('No se pudo guardar la pieza: ' + error.message); else ORIG.piezas[p.id] = campos;
+      }
+    }
+    // Borrados: solo piezas (el panel tiene boton de eliminar) y solo si ya cargo.
+    const vivos = new Set(S.piezas.map(p=>p.id));
+    for(const id of Object.keys(ORIG.piezas)){
+      if(!vivos.has(id)){ await db.from('piezas').delete().eq('id', id); delete ORIG.piezas[id]; }
+    }
+  } finally { sincronizando = false; }
+}
+
+function save(){
+  // El chat del asistente sigue siendo local: no es dato de la marca.
+  try{ localStorage.setItem(KEY + '-chat', JSON.stringify(S.chat)); }catch(e){}
+  sincronizar();
+}
+function uid(){ return 'n' + Date.now() + Math.floor(Math.random()*1000); }
+function marca(id){ return S.marcas.find(m=>m.id===id) || {nombre:'—'}; }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+/* ---- TOAST ---- */
+let tTimer;
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('on');
+  clearTimeout(tTimer); tTimer = setTimeout(()=>t.classList.remove('on'), 2300);
+}
+
+/* ---- FECHAS DE LA SEMANA ---- */
+function hoy(){
+  const d = new Date(); return d;
+}
+function semanaLabel(){
+  const base = hoy(); base.setDate(base.getDate() + S.semana*7);
+  const lunes = new Date(base); const dow = (lunes.getDay()+6)%7; lunes.setDate(lunes.getDate()-dow);
+  const fmt = dt => dt.toLocaleDateString('es-AR',{day:'numeric',month:'short'});
+  const fin = new Date(lunes); fin.setDate(fin.getDate()+4);
+  return fmt(lunes) + ' – ' + fmt(fin);
+}
+function diaHoyIdx(){
+  if(S.semana!==0) return -1;
+  return (hoy().getDay()+6)%7;   // 0=lunes
+}
+
+/* ============================================================
+   VISTA: HOY
+   ============================================================ */
+function viewHoy(){
+  const pend = S.piezas.filter(p=>p.estado==='borrador');
+  const cnt = {};
+  S.piezas.forEach(p=>{ if(p.estado==='listo'||p.estado==='borrador') cnt[p.marca]=(cnt[p.marca]||0)+1; });
+
+  const porMarca = {};
+  pend.forEach(p=>{ (porMarca[p.marca] = porMarca[p.marca]||[]).push(p); });
+
+  let wait = '';
+  if(!pend.length){
+    wait = '<div class="empty">No hay nada esperando tu OK. Todo al día.</div>';
+  } else {
+    Object.keys(porMarca).forEach(mid=>{
+      const m = marca(mid), ps = porMarca[mid];
+      wait += `<div class="wrow">
+        <div><div class="t">${esc(m.nombre)} · ${ps.length} ${ps.length===1?'pieza':'piezas'} para revisar</div>
+        <div class="d">${esc(ps.map(p=>p.titulo).join(' · '))}</div></div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="chip ${ESTADOS[m.estado].c}">${ESTADOS[m.estado].t}</span>
+          <button class="btn pri" data-open="${ps[0].id}">Revisar</button>
+        </div></div>`;
+    });
+  }
+
+  const sugs = S.marcas.map(m=>{
+    const n = cnt[m.id]||0;
+    const cls = (m.estado==='onb'||m.estado==='arm') ? 'warn' : '';
+    let pedido = '';
+    if(m.estado==='onb') pedido = 'Correr entrevista';
+    else if(m.estado==='arm') pedido = 'Ver las piezas';
+    else if(m.estado==='cam') pedido = 'Armar el cierre';
+    else if(m.estado==='rev') pedido = 'Ver métricas';
+    else pedido = n ? 'Ver la semana' : 'Armar contenido';
+    return `<div class="sug ${cls}">
+      <div class="txt"><b>${esc(m.nombre)}</b> ${ESTADO_SUG[m.estado]}</div>
+      <button class="btn" data-sug="${m.id}">${pedido}</button></div>`;
+  }).join('');
+
+  return `
+  <section>
+    <div class="sh"><h2>Lo que espera tu OK</h2><span class="n">${pend.length}</span></div>
+    <div class="box">${wait}</div>
+  </section>
+  <section>
+    <div class="sh"><h2>Sugerencias por estado de cada marca</h2></div>
+    <div class="sugs">${sugs}</div>
+  </section>`;
+}
+
+/* ============================================================
+   VISTA: CALENDARIO
+   ============================================================ */
+function viewCal(){
+  const dToday = diaHoyIdx();
+  const usadas = S.marcas.filter(m=>S.piezas.some(p=>p.marca===m.id));
+  const otras = S.marcas.filter(m=>!usadas.includes(m));
+
+  let rows = '';
+  S.marcas.forEach(m=>{
+    const ps = S.piezas.filter(p=>p.marca===m.id);
+    if(!ps.length && !usadas.includes(m)) return;
+    let celdas = '';
+    DIAS.forEach((d,i)=>{
+      const del = S.piezas.filter(p=>p.marca===m.id && p.dia===d);
+      const cls = (i===dToday) ? 'cc today' : 'cc';
+      celdas += `<div class="${cls}">` + del.map(p=>{
+        const k = p.estado==='publicado' ? 'ok' : (p.estado==='borrador' ? 'v' : (p.tipo==='reel'?'r':''));
+        const ck = p.estado==='publicado' ? ' <span class="ck">✓</span>' : '';
+        return `<button class="pub ${k}" data-open="${p.id}">${esc(p.titulo)}${ck}</button>`;
+      }).join('') + `</div>`;
+    });
+    rows += `<div class="cr">
+      <div class="cl"><span class="dot" style="background:var(--${m.estado})"></span>${esc(m.nombre)}</div>${celdas}</div>`;
+  });
+
+  const otrasTxt = otras.length ? `<div class="hint">Sin piezas esta semana: ${otras.map(m=>esc(m.nombre)).join(', ')}</div>` : '';
+
+  return `
+  <section>
+    <div class="sh">
+      <h2>Calendario</h2>
+      <span class="lnk" style="margin-left:0">${semanaLabel()}</span>
+      <span class="n" style="margin-left:auto;display:flex;gap:8px">
+        <button class="btn gh" data-week="-1">← Anterior</button>
+        <button class="btn gh" data-week="0">Hoy</button>
+        <button class="btn gh" data-week="1">Siguiente →</button>
+      </span>
+    </div>
+    <div class="cal">
+      <div class="cr ch">
+        <div class="cl">Cliente</div>
+        ${DIAS.map((d,i)=>`<div class="cc ${i===dToday?'today':''}">${d}</div>`).join('')}
+      </div>
+      ${rows || '<div class="empty">No hay piezas cargadas.</div>'}
+    </div>
+    <div class="legend">
+      <span><i style="background:var(--accent-soft)"></i>Lista para publicar</span>
+      <span><i style="background:#E8EEE3"></i>Publicada</span>
+      <span><i style="background:var(--cam-bg)"></i>Video / reel</span>
+      <span><i style="background:#fff;border:1px dashed var(--border)"></i>Borrador, espera tu OK</span>
+    </div>
+    ${otrasTxt}
+    <div style="margin-top:14px;display:flex;gap:8px">
+      <button class="btn" id="addPieza">+ Agregar pieza</button>
+      <button class="btn gh" data-sug="__all">Pedirle al asistente</button>
+    </div>
+  </section>`;
+}
+
+/* ============================================================
+   VISTA: CLIENTES
+   ============================================================ */
+function viewCli(){
+  const rows = S.marcas.map(m=>{
+    const n = S.piezas.filter(p=>p.marca===m.id && p.estado!=='publicado').length;
+    const espera = S.piezas.filter(p=>p.marca===m.id && p.estado==='borrador').length;
+    return `<button class="tr" data-marca="${m.id}">
+      <div class="cn"><span class="dot" style="background:var(--${m.estado})"></span>
+        <span>${esc(m.nombre)}<div class="rub">${esc(m.rubro)}</div></span></div>
+      <div class="cnx">${m.pilares && m.pilares.length ? '<b>'+m.pilares.length+' pilares</b> · '+esc(m.arq) : '<b>Sin perfil de marca</b>'}</div>
+      <div><span class="chip ${ESTADOS[m.estado].c}">${ESTADOS[m.estado].t}</span></div>
+      <div class="cw">${espera? '<b>'+espera+'</b> por OK' : (n? n+' activas' : '—')}</div>
+    </button>`;
+  }).join('');
+  return `
+  <section>
+    <div class="sh"><h2>Clientes</h2><span class="n">${S.marcas.length}</span></div>
+    <div class="tbl">
+      <div class="tr head"><div>Marca</div><div>Perfil</div><div>Estado</div><div style="text-align:right">Semana</div></div>
+      ${rows}
+    </div>
+    <div style="margin-top:14px"><button class="btn" id="addMarca">+ Agregar cliente</button></div>
+  </section>`;
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+let VER = 'hoy';
+/* vista inicial por URL: panel.html?v=calendario */
+(function(){
+  const v = new URLSearchParams(location.search).get('v');
+  if(['hoy','calendario','clientes'].includes(v)) VER = v;
+})();
+function render(){
+  document.getElementById('sideClients').innerHTML = S.marcas.map(m=>{
+    const n = S.piezas.filter(p=>p.marca===m.id && (p.estado==='listo'||p.estado==='borrador')).length;
+    return `<button class="si" data-marca="${m.id}"><span class="dot" style="background:var(--${m.estado})"></span>${esc(m.nombre)}<span class="cnt">${n||'—'}</span></button>`;
+  }).join('');
+
+  document.querySelectorAll('.si[data-view]').forEach(b=>b.classList.toggle('on', b.dataset.view===VER));
+
+  const t = document.getElementById('pageTitle'), sub = document.getElementById('pageSub');
+  const d = hoy();
+  if(VER==='hoy'){
+    t.textContent = d.toLocaleDateString('es-AR',{weekday:'long',day:'numeric',month:'long'});
+    t.textContent = t.textContent.charAt(0).toUpperCase()+t.textContent.slice(1);
+  } else if(VER==='calendario'){ t.textContent = 'Calendario'; }
+  else { t.textContent = 'Clientes'; }
+
+  const pend = S.piezas.filter(p=>p.estado==='borrador').length;
+  const activas = S.piezas.filter(p=>p.estado!=='publicado').length;
+  sub.textContent = `${pend} ${pend===1?'pieza espera':'piezas esperan'} tu OK · ${S.marcas.length} clientes`;
+
+  document.getElementById('kpis').innerHTML = `
+    <div class="kpi"><div class="v num">${activas}</div><div class="l">Piezas activas</div></div>
+    <div class="kpi"><div class="v num">${pend}</div><div class="l">Esperando tu OK</div></div>
+    <div class="kpi"><div class="v num">${S.marcas.length}</div><div class="l">Clientes</div></div>`;
+
+  const v = document.getElementById('view');
+  v.innerHTML = VER==='hoy' ? viewHoy() : (VER==='calendario' ? viewCal() : viewCli());
+  save();
+}
+
+/* ============================================================
+   MODAL DE PIEZA
+   ============================================================ */
+function openPieza(id){
+  const p = S.piezas.find(x=>x.id===id); if(!p) return;
+  const m = marca(p.marca);
+  document.getElementById('mTitle').textContent = p.titulo;
+  document.getElementById('mBody').innerHTML = `
+    <div class="fld"><label>Cliente</label><div class="val">${esc(m.nombre)} <span class="chip ${ESTADOS[m.estado].c}" style="margin-left:6px">${ESTADOS[m.estado].t}</span></div></div>
+    <div class="fld"><label>Título</label><input id="fTitulo" value="${esc(p.titulo)}"></div>
+    <div class="fld"><label>Día y tipo</label>
+      <div style="display:flex;gap:8px">
+        <select id="fDia">${DIAS.map(d=>`<option ${d===p.dia?'selected':''}>${d}</option>`).join('')}</select>
+        <select id="fTipo">${['post','carrusel','reel','historia'].map(x=>`<option ${x===p.tipo?'selected':''}>${x}</option>`).join('')}</select>
+      </div></div>
+    <div class="fld"><label>Guion / copia</label><textarea id="fGuion">${esc(p.guion)}</textarea></div>
+    <div class="fld"><label>Estado</label>
+      <select id="fEstado">${[['borrador','Borrador — espera tu OK'],['listo','Lista para publicar'],['publicado','Publicada']]
+        .map(([v,l])=>`<option value="${v}" ${v===p.estado?'selected':''}>${l}</option>`).join('')}</select></div>
+    <div class="hint">Pilares de ${esc(m.nombre)}: ${(m.pilares&&m.pilares.length)? esc(m.pilares.join(' · ')) : 'sin perfil cargado'}</div>`;
+  document.getElementById('mFoot').innerHTML = `
+    <button class="btn gh" data-del="${p.id}">Eliminar</button>
+    <button class="btn" data-mclose="1">Cancelar</button>
+    <button class="btn pri" data-save="${p.id}">Guardar</button>`;
+  show('modal');
+}
+function savePieza(id){
+  const p = S.piezas.find(x=>x.id===id); if(!p) return;
+  p.titulo = document.getElementById('fTitulo').value.trim() || p.titulo;
+  p.dia = document.getElementById('fDia').value;
+  p.tipo = document.getElementById('fTipo').value;
+  p.guion = document.getElementById('fGuion').value;
+  p.estado = document.getElementById('fEstado').value;
+  hide('modal'); render(); toast('Pieza guardada');
+}
+
+/* ============================================================
+   MODAL DE MARCA
+   ============================================================ */
+function openMarca(id){
+  const m = S.marcas.find(x=>x.id===id); if(!m) return;
+  document.getElementById('mTitle').textContent = m.nombre;
+  document.getElementById('mBody').innerHTML = `
+    <div class="fld"><label>Nombre</label><input id="gNom" value="${esc(m.nombre)}"></div>
+    <div class="fld"><label>Rubro</label><input id="gRub" value="${esc(m.rubro)}"></div>
+    <div class="fld"><label>Estado</label>
+      <select id="gEst">${Object.keys(ESTADOS).map(k=>`<option value="${k}" ${k===m.estado?'selected':''}>${ESTADOS[k].t}</option>`).join('')}</select></div>
+    <div class="fld"><label>Perfil de tono</label><input id="gTon" value="${esc(m.tono)}"></div>
+    <div class="fld"><label>Arquetipo</label><input id="gArq" value="${esc(m.arq)}"></div>
+    <div class="fld"><label>Pilares de mensaje (separados por coma)</label>
+      <input id="gPil" value="${esc((m.pilares||[]).join(', '))}"></div>
+    <div class="hint">${m.estado==='onb'
+      ? 'Sin perfil de marca: hay que correr la entrevista antes de generar contenido.'
+      : 'El perfil es lo que hace que el contenido suene a esta marca.'}</div>`;
+  document.getElementById('mFoot').innerHTML = `
+    <button class="btn gh" data-delmarca="${m.id}">Eliminar</button>
+    <button class="btn" data-mclose="1">Cancelar</button>
+    <button class="btn pri" data-savemarca="${m.id}">Guardar</button>`;
+  show('modal');
+}
+function saveMarca(id){
+  const m = S.marcas.find(x=>x.id===id); if(!m) return;
+  m.nombre = document.getElementById('gNom').value.trim() || m.nombre;
+  m.rubro = document.getElementById('gRub').value.trim();
+  m.estado = document.getElementById('gEst').value;
+  m.tono = document.getElementById('gTon').value.trim();
+  m.arq = document.getElementById('gArq').value.trim();
+  m.pilares = document.getElementById('gPil').value.split(',').map(s=>s.trim()).filter(Boolean);
+  hide('modal'); render(); toast('Cliente actualizado');
+}
+
+/* ============================================================
+   MODAL GENÉRICO
+   ============================================================ */
+function show(which){
+  document.getElementById('ov').classList.add('on');
+  document.getElementById(which).classList.add('on');
+}
+function hide(which){
+  document.getElementById('ov').classList.remove('on');
+  document.getElementById(which).classList.remove('on');
+}
+
+/* ============================================================
+   ASISTENTE
+   ============================================================ */
+function openDrawer(marcaId){
+  document.getElementById('drawer').classList.add('on');
+  drawChat();
+  const inp = document.getElementById('dInput');
+  if(marcaId){ const m = marca(marcaId); inp.value = `Armame 5 posts para ${m.nombre}`; }
+  inp.focus();
+}
+function drawChat(){
+  const b = document.getElementById('dBody');
+  b.innerHTML = S.chat.map(m=>`<div class="msg ${m.de==='yo'?'me':'sys'}">${esc(m.txt)}</div>`).join('');
+  b.scrollTop = b.scrollHeight;
+}
+function send(){
+  const inp = document.getElementById('dInput');
+  const t = inp.value.trim(); if(!t) return;
+  S.chat.push({de:'yo', txt:t}); inp.value = ''; drawChat();
+
+  setTimeout(()=>{
+    S.chat.push({de:'sys', txt: responder(t)});
+    drawChat(); save();
+  }, 420);
+}
+function responder(t){
+  const low = t.toLowerCase();
+  const m = S.marcas.find(x=>low.includes(x.nombre.toLowerCase()));
+
+  if(/pendiente|qué tiene|que tiene/.test(low)){
+    if(!m) return 'Decime de qué cliente.';
+    const ps = S.piezas.filter(p=>p.marca===m.id);
+    if(!ps.length) return `${m.nombre} no tiene piezas cargadas.`;
+    const b = ps.filter(p=>p.estado==='borrador').length;
+    return `${m.nombre} · ${ESTADOS[m.estado].t}\n${ps.length} piezas esta semana, ${b} esperando tu OK.`;
+  }
+
+  if(/pasá|pasa|mover|cambiar estado|a revisión|a revision/.test(low)){
+    if(!m) return 'Decime de qué cliente.';
+    m.estado = 'rev'; save(); render();
+    return `${m.nombre} pasó a Revisión.`;
+  }
+
+  if(/armame|armá|haceme|generá|genera|contenido|guion|posts|post/.test(low)){
+    if(!m) return 'Decime para qué cliente. Sin el cliente no sé el tono ni los pilares.';
+    if(m.estado==='onb') return `${m.nombre} todavía no tiene perfil de marca. Primero hay que correr la entrevista: sin eso, lo que genere va a sonar genérico.\n\n¿La arrancamos? Son 40 minutos.`;
+    const pil = (m.pilares||[]);
+    return `Listo — 5 piezas para ${m.nombre} (${ESTADOS[m.estado].t}).\n\n` +
+      pil.slice(0,5).map((p,i)=>`${i+1}. ${p}`).join('\n') +
+      `\n\nEstán en el calendario como borradores. Revisalas y aprobás lo que va.`;
+  }
+  if(/entrevista|perfil/.test(low)){
+    if(!m) return '¿Para qué cliente?';
+    return `Arrancamos la entrevista de ${m.nombre}. Te voy a ir preguntando por bloques: negocio, cliente, tono (4 ejes), arquetipo, pilares y límites.\n\nBloque 1 — ¿qué vende ${m.nombre}, en una frase?`;
+  }
+  return 'Puedo: armar contenido para un cliente, ver qué tiene pendiente, cambiar el estado de una marca, o correr la entrevista de marca.\n\nProbá: «armame 5 posts para ' + (S.marcas[0]?S.marcas[0].nombre:'Cliente') + '».';
+}
+
+/* ============================================================
+   EVENTOS
+   ============================================================ */
+document.addEventListener('click', e=>{
+  const t = e.target;
+  const cl = s => t.closest(s);
+
+  const bv = cl('[data-view]');              if(bv){ VER = bv.dataset.view; render(); return; }
+  const bm = cl('[data-marca]');             if(bm){ openMarca(bm.dataset.marca); return; }
+  const bo = cl('[data-open]');              if(bo){ openPieza(bo.dataset.open); return; }
+  const bs = cl('[data-save]');              if(bs){ savePieza(bs.dataset.save); return; }
+  const bsm= cl('[data-savemarca]');         if(bsm){ saveMarca(bsm.dataset.savemarca); return; }
+  const bd = cl('[data-del]');               if(bd){ S.piezas = S.piezas.filter(p=>p.id!==bd.dataset.del); hide('modal'); render(); toast('Pieza eliminada'); return; }
+  const bdm= cl('[data-delmarca]');          if(bdm){ S.marcas = S.marcas.filter(m=>m.id!==bdm.dataset.delmarca); hide('modal'); render(); toast('Cliente eliminado'); return; }
+  const bcl= cl('[data-mclose]');            if(bcl){ hide('modal'); return; }
+  const bw = cl('[data-week]');              if(bw){ S.semana = parseInt(bw.dataset.week,10)||0; render(); return; }
+  const bsu= cl('[data-sug]');
+  if(bsu){
+    const v = bsu.dataset.sug;
+    if(v==='__all'){ VER='calendario'; render(); openDrawer(); }
+    else { const m = marca(v); openDrawer(v); }
+    return;
+  }
+  if(t.id==='addPieza'){
+    const p = {id:uid(), marca:S.marcas[0].id, dia:'Mié', titulo:'Nueva pieza', tipo:'post', estado:'borrador', guion:''};
+    S.piezas.push(p); render(); openPieza(p.id); return;
+  }
+  if(t.id==='addMarca'){
+    const m = {id:'m'+uid(), nombre:'Nuevo cliente', rubro:'', estado:'onb', tono:'[a definir]', arq:'[a definir]', pilares:[]};
+    S.marcas.push(m); render(); openMarca(m.id); return;
+  }
+  if(t.id==='openAssistant'){ openDrawer(); return; }
+  if(t.id==='dClose'){ document.getElementById('drawer').classList.remove('on'); return; }
+  if(t.id==='dSend'){ send(); return; }
+  if(t.id==='mClose'){ hide('modal'); return; }
+  if(t.id==='ov'){ hide('modal'); return; }
+});
+document.addEventListener('keydown', e=>{
+  if(e.key==='Escape'){
+    hide('modal');
+    document.getElementById('drawer').classList.remove('on');
+  }
+  if(e.key==='Enter' && document.activeElement.id==='dInput') send();
+});
+
+/* ---- ARRANQUE: sin sesion no se ve nada; con sesion, se leen los datos ---- */
+(async () => {
+  if(FALTAN_CLAVES){
+    document.body.innerHTML = '<p style="padding:40px;font:15px system-ui">' +
+      'Falta configurar Supabase en este archivo (las dos constantes de arriba).</p>';
+    return;
+  }
+  db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const { data: { session } } = await db.auth.getSession();
+  if(!session){ location.href = 'entrar.html'; return; }
+  try { await cargar(); }
+  catch(e){ toast('No pudimos leer tus datos: ' + e.message); }
+  render();
+})();
+</script>
+</body>
+</html>

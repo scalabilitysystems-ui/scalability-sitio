@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Entrar · Scalability</title>
+<!-- ========================================================================
+     El alta y el login de los clientes.
+
+     NADA de esto corre en nuestro servidor: el navegador del cliente habla
+     DIRECTO con Supabase Auth. Nosotros no vemos, no guardamos y no podemos
+     resetear una contrasena: llega un id y nada mas.
+
+     La unica clave que aparece aca es la ANON, que esta DISENADA para ser
+     publica (viaja en el navegador de cualquiera, como el HTML mismo). Lo que
+     NUNCA puede aparecer en este archivo es la service_role: esa saltea el RLS
+     y con ella cualquiera leeria los datos de todos los clientes.
+     ======================================================================== -->
+<style>
+  :root{
+    --bg:#FAF9F6; --border:#E7E3DA; --accent:#4A5D3F; --onb:#8A8579;
+    --arm:#9C6B24; --mar:#4A5D3F; --cam:#A8482C; --rev:#41618A; --r:10px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:#2A2A26;
+       font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif}
+  .wrap{max-width:420px;margin:0 auto;padding:44px 20px}
+  h1{font-size:21px;margin:0 0 6px;letter-spacing:-.2px}
+  p.sub{margin:0 0 26px;color:var(--onb);font-size:14px}
+  label{display:block;font-size:13px;color:var(--onb);margin:14px 0 5px}
+  input{width:100%;padding:11px 12px;border:1px solid var(--border);
+        border-radius:var(--r);background:#fff;font:inherit}
+  input:focus{outline:none;border-color:var(--accent)}
+  button{width:100%;margin-top:20px;padding:12px;border:0;border-radius:var(--r);
+         background:var(--accent);color:#fff;font:inherit;font-weight:600;cursor:pointer}
+  button:disabled{opacity:.5;cursor:default}
+  button.link{background:none;color:var(--rev);font-weight:500;padding:6px;
+              margin-top:10px;text-decoration:underline}
+  .msg{margin-top:16px;padding:11px 13px;border-radius:var(--r);font-size:14px;display:none}
+  .msg.ok{display:block;background:#EDF2EA;border:1px solid #CBD8C4;color:#35452C}
+  .msg.err{display:block;background:#FBEEEB;border:1px solid #E8C9C1;color:#8A3A28}
+  .oculto{display:none}
+  .marca{border:1px solid var(--border);border-radius:var(--r);background:#fff;
+         padding:13px 15px;margin-bottom:9px}
+  .marca b{font-size:15px}
+  .marca span{display:block;color:var(--onb);font-size:12.5px;margin-top:3px}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--onb);
+       word-break:break-all}
+  .piso{margin-top:26px;padding-top:16px;border-top:1px solid var(--border);
+        font-size:12px;color:var(--onb)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1 id="titulo">Entrar</h1>
+  <p class="sub" id="bajada">Tu correo y tu contraseña.</p>
+
+  <!-- ---------- LOGIN ---------- -->
+  <form id="f-entrar">
+    <label for="e-mail">Correo</label>
+    <input id="e-mail" type="email" autocomplete="email" required>
+    <label for="e-pass">Contraseña</label>
+    <input id="e-pass" type="password" autocomplete="current-password" required>
+    <button type="submit" id="b-entrar">Entrar</button>
+    <button type="button" class="link" id="a-recuperar">Olvidé mi contraseña</button>
+    <button type="button" class="link" id="a-crear">Crear una cuenta</button>
+  </form>
+
+  <!-- ---------- ALTA ---------- -->
+  <form id="f-crear" class="oculto">
+    <label for="c-mail">Correo</label>
+    <input id="c-mail" type="email" autocomplete="email" required>
+    <label for="c-pass">Contraseña (mínimo 8)</label>
+    <input id="c-pass" type="password" autocomplete="new-password" minlength="8" required>
+    <button type="submit" id="b-crear">Crear cuenta</button>
+    <button type="button" class="link" id="a-volver">Ya tengo cuenta</button>
+  </form>
+
+  <!-- ---------- RECUPERAR ---------- -->
+  <form id="f-recuperar" class="oculto">
+    <label for="r-mail">Tu correo</label>
+    <input id="r-mail" type="email" autocomplete="email" required>
+    <button type="submit" id="b-recuperar">Mandarme el enlace</button>
+    <button type="button" class="link" id="a-volver2">Volver</button>
+  </form>
+
+  <!-- ---------- CÓDIGO: la verificación del correo ----------
+       La cuenta se la crea el cliente solo. El código que llega a su correo
+       es la prueba de que el correo es suyo — nadie de nuestro lado participa. -->
+  <form id="f-codigo" class="oculto">
+    <label for="k-code">Código de 6 dígitos</label>
+    <input id="k-code" inputmode="numeric" autocomplete="one-time-code"
+           maxlength="6" placeholder="······" required>
+    <button type="submit" id="b-codigo">Verificar</button>
+    <button type="button" class="link" id="a-reenviar">No me llegó — mandarlo otra vez</button>
+  </form>
+
+  <!-- ---------- ADENTRO ---------- -->
+  <div id="dentro" class="oculto">
+    <h1>Listo</h1>
+    <p class="sub" id="quien"></p>
+    <div id="lista"></div>
+    <button type="button" id="b-salir">Salir</button>
+  </div>
+
+  <div class="msg" id="msg"></div>
+
+  <div class="piso">
+    Tus datos se guardan cifrados y solo vos los ves.<br>
+    Tu contraseña no la conocemos ni podemos verla.
+  </div>
+</div>
+
+<script type="module">
+// ============================================================================
+// CONFIGURACION — pegar aca los dos datos del proyecto de Supabase.
+// Los dos son publicos. NUNCA pegar aca la service_role key.
+// ============================================================================
+const SUPABASE_URL      = 'https://plcgklwlncdmvweodwkd.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsY2drbHdsbmNkbXZ3ZW9kd2tkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAyNTE4MjQsImV4cCI6MjEwNTgyNzgyNH0.ZFm00is19JXxSDaEcCC1QVXLrQj5ix2jnAAZNIxnX-M';
+// ============================================================================
+
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+const CONFIGURADO = !SUPABASE_URL.includes('PEGAR-ACA');
+const supabase = CONFIGURADO
+  ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  : null;
+
+const $ = id => document.getElementById(id);
+const mostrar = (texto, tipo) => {
+  const m = $('msg');
+  m.textContent = texto;          // textContent, nunca innerHTML: nada de HTML ajeno
+  m.className = 'msg ' + tipo;
+};
+const limpiar = () => { $('msg').className = 'msg'; };
+
+function pantalla(cual) {
+  for (const f of ['f-entrar','f-crear','f-recuperar','f-codigo']) $(f).classList.add('oculto');
+  $('dentro').classList.add('oculto');
+  limpiar();
+  if (cual === 'entrar')    { $('titulo').textContent='Entrar';  $('bajada').textContent='Tu correo y tu contraseña.'; }
+  if (cual === 'crear')     { $('titulo').textContent='Crear cuenta'; $('bajada').textContent='Tus marcas, en un solo lugar.'; }
+  if (cual === 'recuperar') { $('titulo').textContent='Recuperar'; $('bajada').textContent='Te mandamos un enlace por correo.'; }
+  if (cual === 'codigo')    { $('titulo').textContent='Verificá tu correo';
+                              $('bajada').textContent='Te mandamos un código de 6 dígitos.'; }
+  if (cual === 'dentro')    { $('dentro').classList.remove('oculto'); return; }
+  const formularios = { entrar:'f-entrar', crear:'f-crear',
+                        recuperar:'f-recuperar', codigo:'f-codigo' };
+  $(formularios[cual]).classList.remove('oculto');
+}
+
+// ---------------------------------------------------------------------------
+// Adentro: lee las marcas. La consulta NO lleva filtro por dueno a proposito:
+// el RLS de la base ya devuelve solo las propias. Si aca apareciera una ajena,
+// el problema no seria este codigo — seria la base, y hay que parar todo.
+// ---------------------------------------------------------------------------
+async function adentro(usuario) {
+  pantalla('dentro');
+  $('quien').textContent = usuario.email;
+  const lista = $('lista');
+  lista.textContent = '';
+  lista.innerHTML = '<div class="marca"><span>Cargando…</span></div>';
+
+  const { data, error } = await supabase.from('marcas').select('id,nombre,rubro,estado,owner');
+
+  lista.textContent = '';
+  if (error) {
+    mostrar('No pudimos leer tus marcas: ' + error.message, 'err');
+    return;
+  }
+  if (!data.length) {
+    lista.innerHTML = '<div class="marca"><b>Todavía no tenés marcas</b>' +
+                      '<span>Cuando sumes la primera, aparece acá.</span></div>';
+    return;
+  }
+  for (const m of data) {
+    const d = document.createElement('div');
+    d.className = 'marca';
+    const b = document.createElement('b'); b.textContent = m.nombre;
+    const s = document.createElement('span');
+    s.textContent = [m.rubro, m.estado].filter(Boolean).join(' · ');
+    const c = document.createElement('code'); c.textContent = 'dueño: ' + m.owner;
+    d.append(b, s, c);
+    lista.append(d);
+  }
+  mostrar('Estas son tus marcas: ' + data.length + '.', 'ok');
+}
+
+// ---------------------------------------------------------------------------
+// Arranque
+// ---------------------------------------------------------------------------
+if (!CONFIGURADO) {
+  mostrar('Falta configurar el proyecto de Supabase en este archivo ' +
+          '(las dos constantes de arriba).', 'err');
+  $('b-entrar').disabled = $('b-crear').disabled = true;
+} else {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session) adentro(session.user); else pantalla('entrar');
+
+  supabase.auth.onAuthStateChange((_ev, s) => { if (s) adentro(s.user); });
+}
+
+$('a-crear').onclick     = () => pantalla('crear');
+$('a-volver').onclick    = () => pantalla('entrar');
+$('a-recuperar').onclick = () => pantalla('recuperar');
+$('a-volver2').onclick   = () => pantalla('entrar');
+
+$('f-entrar').onsubmit = async e => {
+  e.preventDefault(); limpiar(); $('b-entrar').disabled = true;
+  const { error } = await supabase.auth.signInWithPassword({
+    email: $('e-mail').value.trim(), password: $('e-pass').value
+  });
+  $('b-entrar').disabled = false;
+  if (error) mostrar('No pudimos entrar: ' + error.message, 'err');
+};
+
+$('f-crear').onsubmit = async e => {
+  e.preventDefault(); limpiar(); $('b-crear').disabled = true;
+  const { data, error } = await supabase.auth.signUp({
+    email: $('c-mail').value.trim(), password: $('c-pass').value
+  });
+  $('b-crear').disabled = false;
+  if (error) return mostrar('No pudimos crear la cuenta: ' + error.message, 'err');
+  if (!data.session) {
+    // Sin sesion = el proyecto pide confirmar el correo (que es lo que queremos).
+    correoPendiente = $('c-mail').value.trim();
+    pantalla('codigo');
+    $('k-code').focus();
+  }
+};
+
+$('f-recuperar').onsubmit = async e => {
+  e.preventDefault(); limpiar(); $('b-recuperar').disabled = true;
+  const { error } = await supabase.auth.resetPasswordForEmail(
+    $('r-mail').value.trim(),
+    { redirectTo: location.origin + location.pathname }
+  );
+  $('b-recuperar').disabled = false;
+  if (error) return mostrar('No pudimos mandarlo: ' + error.message, 'err');
+  pantalla('entrar');
+  mostrar('Si ese correo tiene cuenta, te llega el enlace para elegir ' +
+          'una contraseña nueva.', 'ok');
+};
+
+// --- Verificar el código y reenviarlo ---
+let correoPendiente = '';
+
+$('f-codigo').onsubmit = async e => {
+  e.preventDefault(); limpiar(); $('b-codigo').disabled = true;
+  const codigo = $('k-code').value.replace(/\D/g, '');
+  // El tipo del OTP de alta es 'signup'. Se prueban los dos nombres porque el
+  // generico 'email' tambien existe y no vale la pena adivinar cual responde.
+  let error = null;
+  for (const tipo of ['signup', 'email']) {
+    const intento = await supabase.auth.verifyOtp({ email: correoPendiente, token: codigo, type: tipo });
+    error = intento.error;
+    if (!error) break;
+  }
+  $('b-codigo').disabled = false;
+  if (error) mostrar('No pudimos verificarlo: ' + error.message +
+                     ' — revisá que sea el código del último correo.', 'err');
+  // Si sale bien, onAuthStateChange entra solo.
+};
+
+$('a-reenviar').onclick = async () => {
+  limpiar(); $('a-reenviar').disabled = true;
+  const { error } = await supabase.auth.resend({ type: 'signup', email: correoPendiente });
+  $('a-reenviar').disabled = false;
+  mostrar(error ? 'No pudimos mandarlo: ' + error.message
+                : 'Te lo mandamos de nuevo. Revisá también el correo no deseado.', 
+          error ? 'err' : 'ok');
+};
+
+$('b-salir').onclick = async () => { await supabase.auth.signOut(); pantalla('entrar'); };
+</script>
+</body>
+</html>
