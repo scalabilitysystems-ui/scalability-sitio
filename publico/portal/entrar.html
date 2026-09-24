@@ -219,7 +219,11 @@ $('f-entrar').onsubmit = async e => {
 $('f-crear').onsubmit = async e => {
   e.preventDefault(); limpiar(); $('b-crear').disabled = true;
   const { data, error } = await supabase.auth.signUp({
-    email: $('c-mail').value.trim(), password: $('c-pass').value
+    email: $('c-mail').value.trim(), password: $('c-pass').value,
+    // A donde vuelve el enlace del correo. Sin esto Supabase manda al Site URL
+    // pelado, que sirve la home del sitio: ahi la sesion se pierde. Con esto
+    // el cliente cae directo en el panel, ya adentro.
+    options: { emailRedirectTo: new URL('panel.html', location.href).href }
   });
   $('b-crear').disabled = false;
   if (error) return mostrar('No pudimos crear la cuenta: ' + error.message, 'err');
