@@ -136,6 +136,9 @@ const mostrar = (texto, tipo) => {
 };
 const limpiar = () => { $('msg').className = 'msg'; };
 
+// replace y no href: asi el boton "atras" no vuelve a la pantalla de login.
+const alPanel = () => location.replace('panel.html');
+
 function pantalla(cual) {
   for (const f of ['f-entrar','f-crear','f-recuperar','f-codigo']) $(f).classList.add('oculto');
   $('dentro').classList.add('oculto');
@@ -204,9 +207,17 @@ if (!CONFIGURADO) {
   $('b-entrar').disabled = $('b-crear').disabled = true;
 } else {
   const { data: { session } } = await supabase.auth.getSession();
-  if (session) adentro(session.user); else pantalla('entrar');
+  if (session) alPanel(); else pantalla('entrar');
 
-  supabase.auth.onAuthStateChange((_ev, s) => { if (s) adentro(s.user); });
+  // Con sesion, al panel. El login no es el lugar para ver las marcas: entrar y
+  // quedarse mirando una pantalla de "listo" es una pantalla de mas.
+  supabase.auth.onAuthStateChange((evento, s) => {
+    if (!s) return;
+    // La recuperacion de contrasena trae sesion pero necesita su propia pantalla
+    // (todavia no existe): no se redirige para no dejarlo en un lugar equivocado.
+    if (evento === 'PASSWORD_RECOVERY') return;
+    alPanel();
+  });
 }
 
 $('a-crear').onclick     = () => pantalla('crear');
