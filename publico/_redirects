@@ -1,0 +1,13 @@
+# Redirecciones del sitio.
+#
+# El portal vivía acá, en /portal/. Ahora vive en su propio subdominio:
+# panel.scalabilitysystems.com.ar
+#
+# Se deja una redirección y NO una copia: una copia obliga a mantener dos
+# versiones sincronizadas, y además crea dos orígenes distintos — y la sesión
+# del navegador vive por origen, así que un login en cada lado son dos sesiones
+# distintas. Un solo lugar, una sola sesión.
+#
+# Si alguien tiene el link viejo guardado, cae parado.
+/portal/*  https://panel.scalabilitysystems.com.ar/:splat  301
+/portal    https://panel.scalabilitysystems.com.ar/        301
