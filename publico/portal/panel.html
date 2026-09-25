@@ -692,15 +692,45 @@ function drawChat(){
   b.innerHTML = S.chat.map(m=>`<div class="msg ${m.de==='yo'?'me':'sys'}">${esc(m.txt)}</div>`).join('');
   b.scrollTop = b.scrollHeight;
 }
-function send(){
+// La dirección de la función que habla con el modelo. La clave vive alla,
+// del lado del servidor: aca no hay ninguna.
+const FUNCION_ASISTENTE = SUPABASE_URL + '/functions/v1/asistente';
+
+async function preguntarAlAsistente(texto){
+  const { data: { session } } = await db.auth.getSession();
+  if(!session) throw new Error('se cortó la sesión, volvé a entrar');
+
+  // El historial va como vino: el asistente necesita el hilo para entender
+  // "cargala" o "esa misma". Se mandan los últimos turnos, no todo.
+  const historial = S.chat.slice(-12).map(m => ({
+    role: m.de === 'yo' ? 'user' : 'assistant', content: m.txt
+  }));
+
+  const r = await fetch(FUNCION_ASISTENTE, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+    body: JSON.stringify({ mensaje: texto, historial })
+  });
+  const salida = await r.json().catch(() => ({}));
+  if(!r.ok) throw new Error(salida.error || ('la función respondió ' + r.status));
+  return salida.respuesta || '(sin respuesta)';
+}
+
+async function send(){
   const inp = document.getElementById('dInput');
   const t = inp.value.trim(); if(!t) return;
   S.chat.push({de:'yo', txt:t}); inp.value = ''; drawChat();
 
-  setTimeout(()=>{
-    S.chat.push({de:'sys', txt: responder(t)});
-    drawChat(); save();
-  }, 420);
+  S.chat.push({de:'sys', txt:'…'}); drawChat();
+  try{
+    S.chat[S.chat.length-1].txt = await preguntarAlAsistente(t);
+  }catch(e){
+    S.chat[S.chat.length-1].txt = 'No pude hablar con el asistente: ' + e.message;
+  }
+  drawChat(); save();
+
+  // Si creó o cambió algo, la vista tiene que reflejarlo.
+  try { await cargar(); render(); } catch(e){}
 }
 function responder(t){
   const low = t.toLowerCase();
