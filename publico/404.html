@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Esa dirección no existe · Scalability Systems</title>
+<!-- Ruta ABSOLUTA a propósito: esta página se sirve desde cualquier profundidad
+     (/cualquier/cosa/), y con una ruta relativa el estilo no cargaría — que es
+     justo el síntoma que se veía cuando una dirección inexistente devolvía la
+     portada sin formato. -->
+<link rel="stylesheet" href="/estilo.css">
+<style>
+  .caja{max-width:620px;margin:0 auto;padding:14vh 24px 60px}
+  .caja h1{font-size:clamp(26px,5vw,40px);line-height:1.15;margin:0 0 14px}
+  .caja p{color:var(--mut);font-size:17px;line-height:1.6;margin:0 0 26px}
+  .acciones{display:flex;gap:12px;flex-wrap:wrap}
+  code{background:var(--card);border:1px solid var(--line);border-radius:6px;
+       padding:2px 7px;font-size:14px;color:var(--acc)}
+</style>
+</head>
+<body>
+  <main class="caja">
+    <h1>Esa dirección no existe.</h1>
+    <p>
+      Puede ser un error de tipeo, o que la página se haya movido.
+      Si venías buscando el acceso al portal, la dirección correcta es
+      <code>/portal/entrar</code>.
+    </p>
+    <div class="acciones">
+      <a class="btn" href="/">Ir al inicio</a>
+      <a class="btn" href="/portal/entrar">Entrar al portal</a>
+    </div>
+  </main>
+</body>
+</html>
