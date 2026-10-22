@@ -78,7 +78,7 @@ strong{font-weight:700}
 a{color:var(--acc-text);text-underline-offset:3px;text-decoration-thickness:1px}
 .acc{color:var(--acc-mid)}
 .mut{color:var(--mut)}
-.lead{font-size:19.5px;line-height:1.6;color:var(--mut);margin-top:22px;max-width:56ch}
+.copete{font-size:19px;line-height:1.55;color:#413B34;margin-top:20px;max-width:56ch}
 .micro{color:var(--mut);font-size:14px;margin-top:16px;max-width:52ch}
 
 /* ── Botones ──────────────────────────────────────────────────────────── */
