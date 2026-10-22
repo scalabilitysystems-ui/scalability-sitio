@@ -390,10 +390,14 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background
   .hero{padding:40px 0 34px}
   section{padding:42px 0}
   .oscuro{margin:44px -22px;padding:36px 22px}
-  .frente{height:auto;align-items:flex-end;min-height:420px}
-  .frente-cuerpo{padding:24px 22px 26px;max-width:none}
-  .frente h3{font-size:23px;max-width:20ch}
-  .frente dd{font-size:15px}
+  /* En el teléfono la imagen va arriba, entera (4:3) y el texto abajo sobre el
+     fondo oscuro del slide: no se recorta nada y el texto no compite con la foto. */
+  .frente{display:block;height:auto;min-height:0}
+  .frente-img{position:static;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+  .frente::before{display:none}
+  .frente-cuerpo{padding:20px 20px 26px;max-width:none}
+  .frente h3{font-size:23px;max-width:22ch;margin-bottom:12px}
+  .frente dd{font-size:15px;max-width:52ch}
   /* En el teléfono el flujo va en vertical con una regla al costado: un chevron
      suelto al principio de un renglón parece un bullet. */
   .flujo{flex-direction:column;align-items:flex-start;gap:3px;border-left:1px solid var(--line);padding-left:14px}
