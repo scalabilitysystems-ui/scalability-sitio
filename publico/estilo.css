@@ -130,20 +130,54 @@ section[id],article[id],footer[id]{scroll-margin-top:86px}
 .senales li:last-child{border-bottom:0}
 .senales b{font-weight:700}
 
-/* Frentes de trabajo: dos columnas sin caja, separadas por hairline */
-.frentes{margin-top:12px;border-top:1px solid var(--line)}
+/* Frentes de trabajo: carrusel con imagen de fondo.
+   Un slide por vista, texto sobre el 45% izquierdo, velo oscuro para el contraste. */
+.carrusel{position:relative}
+.carrusel-pista{
+  display:flex;gap:18px;overflow-x:auto;overflow-y:hidden;
+  scroll-snap-type:x mandatory;scrollbar-width:none;padding:4px 0 20px;
+  -webkit-overflow-scrolling:touch;
+}
+.carrusel-pista::-webkit-scrollbar{display:none}
+.carrusel-pista:focus-visible{outline:2px solid var(--acc-mid);outline-offset:6px}
+.carrusel-pista.arrastrando{cursor:grabbing;scroll-snap-type:none}
+.carrusel-pista.arrastrando *{user-select:none}
+
 .frente{
-  display:grid;grid-template-columns:minmax(190px,236px) 1fr;gap:12px 34px;
-  padding:26px 0;border-bottom:1px solid var(--line);
+  position:relative;flex:0 0 100%;width:100%;min-width:0;
+  height:460px;scroll-snap-align:start;overflow:hidden;border-radius:10px;
+  display:flex;align-items:center;isolation:isolate;background:#141210;
 }
-.frente h3{margin:0;font-size:19px;line-height:1.28;letter-spacing:-.2px}
-.frente dl{margin:0;display:grid;gap:0}
-.frente dt{
-  font-size:11.5px;text-transform:uppercase;letter-spacing:1.2px;font-weight:700;
-  color:var(--mut);margin-top:12px;
+.frente-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.frente::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(100deg, rgba(16,15,13,.94) 0%, rgba(16,15,13,.86) 48%, rgba(16,15,13,.52) 80%, rgba(16,15,13,.34) 100%);
 }
+.frente-cuerpo{position:relative;padding:36px 40px;max-width:56ch;color:var(--tinta-fg)}
+.frente h3{font-family:var(--serif);font-size:clamp(23px,3vw,31px);font-weight:400;line-height:1.12;letter-spacing:-.01em;margin:0 0 14px;color:#fff;max-width:20ch}
+.frente dl{margin:0}
+.frente dt{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;font-weight:700;color:#C7BFB4;margin-top:12px}
 .frente dt:first-child{margin-top:0}
-.frente dd{margin:3px 0 0;font-size:15.5px;line-height:1.55;color:var(--fg)}
+.frente dd{margin:3px 0 0;font-size:15.5px;line-height:1.5;color:#EFE9E0;max-width:50ch}
+
+.carrusel-mando{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:4px}
+.carrusel-botones{display:flex;gap:8px}
+.carrusel-btn{
+  width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;
+  border:1px solid #CFC6B8;border-radius:6px;background:transparent;color:var(--fg);
+  cursor:pointer;transition:border-color .15s ease,background .15s ease;
+}
+.carrusel-btn svg{width:16px;height:16px}
+.carrusel-btn:hover:not(:disabled){border-color:var(--fg);background:#FFFBF4}
+.carrusel-btn:disabled{opacity:.34;cursor:default}
+.carrusel-puntos{list-style:none;margin:0;display:flex;gap:6px;align-items:center}
+.carrusel-puntos li{margin:0}
+.carrusel-puntos button{width:26px;height:24px;padding:0;border:0;background:transparent;cursor:pointer;position:relative}
+.carrusel-puntos button::after{
+  content:"";position:absolute;left:0;right:0;top:11px;height:2px;background:#CFC6B8;transition:background .15s ease;
+}
+.carrusel-puntos button:hover::after{background:var(--mut)}
+.carrusel-puntos button[aria-current="true"]::after{background:var(--acc-mid)}
 
 /* Método: numerales de la display, sin círculos */
 .pasos{list-style:none;margin:24px 0 0;counter-reset:paso}
@@ -356,8 +390,10 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background
   .hero{padding:40px 0 34px}
   section{padding:42px 0}
   .oscuro{margin:44px -22px;padding:36px 22px}
-  .frente{grid-template-columns:1fr;gap:10px;padding:22px 0}
-  .frente h3{font-size:18px}
+  .frente{height:auto;align-items:flex-end;min-height:420px}
+  .frente-cuerpo{padding:24px 22px 26px;max-width:none}
+  .frente h3{font-size:23px;max-width:20ch}
+  .frente dd{font-size:15px}
   /* En el teléfono el flujo va en vertical con una regla al costado: un chevron
      suelto al principio de un renglón parece un bullet. */
   .flujo{flex-direction:column;align-items:flex-start;gap:3px;border-left:1px solid var(--line);padding-left:14px}
