@@ -66,6 +66,10 @@ sobre un método de cinco pasos: entender, diagnosticar, definir y priorizar, di
 implementar, medir y optimizar.
 
 Las reglas de redacción que no se rompen:
+- **El método tiene nombre propio: “Método Día 1”.** Es la medición del punto de partida
+  (con fecha) contra la que se compara todo lo posterior. Se nombra igual en la portada, en
+  el caso y en las preguntas. Es el equivalente a lo que Bain llama *Results Delivery*: lo
+  que una consultora tiene y una agencia no.
 - La analítica es una capacidad, **no** el posicionamiento. Si el sitio empieza a parecer
   una consultora de BI, está mal.
 - La herramienta sale del problema: nunca “necesitás tal software” antes de mostrarlo.
