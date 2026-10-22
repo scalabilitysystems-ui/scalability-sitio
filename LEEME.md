@@ -45,25 +45,47 @@ tocar CSS** salvo que aparezca un elemento nuevo.
 Cada nota tiene que llevar `canonical` y las etiquetas `og:` completas: el
 tráfico llega compartido desde redes y sin eso el link se ve roto al pegarlo.
 
-> **Los links legales salieron del nav superior** (17/08 estaban ahí). En el
-> nav quedaron sólo "Cómo trabajo" y "Blog"; Privacidad, Condiciones y
-> Eliminar datos siguen en el pie de **todas** las páginas, que es lo que pide
-> Meta. Con cinco ítems el nav se rompía en pantallas chicas.
+> **Los links legales salieron del nav superior** (17/08 estaban ahí) y siguen
+> sólo en el pie de **todas** las páginas, que es lo que pide Meta. En la portada
+> el nav lleva tres ítems ("Cómo trabajo", "La propuesta", "Autotest"); en el
+> teléfono se oculta el primero por CSS, porque tres ítems más la marca no entran
+> en una línea. Con cinco ítems se rompía en pantallas chicas.
 
-## Antes de tocar el texto: leer POSICIONAMIENTO.md
+## Antes de tocar el texto: leer el documento de la propuesta
 
-**`POSICIONAMIENTO.md` es la fuente de verdad del discurso del sitio.** Dice
-qué vendemos, cuál es el mecanismo, contra qué nos comparan y qué no se dice
-nunca. Si un cambio de texto contradice algo de ahí, primero se discute el
-posicionamiento y después se toca el HTML.
+**La fuente de verdad del discurso es el procedimiento comercial**, no este repo:
+`~/Scalability/comercial/procedimiento-estrategia-comercial.md` (siete fases, con el
+criterio de "está hecha" de cada una) y `~/Scalability/comercial/propuesta-piloto-rauda.md`
+como ejemplo de propuesta escrita. Si un cambio de texto contradice ese documento,
+primero se discute la propuesta y después se toca el HTML.
 
-Al final de ese documento está el análisis de qué le falta a la página hoy —
-prueba, componentes, un CTA único y una vía de contacto que no sea sólo un
-mail.
+**Lo que el sitio vende hoy** (agosto 2026 en adelante): consultoría de operación
+comercial en tres etapas — **medir** (diagnóstico pago, línea base del Día 1), **construir**
+(las cinco piezas: oferta, canal, entrega, recurrencia, cobro, y la tecnología solo si el
+problema la pide) y **medir de nuevo** (Día 1 contra Día 30/90/120, mensual). No se vende
+un bot: la herramienta es la última decisión, nunca la primera. El autotest de 10 preguntas
+(`diagnostico.html`) es la puerta de entrada gratis; el diagnóstico es el producto pago.
 
 > Los marcadores entre corchetes (`[EMAIL]`, `[CUIT]`, `[PLAZO]` y demás) ya
 > están todos completados. Si alguna vez agregás una página nueva, verificá
 > con `grep -o "\[[A-ZÁÉÍÓÚÑ ]\{3,\}\]" *.html` que no quede ninguno.
+
+## Branding y assets
+
+Paleta vigente: naranja `#FC8301`, negro `#131211`, papel `#FBF9F6`. El isotipo es la S
+caligráfica negra sobre cuadrado naranja. Todos los colores viven en las variables de
+`:root` al principio de `publico/estilo.css` — no hay colores sueltos en el HTML.
+
+| Archivo | Para qué |
+|---|---|
+| `publico/icono.png` | favicon y logo de la cabecera (512 px) |
+| `publico/icono-180.png` | icono de pantalla de inicio en iPhone |
+| `publico/og.png` | imagen que se ve al compartir el link (1200×630) |
+
+Los tres se regeneran con `herramientas/assets.py` (necesita PIL; en el VPS corre con
+`~/.hermes/hermes-agent/venv/bin/python3`), que parte de
+`~/Scalability/comercial/casa-macio/assets/logo-s-negro.png`. Si cambia el logo, se cambia
+ese archivo y se vuelve a correr el script: no se editan los PNG a mano.
 
 ## Actualizar el sitio publicado
 
@@ -118,7 +140,11 @@ armó a mano la primera vez).
 
 ## Nota
 
-La portada ya no es mínima: tiene el antecedente anónimo, los cinco
-componentes del sistema y un CTA único por WhatsApp, según lo que pedía
-POSICIONAMIENTO.md. Si vuelve a quedar desactualizada respecto de ese
-documento, se corrige ahí primero.
+La portada está armada sobre la propuesta de tres etapas (medir, construir, medir de
+nuevo) y en ese orden aparecen las secciones: síntoma, propuesta, cómo trabajo, el caso
+anónimo de la empresa de software, lo que no hago, preguntas y contacto. Si la propuesta
+comercial cambia, cambia primero el documento del procedimiento y después esta portada —
+no al revés.
+
+El único CTA que importa es el de WhatsApp. El autotest es el segundo camino, para el que
+todavía no quiere escribir.
