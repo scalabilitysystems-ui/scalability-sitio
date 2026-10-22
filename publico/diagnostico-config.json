@@ -414,15 +414,15 @@
       ]
     }
   ],
-  "cierreDimension": "Y recién después: agentes donde tengan sentido.",
+  "cierreDimension": "Y recién después, la herramienta que haga falta.",
   "ctaFinal": {
-    "titulo": "El autotest te dice dónde. El diagnóstico te dice cuánto.",
-    "texto": "Esto marca el eje: cuánto de tu proceso depende de personas. El diagnóstico lo mide con tus números —qué cuesta, cuánto se pierde por mes, qué se arregla primero— y termina con la línea base del Día 1 por escrito.",
-    "boton": "Quiero el diagnóstico",
-    "debajo": "Scalability mide, construye y vuelve a medir la operación comercial de negocios que ya venden."
+    "titulo": "Ya sabés dónde se cae la oportunidad. Falta saber cuánto cuesta.",
+    "texto": "El autotest marca el eje. Lo que sigue es mirar los números del negocio: cuántas consultas entran, cuántas se convierten, cuánto tarda la primera respuesta y qué pasa con las que quedan en el camino.",
+    "boton": "Quiero analizar mi negocio",
+    "debajo": "Scalability diseña la estrategia comercial y construye lo que la sostiene: sitio, automatización, integraciones y medición."
   },
   "whatsapp": {
     "numero": "5493417124688",
-    "mensaje": "Hola, hice el autotest ({nivel} · principal problema: {dimension}) y quiero el diagnóstico."
+    "mensaje": "Hola, hice el autotest ({nivel} · principal problema: {dimension}) y quiero analizar mi negocio."
   }
 }

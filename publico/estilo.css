@@ -1,15 +1,22 @@
 /* Scalability — hoja única, sin dependencias
-   Paleta del branding vigente: naranja #FC8301, negro, papel cálido. */
+   Branding: naranja #FC8301, negro #131211, papel #FBF9F6.
+
+   Contraste (WCAG AA): el naranja de marca sobre papel da 2.38:1, así que no
+   sirve para texto chico. Para eso están --acc-text (4.64:1) y --acc-mid
+   (3.26:1, solo títulos grandes). Los botones van con texto negro sobre el
+   naranja de marca: 7.47:1. */
 
 :root{
   --bg:#FBF9F6;          /* papel */
   --fg:#131211;          /* tinta */
-  --mut:#5E5850;         /* gris cálido para texto secundario */
-  --acc:#FC8301;         /* naranja de marca */
-  --acc-soft:#FFF0DC;    /* naranja muy bajo, para fondos */
+  --mut:#5E5850;         /* 6.69:1 sobre papel */
+  --acc:#FC8301;         /* naranja de marca: rellenos, bordes, logo */
+  --acc-mid:#D96D00;     /* 3.26:1 — solo texto grande */
+  --acc-text:#B45700;    /* 4.64:1 — enlaces y rótulos chicos */
+  --acc-soft:#FFF1DE;
   --line:#E3DCD2;
   --card:#FFFFFF;
-  --tinta:#131211;       /* bloque oscuro */
+  --tinta:#131211;
   --tinta-fg:#F6F1E9;
   --tinta-mut:#A8A099;
   --tinta-line:#302C28;
@@ -25,9 +32,15 @@ body{
   font:17px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   -webkit-font-smoothing:antialiased;
 }
-::selection{background:var(--acc);color:#fff}
-a:focus-visible,.btn:focus-visible,button:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:4px}
+::selection{background:var(--acc);color:var(--fg)}
+a:focus-visible,.btn:focus-visible,button:focus-visible{
+  outline:3px solid var(--acc-text);outline-offset:3px;border-radius:6px;
+}
 .wrap{max-width:760px;margin:0 auto;padding:0 24px}
+
+/* Salto al contenido: invisible hasta que alguien tabula. */
+.saltar{position:absolute;left:-9999px;top:0;z-index:50;background:var(--fg);color:#fff;padding:10px 16px;border-radius:0 0 8px 0}
+.saltar:focus{left:0}
 
 /* ── Cabecera ─────────────────────────────────────────────────────────── */
 header{
@@ -37,84 +50,92 @@ header{
 header .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .marca{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--fg);font-weight:800;letter-spacing:-.4px;font-size:18px}
 .marca img{width:32px;height:32px;border-radius:8px;display:block}
-nav a{color:var(--mut);text-decoration:none;font-size:14.5px;margin-left:22px}
+nav a{color:var(--mut);text-decoration:none;font-size:14.5px;margin-left:20px}
 nav a:hover{color:var(--fg)}
 
 /* ── Tipografía ───────────────────────────────────────────────────────── */
-h1{font-size:clamp(32px,5.6vw,54px);line-height:1.06;letter-spacing:-1.6px;font-weight:800}
+h1{font-size:clamp(30px,4.6vw,45px);line-height:1.1;letter-spacing:-1.3px;font-weight:800}
 h2{font-size:23px;line-height:1.25;letter-spacing:-.5px;font-weight:800;margin:0 0 14px}
 h3{font-size:19px;line-height:1.3;margin:26px 0 8px;letter-spacing:-.3px;font-weight:700}
-h4{font-size:17px;font-weight:700;margin:20px 0 6px}
+h4{font-size:16.5px;font-weight:700;margin:20px 0 6px}
 p{margin:12px 0;color:var(--fg)}
 ul,ol{margin:12px 0 12px 20px}
 li{margin:7px 0}
 strong{font-weight:700}
-a{color:var(--acc)}
-.acc,.verde{color:var(--acc)}
-/* "cuello de botella" partido en dos renglones se lee mal: va como una unidad. */
+a{color:var(--acc-text)}
+.acc,.verde{color:var(--acc-mid)}
 .nw{white-space:nowrap}
 .mut{color:var(--mut)}
 .eyebrow{
   font-size:12px;text-transform:uppercase;letter-spacing:1.8px;font-weight:700;
-  color:var(--acc);margin:0 0 14px;
+  color:var(--acc-text);margin:0 0 14px;
 }
-.bajada{color:var(--mut);font-size:19.5px;margin-top:20px;max-width:58ch}
+.bajada{color:var(--mut);font-size:19px;margin-top:20px;max-width:58ch}
 .micro{color:var(--mut);font-size:14px;margin-top:16px}
 
 /* ── Botones ──────────────────────────────────────────────────────────── */
 .acciones{margin-top:30px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 .btn{
   display:inline-flex;align-items:center;gap:8px;
-  background:var(--acc);color:#fff;font-weight:700;font-size:15px;
+  background:var(--acc);color:var(--fg);font-weight:700;font-size:15px;
   padding:14px 26px;border-radius:8px;text-decoration:none;letter-spacing:-.1px;
   border:1px solid var(--acc);cursor:pointer;font-family:inherit;
-  transition:transform .15s ease,box-shadow .15s ease,background .15s ease,color .15s ease;
+  transition:transform .15s ease,box-shadow .15s ease,background .15s ease;
 }
-.btn:hover{transform:translateY(-1px);box-shadow:0 10px 24px -12px rgba(252,131,1,.85)}
+.btn:hover{transform:translateY(-1px);box-shadow:0 10px 22px -12px rgba(217,109,0,.9);background:#F08A0C}
 .btn:active{transform:translateY(0)}
-.btn-ghost{background:transparent;color:var(--fg);border:1px solid var(--line)}
-.btn-ghost:hover{border-color:var(--fg);color:var(--fg);box-shadow:none;transform:none}
+.btn-ghost{background:transparent;color:var(--fg);border:1px solid #CFC7BB}
+.btn-ghost:hover{border-color:var(--fg);color:var(--fg);box-shadow:none;transform:none;background:transparent}
 
 /* ── Secciones ────────────────────────────────────────────────────────── */
 section{padding:46px 0;border-top:1px solid var(--line)}
-/* La cabecera es fija: sin esto, al saltar a #oferta el título queda debajo. */
-section[id],footer[id]{scroll-margin-top:80px}
-.hero{padding:74px 0 54px;border-top:0}
-.hero h1{max-width:24ch}
-.hero .bajada{max-width:52ch}
+/* La cabecera es fija: sin esto, al saltar a una sección el título queda debajo. */
+section[id],article[id],footer[id]{scroll-margin-top:80px}
+.hero{padding:64px 0 50px;border-top:0}
+.hero h1{max-width:22ch}
+.hero .bajada{max-width:56ch}
 
-/* Lista de escenas: el dolor contado desde el que se fue */
-.escenas{list-style:none;margin:22px 0 0;display:grid;gap:10px}
-.escenas li{
-  background:var(--card);border:1px solid var(--line);border-radius:10px;
-  padding:16px 18px;font-size:16.5px;color:var(--fg);margin:0;
+/* Diagrama del sistema: estrategia → medición, con la capa de tecnología.
+   Es HTML y no una imagen: se lee, se adapta al ancho y no pesa nada. */
+.sistema{margin-top:32px;border-top:1px solid var(--line);padding-top:20px}
+.flujo{list-style:none;margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.flujo li{
+  margin:0;font-size:13.5px;font-weight:700;letter-spacing:-.1px;
+  border:1px solid #CFC7BB;border-radius:999px;padding:7px 14px;
+  color:var(--fg);background:var(--card);
 }
-.escenas li b{display:block;font-weight:700;letter-spacing:-.2px}
+.flujo li::after{content:"→";margin-left:10px;margin-right:-4px;color:var(--acc-mid);font-weight:700}
+.flujo li:last-child::after{content:"";margin:0}
+.flujo li:last-child{border-color:var(--acc);background:var(--acc-soft)}
+.tecnologia{margin-top:16px;font-size:13.5px;color:var(--mut)}
+.tecnologia b{color:var(--fg);font-weight:700;border-bottom:2px solid var(--acc);padding-bottom:1px;margin-right:4px}
 
-/* Etapas de la oferta */
-.etapas{display:grid;gap:18px;margin-top:26px}
-.etapa{
-  background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 22px 20px;
-  display:grid;grid-template-columns:auto 1fr;gap:16px;
-}
-.etapa .num{
-  font-size:13px;font-weight:800;letter-spacing:.5px;color:#fff;background:var(--acc);
-  width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-}
-.etapa h3{margin:2px 0 2px;font-size:20px}
-.etapa .plazo{color:var(--mut);font-size:13.5px;font-weight:600;letter-spacing:.2px;margin:0 0 8px}
-.etapa p{font-size:16px;margin:9px 0}
-.etapa .queda{
-  border-top:1px solid var(--line);margin-top:14px;padding-top:12px;
-  font-size:15px;color:var(--mut);
-}
-.etapa .queda b{color:var(--fg)}
+/* Problemas: reconocerse en una situación concreta */
+.problemas{display:grid;gap:12px;margin:24px 0 0;grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+.problema{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:18px 20px}
+.problema h3{margin:0 0 6px;font-size:16.5px;letter-spacing:-.2px}
+.problema p{margin:0;font-size:15px;color:var(--mut)}
 
-/* Tarjetas y grilla */
-.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
-.card{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:20px}
-.card h3{margin:0 0 7px;font-size:16.5px}
-.card p{margin:0;font-size:15px;color:var(--mut)}
+/* Soluciones: un bloque por necesidad, siempre con el mismo esqueleto */
+.soluciones{display:grid;gap:18px;margin-top:26px}
+.solucion{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px}
+.solucion h3{margin:0 0 6px;font-size:20px;letter-spacing:-.4px}
+.solucion .para{margin:0 0 10px;color:var(--acc-text);font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.solucion dl{margin:0}
+.solucion dt{font-size:12px;text-transform:uppercase;letter-spacing:1.1px;color:var(--mut);font-weight:700;margin-top:14px}
+.solucion dd{margin:4px 0 0;font-size:15.5px}
+.solucion dd.paso{color:var(--mut)}
+.solucion dd.paso b{color:var(--fg)}
+
+/* Método: pasos numerados, una sola columna */
+.pasos{list-style:none;margin:24px 0 0;display:grid;gap:14px}
+.pasos li{display:grid;grid-template-columns:auto 1fr;gap:14px;margin:0;align-items:start}
+.pasos .n{
+  width:28px;height:28px;border-radius:50%;background:var(--acc);color:var(--fg);
+  font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:2px;
+}
+.pasos h3{margin:0 0 3px;font-size:17px}
+.pasos p{margin:0;font-size:15.5px;color:var(--mut)}
 
 /* Bloque oscuro: el caso */
 .oscuro{
@@ -124,12 +145,17 @@ section[id],footer[id]{scroll-margin-top:80px}
 .oscuro h2,.oscuro h3,.oscuro h4,.oscuro strong{color:var(--tinta-fg)}
 .oscuro p,.oscuro li{color:#DED7CD}
 .oscuro .eyebrow{color:var(--acc)}
+.oscuro a{color:var(--acc)}
 .oscuro .mut,.oscuro .micro{color:var(--tinta-mut)}
 .oscuro .aviso{background:#1D1A17;border-left:3px solid var(--acc)}
-.oscuro th{color:var(--tinta-mut)}
+.oscuro .aviso p{color:#DED7CD}
+.oscuro th{color:var(--tinta-mut);border-color:var(--tinta-line)}
 .oscuro td{border-color:var(--tinta-line);color:#DED7CD}
-.oscuro th{border-color:var(--tinta-line)}
 .oscuro ul{margin-left:20px}
+.dato{border-left:2px solid var(--acc);padding:2px 0 2px 14px;margin:14px 0;font-size:15.5px}
+.dato b{display:block;color:var(--ink,var(--fg));font-size:11.5px;letter-spacing:1.1px;text-transform:uppercase;margin-bottom:3px}
+.oscuro .dato,.oscuro .dato b{color:var(--tinta-fg)}
+.oscuro .dato b{color:var(--tinta-mut)}
 
 /* Tablas */
 table{width:100%;border-collapse:collapse;margin:18px 0;font-size:15px}
@@ -142,15 +168,23 @@ th{color:var(--mut);font-weight:700;font-size:12px;text-transform:uppercase;lett
 blockquote{border-left:3px solid var(--acc);background:var(--card);border-radius:0 8px 8px 0;padding:16px 20px;margin:26px 0}
 blockquote p{margin:0;font-size:17.5px}
 
-/* Lo que no hago */
+/* "¿En qué situación está tu negocio?" — cada opción lleva a su solución */
+.situaciones{list-style:none;margin:22px 0 0;display:grid;gap:10px}
+.situaciones li{margin:0}
+.situacion{
+  width:100%;text-align:left;background:var(--card);border:1px solid var(--line);
+  border-radius:10px;padding:15px 18px;cursor:pointer;font:16px/1.45 inherit;color:var(--fg);
+  text-decoration:none;
+  display:flex;justify-content:space-between;gap:12px;align-items:center;
+  transition:border-color .15s ease,background .15s ease;
+}
+.situacion:hover{border-color:var(--acc);background:#FFFAF3}
+.situacion::after{content:"→";color:var(--acc-text);font-weight:700;flex:none}
+
+/* Lo que no hacemos */
 .limites{list-style:none;margin:20px 0 0;display:grid;gap:12px}
-.limites li{
-  padding-left:30px;position:relative;margin:0;font-size:16.5px;color:var(--fg);
-}
-.limites li::before{
-  content:"×";position:absolute;left:0;top:-2px;color:var(--acc);
-  font-size:20px;font-weight:800;line-height:1.4;
-}
+.limites li{padding-left:30px;position:relative;margin:0;font-size:16.5px}
+.limites li::before{content:"×";position:absolute;left:0;top:-2px;color:var(--acc-text);font-size:20px;font-weight:800;line-height:1.4}
 
 /* Preguntas frecuentes */
 .faq h3{font-size:17.5px;margin:24px 0 4px}
@@ -163,12 +197,12 @@ footer a:hover{color:var(--fg)}
 .legal{font-size:13.5px;color:var(--mut);border-top:1px solid var(--line);margin-top:30px;padding-top:20px}
 .fecha{color:var(--mut);font-size:14px;margin-top:8px}
 
-/* ── Diagnóstico: landing + wizard de una pregunta por pantalla ───────── */
+/* ── Autotest: landing + wizard de una pregunta por pantalla ──────────── */
 .diag-hero{max-width:580px;margin:0 auto;padding:64px 0 28px;text-align:center}
 .diag-hero h1{font-size:clamp(28px,4.8vw,42px);letter-spacing:-1.2px}
 .diag-hero .bajada{margin-top:18px;max-width:none}
 .diag-hero .acciones{justify-content:center}
-.diag-tiempo{color:var(--acc);font-size:13.5px;font-weight:700;margin-top:16px;letter-spacing:.4px;text-transform:uppercase}
+.diag-tiempo{color:var(--acc-text);font-size:13.5px;font-weight:700;margin-top:16px;letter-spacing:.4px;text-transform:uppercase}
 .diag-micro{color:var(--mut);font-size:14px;margin-top:20px}
 
 .quiz{max-width:580px;margin:0 auto;padding:44px 0 80px}
@@ -213,8 +247,8 @@ footer a:hover{color:var(--fg)}
 .nivel{display:inline-block;border:1px solid;border-radius:999px;padding:7px 14px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
 .nivel-1{border-color:#1F8A54;color:#1F8A54}
 .nivel-2{border-color:#1F8A54;color:#1F8A54}
-.nivel-3{border-color:#B8860B;color:#B8860B}
-.nivel-4{border-color:#C2601A;color:#C2601A}
+.nivel-3{border-color:#8A6400;color:#8A6400}
+.nivel-4{border-color:#B45700;color:#B45700}
 .nivel-5{border-color:#B23A2F;color:#B23A2F}
 .nivel-mensaje{color:var(--fg);font-weight:700}
 
@@ -247,7 +281,7 @@ pre code{font-size:13.5px;line-height:1.62;color:#EDE6DC;background:none;padding
 code{
   font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   background:var(--card);border:1px solid var(--line);border-radius:5px;
-  padding:1.5px 6px;font-size:14px;color:#B45700;
+  padding:1.5px 6px;font-size:14px;color:var(--acc-text);
 }
 
 .cta-post{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:28px;margin:44px 0 0}
@@ -267,25 +301,44 @@ code{
 .entrada{display:block;text-decoration:none;color:inherit;padding:22px 0;border-bottom:1px solid var(--line)}
 .entrada:first-of-type{border-top:1px solid var(--line)}
 .entrada h3{margin:0 0 7px;font-size:19px;transition:color .15s ease}
-.entrada:hover h3{color:var(--acc)}
+.entrada:hover h3{color:var(--acc-text)}
 .entrada p{margin:0;font-size:15px;color:var(--mut)}
 .entrada .meta{margin:9px 0 0;padding:0;border:0;font-size:13px}
-.proximo{opacity:.55}
+.proximo{opacity:.62}
 .proximo:hover h3{color:var(--fg)}
+
+/* La tabla del caso se lee mal en dos columnas de 170 px: en el teléfono cada
+   fila pasa a ser una tarjeta con los rótulos Antes / Ahora arriba de cada dato. */
+@media (max-width:600px){
+  .oscuro table,.oscuro tbody,.oscuro tr,.oscuro td{display:block;width:100%}
+  .oscuro tr.enc{display:none}
+  .oscuro tr{border:1px solid var(--tinta-line);border-radius:10px;padding:10px 0;margin:0 0 10px}
+  .oscuro td{border:0;padding:4px 14px}
+  .oscuro td::before{display:block;font-size:10.5px;letter-spacing:1.1px;font-weight:700;margin-bottom:2px;color:var(--tinta-mut)}
+  .oscuro td:first-child::before{content:"ANTES"}
+  .oscuro td:last-child::before{content:"AHORA";color:var(--acc)}
+}
 
 @media (max-width:600px){
   body{font-size:16.5px}
   header{padding:12px 0}
   nav a{margin-left:14px;font-size:13.5px}
-  /* Con tres ítems el nav se parte en dos renglones: en el teléfono alcanza
-     con la propuesta y el autotest, que es a donde va el tráfico. */
-  nav a:first-child{display:none}
-  .hero{padding:44px 0 36px}
+  /* Con cuatro ítems el nav se parte en dos renglones: en el teléfono quedan
+     los dos que importan (soluciones y el autotest). */
+  nav a.sec{display:none}
+  .hero{padding:40px 0 32px}
   section{padding:38px 0}
-  .oscuro{margin:38px -24px;padding:34px 24px;border-radius:0}
-  .etapa{grid-template-columns:1fr;gap:10px}
-  .etapa .num{margin-bottom:2px}
+  .oscuro{margin:38px -24px;padding:32px 24px;border-radius:0}
+  .flujo{gap:6px}
+  .flujo li{font-size:12.5px;padding:6px 11px}
+  .flujo li::after{margin-left:8px}
+  .pasos li{gap:11px}
+  .problemas{grid-template-columns:1fr}
   .articulo{padding:36px 0 16px}
   .articulo h2{margin:40px 0 12px}
-  .escenas li{font-size:16px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none !important;animation:none !important}
 }
