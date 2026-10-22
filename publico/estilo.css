@@ -393,7 +393,9 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background
   /* En el teléfono la imagen va arriba, entera (4:3) y el texto abajo sobre el
      fondo oscuro del slide: no se recorta nada y el texto no compite con la foto. */
   .frente{display:block;height:auto;min-height:0}
-  .frente-img{position:static;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+  /* position + z-index explícitos: con el z-index:-2 del escritorio la foto quedaba
+     pintada detrás del fondo del slide y no se veía. */
+  .frente-img{position:relative;z-index:0;display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
   .frente::before{display:none}
   .frente-cuerpo{padding:20px 20px 26px;max-width:none}
   .frente h3{font-size:23px;max-width:22ch;margin-bottom:12px}

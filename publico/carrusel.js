@@ -11,9 +11,30 @@
   const next = document.getElementById("next");
   const reducir = window.matchMedia("(prefers-reduced-motion: reduce)");
 
+  // La posición se calcula con rectángulos, no con offsetLeft: el slide es
+  // position:relative, así que su offsetParent no es la pista y el cálculo
+  // quedaba corto (el carrusel frenaba entre dos slides).
+  const posicionDe = (s) =>
+    s.getBoundingClientRect().left - pista.getBoundingClientRect().left + pista.scrollLeft;
+
+  // Las imágenes del carrusel van con loading="lazy": sin esto, al pasar de
+  // slide la foto todavía no está descargada y se ve el fondo negro.
+  const precargar = (i) => {
+    [i, i + 1].forEach((n) => {
+      const img = slides[n] && slides[n].querySelector(".frente-img");
+      if (img && !img.dataset.pedida) {
+        img.dataset.pedida = "1";
+        const previa = new Image();
+        previa.src = img.currentSrc || img.src;
+      }
+    });
+  };
+
   const irA = (i, suave = true) => {
-    const s = slides[Math.max(0, Math.min(slides.length - 1, i))];
-    pista.scrollTo({ left: s.offsetLeft - pista.offsetLeft, behavior: suave && !reducir.matches ? "smooth" : "auto" });
+    const n = Math.max(0, Math.min(slides.length - 1, i));
+    const s = slides[n];
+    precargar(n);
+    pista.scrollTo({ left: posicionDe(s), behavior: suave && !reducir.matches ? "smooth" : "auto" });
   };
 
   // El slide activo es el más cercano al borde izquierdo visible.
@@ -22,7 +43,7 @@
     let mejor = 0;
     let dist = Infinity;
     slides.forEach((s, i) => {
-      const d = Math.abs(s.offsetLeft - pista.offsetLeft - x);
+      const d = Math.abs(posicionDe(s) - x);
       if (d < dist) { dist = d; mejor = i; }
     });
     return mejor;
@@ -85,4 +106,5 @@
 
   window.addEventListener("resize", () => { pintar(); });
   pintar();
+  precargar(0);
 })();
