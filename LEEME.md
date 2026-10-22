@@ -59,12 +59,34 @@ criterio de "está hecha" de cada una) y `~/Scalability/comercial/propuesta-pilo
 como ejemplo de propuesta escrita. Si un cambio de texto contradice ese documento,
 primero se discute la propuesta y después se toca el HTML.
 
-**Lo que el sitio vende hoy** (agosto 2026 en adelante): consultoría de operación
-comercial en tres etapas — **medir** (diagnóstico pago, línea base del Día 1), **construir**
-(las cinco piezas: oferta, canal, entrega, recurrencia, cobro, y la tecnología solo si el
-problema la pide) y **medir de nuevo** (Día 1 contra Día 30/90/120, mensual). No se vende
-un bot: la herramienta es la última decisión, nunca la primera. El autotest de 10 preguntas
-(`diagnostico.html`) es la puerta de entrada gratis; el diagnóstico es el producto pago.
+**Lo que el sitio vende hoy** (octubre 2026): **marketing estratégico y tecnología**.
+Cinco frentes — estrategia y crecimiento comercial, sitios y sistemas de conversión,
+automatización de procesos comerciales, soluciones tecnológicas a medida y analítica —
+sobre un método de cinco pasos: entender, diagnosticar, definir y priorizar, diseñar e
+implementar, medir y optimizar.
+
+Las reglas de redacción que no se rompen:
+- La analítica es una capacidad, **no** el posicionamiento. Si el sitio empieza a parecer
+  una consultora de BI, está mal.
+- La herramienta sale del problema: nunca “necesitás tal software” antes de mostrarlo.
+- No se publican precios, cifras de resultado, ni casos con nombre de cliente. Lo que no
+  se puede respaldar, no se escribe.
+- El autotest de 10 preguntas (`diagnostico.html`) es el lead magnet: la única vía de
+  captación con formulario, y el resultado se ve en pantalla.
+
+## SEO y accesibilidad (lo que ya está puesto)
+
+- `publico/robots.txt` y `publico/sitemap.xml` (con `lastmod` por página: **actualizarlo
+  cuando cambia una URL**).
+- JSON-LD `ProfessionalService` en la portada. Si cambia el teléfono o el mail, se cambian
+  ahí también.
+- Un solo `h1` por página, `canonical` y `og:` completos en todas.
+- La paleta está separada en `--acc` (rellenos), `--acc-mid` (solo títulos grandes) y
+  `--acc-text` (enlaces y rótulos chicos). **No usar `--acc` para texto**: sobre papel da
+  2.38:1 y no pasa AA. Los botones van con texto negro sobre naranja (7.47:1).
+- La tabla del caso se convierte en tarjetas en el teléfono (dos columnas de 170 px no se
+  leen).
+- Salto al contenido (`.saltar`) en la portada y en el autotest.
 
 > Los marcadores entre corchetes (`[EMAIL]`, `[CUIT]`, `[PLAZO]` y demás) ya
 > están todos completados. Si alguna vez agregás una página nueva, verificá

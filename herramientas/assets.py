@@ -49,9 +49,10 @@ og.paste(logo, (96, 96), logo)
 bold = ImageFont.truetype('/home/ubuntu/.local/share/fonts/DejaVuSansCondensed-Bold.ttf', 96)
 semi = ImageFont.truetype('/home/ubuntu/.local/share/fonts/DejaVuSansCondensed.ttf', 38)
 small = ImageFont.truetype('/home/ubuntu/.local/share/fonts/DejaVuSansCondensed.ttf', 30)
-d.text((96, 372), 'Scalability', font=bold, fill=INK)
-d.text((96, 486), 'Operación comercial medida, construida y funcionando', font=semi, fill=(95, 90, 85))
-d.text((96, 546), 'scalabilitysystems.com.ar', font=small, fill=ORANGE)
+d.text((96, 360), 'Scalability', font=bold, fill=INK)
+d.text((96, 470), 'Marketing estratégico y tecnología', font=semi, fill=(60, 56, 52))
+d.text((96, 518), 'para hacer crecer tu negocio', font=semi, fill=(60, 56, 52))
+d.text((96, 570), 'scalabilitysystems.com.ar', font=small, fill=(180, 87, 0))
 og.save(OUT / 'og.png', optimize=True)
 
 for f in ('icono.png', 'icono-180.png', 'og.png'):
