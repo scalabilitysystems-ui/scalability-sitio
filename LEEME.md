@@ -98,6 +98,27 @@ Paleta vigente: naranja `#FC8301`, negro `#131211`, papel `#FBF9F6`. El isotipo 
 caligráfica negra sobre cuadrado naranja. Todos los colores viven en las variables de
 `:root` al principio de `publico/estilo.css` — no hay colores sueltos en el HTML.
 
+**Tipografía:** los títulos van en **Petrona** (serif variable de Impallari Type,
+Argentina, OFL), auto-hospedada en `publico/fuentes/`. El texto corrido usa la sans del
+sistema. No se carga ninguna fuente desde un tercero.
+
+### Reglas de diseño que no se rompen
+
+Estas salieron de la pasada de Impeccable y son las que evitan que el sitio vuelva a
+parecer armado por un modelo:
+
+- **Sin rótulos chiquitos arriba de los títulos** (los `eyebrow`/kicker en mayúsculas).
+  El título se banca solo.
+- **Sin tarjetas** para los problemas ni para los servicios: listas con hairlines y
+  bloques en dos columnas. Tarjetas solo para contenido realmente encapsulado, y nunca
+  una tarjeta dentro de otra.
+- **Sin bordes de color a la izquierda** en avisos, citas o notas: una regla de 1px
+  arriba o abajo alcanza.
+- **Sin glifos unicode como íconos**: los chevrons y el tilde son SVG enmascarados.
+- **Sin sombras de color** (el halo naranja del hover se sacó).
+- No animar `width`, `padding` ni `margin`: la barra del autotest usa `transform`. 
+- Contraste: `--acc` nunca es color de texto; para eso están `--acc-mid` y `--acc-text`.
+
 | Archivo | Para qué |
 |---|---|
 | `publico/icono.png` | favicon y logo de la cabecera (512 px) |

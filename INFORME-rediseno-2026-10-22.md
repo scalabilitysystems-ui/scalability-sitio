@@ -115,3 +115,46 @@ Con el sitio servido en local y Chromium real (desktop 1280×900 y móvil 390×8
 4. **Landing por servicio** (P2): cuando haya contenido suficiente para cada uno de los cinco frentes; hoy serían páginas vacías.
 5. **Prueba social** (P2): dos o tres casos anónimos más, con el mismo esqueleto del actual.
 6. **Checklist descargable** (P3): el autotest ya cumple la función de lead magnet; el checklist en PDF solo tiene sentido cuando exista entrega automática.
+
+---
+
+## Pasada de Impeccable (misma fecha): sacar el slop
+
+Segunda pasada, con la skill `impeccable`, enfocada en lo que delataba que la página
+estaba armada por un modelo. El detector mecánico (`impeccable detect`) termina en
+**0 hallazgos** sobre las diez páginas del sitio.
+
+### Diseño
+
+| Antes | Ahora |
+|---|---|
+| Rótulo chiquito en mayúsculas arriba de cada título | Eliminado: el título se banca solo |
+| Seis tarjetas de problema y cinco tarjetas de servicio | Lista con hairlines y bloques a dos columnas, sin caja |
+| Bordes de color de 3 px a la izquierda en avisos y citas | Regla de 1 px arriba o abajo |
+| Flechas y tildes como glifos de texto (→, ×, ✓) | SVG enmascarados, un solo trazo |
+| Halo naranja en el hover de los botones | Sombra neutra, o ninguna |
+| Barra del autotest animando `width` | `transform: scaleX()` |
+| Sans del sistema como voz de los títulos | **Petrona** (serif variable de Impallari Type, Argentina, OFL), auto-hospedada |
+| Superficies del navegador sin tema | Selección, scrollbar, foco, `caret-color` y `tabular-nums` desde la paleta |
+
+### Texto
+
+Se reescribió la portada completa: se fueron las antítesis repetidas ("no es X, es Y"),
+las cadenas de guiones largos, los tríos de sustantivos y las frases de cierre simétricas
+("cambiar una pieza mueve poco, conectar las piezas mueve el resultado"). El registro
+quedó más concreto: qué pasa, en qué punto, qué se hace.
+
+### Artículo del blog
+
+`blog/claude-code-autonomo.html` tenía ocho párrafos de una sola frase usados como remate
+("Vos revisás." / "Vos aprobás." / "Claude es una pieza." / "El sistema es el producto.").
+Se fusionaron en oraciones corridas, sin cambiar el contenido técnico.
+
+### Verificado
+
+- Detector: 0 hallazgos en las diez páginas.
+- Autotest completo: 10 preguntas, captura, resultado (POST bloqueado para no escribir en
+  Supabase). Barra de progreso por `transform`.
+- Sin desborde horizontal a 390 px en portada, autotest, blog, artículo, legales y 404.
+- Peso de portada: 78 KB en 3 pedidos (fuente 43 KB, CSS 20 KB, isotipo 15 KB).
+- HTML sin etiquetas abiertas, sin anclas rotas, sin recursos faltantes.

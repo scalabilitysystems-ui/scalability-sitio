@@ -1,0 +1,19 @@
+Petrona — https://github.com/impallari/Petrona
+
+Licencia: SIL Open Font License, versión 1.1 (OFL-1.1).
+Copyright 2022 The Petrona Project Authors. Diseñada por Impallari Type (Argentina).
+
+Se sirve auto-hospedada, recortada al subset "latin" que publica Google Fonts
+(incluye los acentos del español y los signos ¿ ¡). Dos archivos:
+
+- petrona-normal-400-latin.woff2   → variable, cubre 400 a 700
+- petrona-italic-400-latin.woff2   → itálica, 400
+
+No se modificaron: son los archivos originales de fonts.gstatic.com. Para
+reemplazar la familia, pedir
+fonts.googleapis.com/css2?family=Petrona:ital,wght@0,400;0,600;1,400
+y quedarse sólo con los bloques cuyo unicode-range empieza en U+0000-00FF.
+Google entrega el mismo archivo para 400 y 600 porque es una fuente variable:
+alcanza con declarar font-weight:400 700 en el @font-face.
+
+Texto completo de la licencia: https://openfontlicense.org/open-font-license-official-text/

@@ -44,7 +44,8 @@ function actualizarProgreso() {
   const total = config.preguntas.length;
   const actual = pasoActual + 1;
   textoProgreso.textContent = `Pregunta ${actual} de ${total}`;
-  barraProgreso.style.width = `${(actual / total) * 100}%`;
+  barraProgreso.style.width = "100%";
+  barraProgreso.style.transform = `scaleX(${actual / total})`;
   btnAtras.hidden = pasoActual === 0;
 }
 
