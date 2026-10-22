@@ -51,6 +51,8 @@ li{margin:7px 0}
 strong{font-weight:700}
 a{color:var(--acc)}
 .acc,.verde{color:var(--acc)}
+/* "cuello de botella" partido en dos renglones se lee mal: va como una unidad. */
+.nw{white-space:nowrap}
 .mut{color:var(--mut)}
 .eyebrow{
   font-size:12px;text-transform:uppercase;letter-spacing:1.8px;font-weight:700;
@@ -78,7 +80,7 @@ section{padding:46px 0;border-top:1px solid var(--line)}
 /* La cabecera es fija: sin esto, al saltar a #oferta el título queda debajo. */
 section[id],footer[id]{scroll-margin-top:80px}
 .hero{padding:74px 0 54px;border-top:0}
-.hero h1{max-width:20ch}
+.hero h1{max-width:24ch}
 .hero .bajada{max-width:52ch}
 
 /* Lista de escenas: el dolor contado desde el que se fue */
