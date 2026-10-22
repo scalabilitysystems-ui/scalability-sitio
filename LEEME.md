@@ -162,11 +162,11 @@ armó a mano la primera vez).
 
 ## Nota
 
-La portada está armada sobre la propuesta de tres etapas (medir, construir, medir de
-nuevo) y en ese orden aparecen las secciones: síntoma, propuesta, cómo trabajo, el caso
-anónimo de la empresa de software, lo que no hago, preguntas y contacto. Si la propuesta
-comercial cambia, cambia primero el documento del procedimiento y después esta portada —
-no al revés.
+La portada sigue este orden, y no es decorativo: **problema → soluciones → método → caso →
+diferenciación → situación del visitante → preguntas → contacto**. Primero el visitante se
+reconoce en una situación, después ve qué se hace con eso, después cómo se trabaja y recién
+ahí la prueba. Si la propuesta comercial cambia, se cambia el orden de las secciones y el
+hero primero — no el CSS.
 
 El único CTA que importa es el de WhatsApp. El autotest es el segundo camino, para el que
 todavía no quiere escribir.
