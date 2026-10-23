@@ -39,8 +39,14 @@ done
 
 echo "→ 4/4 Verificación en $DOMINIO"
 fallas=0
+# Con reintento: justo después de un deploy, Cloudflare puede estar cambiando de
+# deployment y devolver 502 por unos segundos. Un fallo aislado no es un defecto.
 comprobar() {
-  if eval "$2" >/dev/null 2>&1; then printf "    ✓ %s\n" "$1"; else printf "    ✘ %s\n" "$1"; fallas=$((fallas+1)); fi
+  for intento in 1 2; do
+    if eval "$2" >/dev/null 2>&1; then printf "    ✓ %s\n" "$1"; return 0; fi
+    [ "$intento" = "1" ] && sleep 6
+  done
+  printf "    ✘ %s\n" "$1"; fallas=$((fallas+1))
 }
 comprobar "portada con sello de versión" "curl -sf '$DOMINIO/?b=$(date +%s)' | grep -q 'estilo.css?v='"
 comprobar "titular nuevo"                "curl -sf '$DOMINIO/?b=$(date +%s)' | grep -q 'no necesita piezas sueltas'"
