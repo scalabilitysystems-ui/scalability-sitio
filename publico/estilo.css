@@ -385,6 +385,56 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background
 .proximo{opacity:.62}
 .proximo:hover h2{color:var(--fg)}
 
+
+/* ── Landing del lead magnet (playbook) ───────────────────────────────────
+   Misma hoja que el resto del sitio: tipografía, colores y espaciado salen de
+   los tokens. Lo propio es sólo la composición de esta página. */
+.pb-hero{padding:56px 0 34px}
+.pb-hero h1{max-width:20ch}
+.pb-etiqueta{font-size:12px;text-transform:uppercase;letter-spacing:1.8px;font-weight:700;color:var(--acc-text);margin:0 0 14px}
+
+.pb-cuerpo{display:grid;grid-template-columns:1fr 300px;gap:34px;align-items:start;padding:40px 0;border-top:1px solid var(--line-soft)}
+.pb-beneficios h2{font-size:24px;margin-bottom:10px}
+.pb-beneficios .limites{margin-top:14px}
+
+.pb-documento{border:1px solid var(--line);border-radius:10px;padding:16px;background:var(--card)}
+.pb-portada{
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  aspect-ratio:3/4;border-radius:6px;margin:0 0 14px;background:#17140F;color:#fff;
+  font-family:var(--serif);font-size:23px;line-height:1.12;letter-spacing:-.01em;padding:18px;
+}
+.pb-portada span{border-top:2px solid var(--acc);border-bottom:2px solid var(--acc);padding:14px 0;display:block}
+.pb-indice{list-style:none;margin:0;font-size:13.5px;color:var(--mut)}
+.pb-indice li{padding:7px 0;border-top:1px solid var(--line-soft);margin:0}
+.pb-indice li:first-child{border-top:0}
+
+.pb-formulario{padding:40px 0;border-top:1px solid var(--line-soft);max-width:540px}
+.pb-formulario h2{font-size:24px;margin-bottom:16px}
+.pb-formulario .campo{margin-top:16px}
+.pb-formulario .btn{margin-top:22px;width:100%;justify-content:center}
+.pb-opcional{color:var(--mut);font-weight:400;font-size:13px}
+
+.pb-consentimiento{margin-top:22px;padding-top:18px;border-top:1px solid var(--line-soft)}
+.pb-consentimiento label{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.5;cursor:pointer}
+.pb-consentimiento input{width:18px;height:18px;margin-top:3px;accent-color:var(--acc-mid);flex:none}
+.pb-consentimiento .micro{margin-top:10px}
+
+.pb-error{color:#A3241B;font-size:13.5px;margin:6px 0 0}
+.pb-aviso{margin:0 0 18px;padding:12px 14px;border-radius:6px;font-size:14.5px;background:#FBF1EE;color:#7E1D15;border:1px solid #EBCFC9}
+.pb-aviso[data-tipo="info"]{background:#F4F1EA;color:#3B3530;border-color:var(--line)}
+.pb-resultado{border-top:2px solid var(--fg);padding-top:22px;max-width:560px}
+.pb-resultado h2{font-size:26px;margin-bottom:10px}
+.pb-resultado .acciones{margin-top:18px}
+.pb-cierre{padding:44px 0 20px;border-top:1px solid var(--line-soft)}
+.pb-cierre h2{font-size:26px}
+.pb-cierre p{max-width:60ch}
+
+@media (max-width:760px){
+  .pb-cuerpo{grid-template-columns:1fr;gap:26px}
+  .pb-documento{max-width:320px}
+  .pb-hero{padding:36px 0 26px}
+}
+
 @media (max-width:640px){
   .wrap{padding:0 22px}
   header{padding:14px 0}
