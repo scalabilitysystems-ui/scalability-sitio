@@ -136,39 +136,28 @@ ese archivo y se vuelve a correr el script: no se editan los PNG a mano.
 
 ## Actualizar el sitio publicado
 
-No hace falta tocar GitHub ni ningún dashboard. Con el token de Cloudflare
-guardado en `C:\Users\Usuario\.cloudflare\scalabilitysystems.token`
-(permiso `Account → Cloudflare Pages → Edit`):
-
-**PowerShell** (es la consola que uso; la de abajo es para Git Bash):
-
-```powershell
-cd C:\Users\Usuario\Desktop\AGENCIA\sitio
-$env:CLOUDFLARE_API_TOKEN = (Get-Content "$HOME\.cloudflare\scalabilitysystems.token" -Raw).Trim()
-$env:CLOUDFLARE_ACCOUNT_ID = "a40806a8bb6fb2b0c40bf29850bf3345"
-npx wrangler pages deploy publico --project-name scalability-sitio --branch main
-```
-
-El `.Trim()` importa: si el archivo del token termina en salto de línea, ese
-carácter entra en la variable y Cloudflare rechaza la autenticación con un
-error que no menciona nada del espacio de más.
-
-**Git Bash / WSL:**
+**Camino normal: commit y push.** Pages construye solo.
 
 ```bash
-cd sitio
-export CLOUDFLARE_API_TOKEN=$(cat /c/Users/Usuario/.cloudflare/scalabilitysystems.token)
-export CLOUDFLARE_ACCOUNT_ID=a40806a8bb6fb2b0c40bf29850bf3345
-npx wrangler pages deploy publico --project-name scalability-sitio --branch main
+cd ~/scalability-sitio
+~/.hermes/hermes-agent/venv/bin/python3 herramientas/versionar.py   # sella CSS/JS/imágenes
+git add -A && git commit -m "qué cambió y por qué"
+git push origin main
 ```
 
-**Siempre `publico`, nunca `.`** — ver la advertencia arriba.
+Y después `herramientas/publicar.sh` hace las comprobaciones sobre el dominio real
+(HTML nuevo, hoja idéntica a la local, las cinco imágenes, sitemap y robots).
 
-Queda arriba en segundos, sin esperar propagación de DNS (el dominio y el
-certificado ya están conectados).
+**Camino manual (sólo si el build automático falla):** `wrangler pages deploy publico
+--project-name scalability-sitio --branch main`. Necesita un token con
+`Account → Cloudflare Pages → Edit` en `~/.cloudflare/<proyecto>.token`. El 22/10 el token
+del VPS no tenía ese permiso y el deploy manual daba `Authentication error` — con el push
+no hace falta.
 
-Seguí commiteando a `git` igual si querés, es sólo historial — el commit en
-sí no dispara ningún deploy (no hay integración con GitHub armada).
+**Preview de cambios sin commitear:** `preview.scalabilitysystems.com.ar` sirve la carpeta
+`publico/` del disco por el túnel de Cloudflare (servicio `sitio-preview`, puerto 8811). No
+es otra copia del sitio publicado: es la carpeta tal como está ahora, incluidos los cambios
+sin commit.
 
 ## Cómo quedó conectado el dominio (referencia, ya hecho)
 
