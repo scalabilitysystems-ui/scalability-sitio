@@ -11,7 +11,6 @@ import pathlib
 import re
 
 RAIZ = pathlib.Path(__file__).resolve().parent.parent / "publico"
-HTML = RAIZ / "index.html"
 
 
 def huella(ruta: pathlib.Path) -> str:
@@ -33,11 +32,20 @@ def versionar(html: str) -> str:
     return html
 
 
+def paginas() -> list[pathlib.Path]:
+    """Todas las páginas del sitio: la portada y cualquier otra que traiga assets."""
+    return sorted(p for p in RAIZ.rglob("*.html") if "node_modules" not in str(p))
+
+
 if __name__ == "__main__":
-    texto = HTML.read_text(encoding="utf-8")
-    nuevo = versionar(texto)
-    if nuevo != texto:
-        HTML.write_text(nuevo, encoding="utf-8")
-    for m in re.finditer(r'(?:href|src)="([^"]+\?v=[a-f0-9]+)"', nuevo):
-        print(" ", m.group(1))
-    print("sellado:", "sí" if nuevo != texto else "no hacía falta")
+    cambios = 0
+    for pagina in paginas():
+        texto = pagina.read_text(encoding="utf-8")
+        nuevo = versionar(texto)
+        rel = pagina.relative_to(RAIZ)
+        if nuevo != texto:
+            pagina.write_text(nuevo, encoding="utf-8")
+            cambios += 1
+            sellados = sorted({m.group(1) for m in re.finditer(r'(?:href|src)="([^"]+\?v=[a-f0-9]+)"', nuevo)})
+            print(f" {rel}: {', '.join(sellados)}")
+    print("sellado:", f"{cambios} página(s)" if cambios else "no hacía falta")
