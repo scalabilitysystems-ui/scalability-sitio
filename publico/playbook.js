@@ -76,11 +76,11 @@ function marcarError(campo, mensaje) {
 function validarCliente(datos) {
   let valido = true;
   if (!datos.nombre || datos.nombre.trim().length < 2) {
-    marcarError("nombre", "Indique su nombre.");
+    marcarError("nombre", "Indicá tu nombre.");
     valido = false;
   }
   if (!/^[^@\s]+@[^@\s.]+(\.[^@\s.]+)+$/.test(datos.email.trim())) {
-    marcarError("email", "Indique un email válido, por ejemplo nombre@empresa.com.");
+    marcarError("email", "Indicá un email válido, por ejemplo nombre@empresa.com.");
     valido = false;
   }
   return valido;
@@ -109,14 +109,14 @@ form.addEventListener("submit", async (ev) => {
   };
 
   if (!validarCliente(datos)) {
-    mostrarEstado("Revise los campos marcados.");
+    mostrarEstado("Revisá los campos marcados.");
     return;
   }
 
   boton.disabled = true;
   const textoOriginal = boton.textContent;
   boton.textContent = "Enviando…";
-  mostrarEstado("Enviando la solicitud…", "info");
+  mostrarEstado("Enviando…", "info");
 
   try {
     const res = await fetch(`${API}/api/playbook/lead`, {
@@ -128,17 +128,17 @@ form.addEventListener("submit", async (ev) => {
 
     if (res.status === 422 && cuerpo.campo) {
       marcarError(cuerpo.campo, cuerpo.campo === "email"
-        ? "Indique un email válido, por ejemplo nombre@empresa.com."
-        : "Revise este campo.");
+        ? "Indicá un email válido, por ejemplo nombre@empresa.com."
+        : "Revisá este campo.");
       mostrarEstado("Revise los campos marcados.");
       return;
     }
     if (res.status === 429) {
-      mostrarEstado("Se hicieron varios intentos seguidos. Espere unos minutos y vuelva a probar.");
+      mostrarEstado("Se hicieron varios intentos seguidos. Esperá unos minutos y volvé a probar.");
       return;
     }
     if (!res.ok) {
-      mostrarEstado("No se pudo registrar la solicitud. Vuelva a intentar en un momento.");
+      mostrarEstado("No se pudo registrar la solicitud. Volvé a intentar en un momento.");
       return;
     }
 
@@ -148,7 +148,7 @@ form.addEventListener("submit", async (ev) => {
     mostrarConfirmacion(cuerpo);
   } catch (e) {
     // Sin conexión o API caída: el usuario puede reintentar, no se pierde lo escrito.
-    mostrarEstado("No hubo conexión con el servidor. Revise la conexión y vuelva a intentar.");
+    mostrarEstado("No hubo conexión con el servidor. Revisá la conexión y volvé a intentar.");
   } finally {
     boton.disabled = false;
     boton.textContent = textoOriginal;
@@ -164,21 +164,35 @@ function mostrarConfirmacion(cuerpo) {
   const acciones = document.getElementById("pb-ok-acciones");
   texto.textContent = cuerpo.repetido
     ? "Ya había una solicitud con este email. No hace falta repetirla."
-    : "Registramos su solicitud de la guía.";
+    : "Listo: guardamos tu solicitud de la guía.";
 
   acciones.replaceChildren();
-  if (cuerpo.pdf_disponible) {
-    const a = document.createElement("a");
-    a.className = "btn";
-    a.href = `${API}/api/playbook/pdf`;
-    a.textContent = "Descargar el PDF";
-    a.addEventListener("click", () => evento("lead_magnet_download"));
-    acciones.appendChild(a);
-  } else {
+  const email = document.getElementById("pb-email").value.trim();
+
+  if (cuerpo.email_estado === "enviado") {
+    evento("lead_magnet_email_sent");
+    texto.textContent = cuerpo.repetido
+      ? `Ya te lo habíamos enviado a ${email}. Revisá esa casilla, incluido el correo no deseado.`
+      : `Te enviamos el playbook a ${email}.`;
     const p = document.createElement("p");
     p.className = "micro";
-    p.textContent = "El archivo todavía no está cargado en el servidor: la solicitud quedó registrada y se avisa por correo cuando esté disponible.";
+    p.textContent = "Si en unos minutos no aparece, revisá la carpeta de correo no deseado o escribinos y lo resolvemos.";
     texto.after(p);
+  } else {
+    // El proveedor de correo todavía no está activo, o falló. Se dice tal cual.
+    texto.textContent = `Guardamos tu solicitud${email ? " con el correo " + email : ""}.`;
+    const p = document.createElement("p");
+    p.className = "micro";
+    p.textContent = "El envío automático se está terminando de configurar. Apenas esté activo, el playbook llega a tu casilla.";
+    texto.after(p);
+    const a = document.createElement("a");
+    a.className = "btn btn-ghost";
+    a.href = "https://wa.me/5493417124688?text=Hola%2C%20ped%C3%AD%20el%20playbook%20y%20quiero%20recibirlo.";
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.textContent = "Pedirlo por WhatsApp";
+    a.addEventListener("click", () => evento("lead_magnet_fallback_whatsapp"));
+    acciones.appendChild(a);
   }
 }
 

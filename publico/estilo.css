@@ -423,6 +423,10 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background
 .pb-aviso{margin:0 0 18px;padding:12px 14px;border-radius:6px;font-size:14.5px;background:#FBF1EE;color:#7E1D15;border:1px solid #EBCFC9}
 .pb-aviso[data-tipo="info"]{background:#F4F1EA;color:#3B3530;border-color:var(--line)}
 .pb-resultado{border-top:2px solid var(--fg);padding-top:22px;max-width:560px}
+/* El foco llega por código al bloque de confirmación: no es un control, no lleva anillo. */
+#pb-ok:focus,#pb-ok:focus-visible{outline:none}
+/* La regla del formulario pone los botones al 100%: acá el de WhatsApp va a su ancho. */
+.pb-resultado .btn{width:auto}
 .pb-resultado h2{font-size:26px;margin-bottom:10px}
 .pb-resultado .acciones{margin-top:18px}
 .pb-cierre{padding:44px 0 20px;border-top:1px solid var(--line-soft)}
