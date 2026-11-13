@@ -227,4 +227,9 @@ if (otra) {
   });
 }
 
-evento("ecommerce_vista", { plan_url: planUrl || "" });
+// La vuelta desde una demo trae ?demo=<clave>: así se mide qué demo genera
+// consultas y no sólo cuántos abrieron la tienda de ejemplo.
+const demoOrigen = new URLSearchParams(location.search).get("demo");
+if (demoOrigen) evento("ecommerce_desde_demo", { demo: demoOrigen });
+
+evento("ecommerce_vista", { plan_url: planUrl || "", demo_origen: demoOrigen || "" });
