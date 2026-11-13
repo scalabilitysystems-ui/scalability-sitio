@@ -3,30 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Norte — demo de tienda de indumentaria</title>
-<meta name="description" content="Demo conceptual de tienda online de indumentaria desarrollada por Scalability: catálogo, ficha de producto, carrito y checkout simulado.">
+<title>Norte — indumentaria | demo de Scalability</title>
+<meta name="description" content="Demo conceptual de tienda de indumentaria desarrollada por Scalability: catálogo con filtros, ficha de producto, carrito y checkout simulado.">
 <meta name="robots" content="noindex,follow">
 <link rel="icon" href="/icono.png?v=b0fe41f4">
-<link rel="stylesheet" href="/demos/tienda.css?v=9f40f9b7">
+<link rel="stylesheet" href="/demos/tienda.css?v=e39aec35">
 </head>
 <body>
 
 <div class="t-demo-barra">
   <div class="t-wrap">
-    <span><strong>Demo conceptual</strong> — tienda de ejemplo, no es un cliente real. El checkout es simulado.</span>
-    <span>
-      <a href="/ecommerce#demos" data-volver="/ecommerce#demos">Volver a Scalability</a> ·
-      <a href="/ecommerce?demo=indumentaria#formulario" data-volver="/ecommerce?demo=indumentaria#formulario">Quiero una tienda así</a>
-    </span>
+    <span><strong>Experiencia de demostración</strong> desarrollada por Scalability. Tienda de ejemplo, no es un cliente real.</span>
+    <a href="/ecommerce#demos">Volver a Scalability</a>
   </div>
 </div>
 
 <header class="t-cabecera">
   <div class="t-wrap">
-    <a class="t-marca" id="t-marca" href="/ecommerce#demos">Norte</a>
+    <a class="t-marca" id="t-marca" href="#/">Norte</a>
     <nav class="t-nav" aria-label="Tienda">
-      <a href="#catalogo">Catálogo</a>
-      <a href="/ecommerce#demos">Sobre esta demo</a>
+      <a href="#/catalogo">Catálogo</a>
+      <a href="#/catalogo/abrigo">Abrigo</a>
+      <a href="#/catalogo/accesorios">Accesorios</a>
     </nav>
     <button class="t-carrito-boton" id="t-carrito-abrir" type="button">
       Carrito <span class="t-contador" id="t-contador" hidden>0</span>
@@ -34,105 +32,238 @@
   </div>
 </header>
 
-<main>
+<main id="t-main" class="t-wrap"></main>
+
+<footer class="t-comercial">
   <div class="t-wrap">
-    <section class="t-portada">
-      <p class="t-etiqueta" id="t-portada-etiqueta">Demo conceptual</p>
-      <h1 id="t-portada-titulo">Abrigo y básicos</h1>
-      <p id="t-portada-texto">Prendas de todos los días, en materiales que duran.</p>
-    </section>
-
-    <h2 class="t-solo-lectores">Catálogo</h2>
-    <div class="t-filtros" id="t-filtros" role="group" aria-label="Filtrar por categoría"></div>
-    <div class="t-grilla" id="t-grilla"></div>
-  </div>
-
-  <section class="t-volver">
-    <div class="t-wrap">
-      <p>Esta tienda la armamos como ejemplo de lo que se puede construir. Si querés una para tu marca, se cotiza según catálogo y pagos.</p>
-      <a class="t-boton" href="/ecommerce?demo=indumentaria#formulario" data-volver="/ecommerce?demo=indumentaria#formulario">Quiero una tienda para mi negocio</a>
-    </div>
-  </section>
-</main>
-
-<!-- Ficha de producto -->
-<div class="t-ficha" id="t-ficha" role="dialog" aria-modal="true" aria-labelledby="t-ficha-nombre" hidden>
-  <div class="t-ficha-caja">
-    <div class="t-ficha-foto" aria-hidden="true"></div>
-    <div class="t-ficha-cuerpo">
-      <h2 id="t-ficha-nombre"></h2>
-      <p class="t-ficha-precio" id="t-ficha-precio"></p>
-      <p id="t-ficha-desc"></p>
-      <div class="t-variantes" id="t-variantes" role="group" aria-label="Talle"></div>
-      <button class="t-boton" id="t-ficha-agregar" type="button">Agregar al carrito</button>
-      <button class="t-cerrar" id="t-ficha-cerrar" type="button" aria-label="Cerrar ficha">×</button>
+    <p><strong>Experiencia de demostración desarrollada por Scalability.</strong> El catálogo, el carrito y el checkout son funcionales; el pago es simulado y no se cobra nada.</p>
+    <div class="t-comercial-acciones">
+      <a class="t-link" href="/ecommerce#demos">Volver a Scalability</a>
+      <a class="t-cta" id="t-volver-comercial" href="/ecommerce?demo=indumentaria#formulario">Quiero una tienda como esta</a>
     </div>
   </div>
-</div>
+</footer>
 
 <!-- Carrito -->
 <aside class="t-panel" id="t-panel" aria-label="Carrito" hidden>
   <div class="t-panel-cabeza">
     <h2>Tu carrito</h2>
-    <button class="t-cerrar" id="t-panel-cerrar" type="button" aria-label="Cerrar carrito" style="position:static">×</button>
+    <button class="t-cerrar" id="t-panel-cerrar" type="button" aria-label="Cerrar carrito">×</button>
   </div>
 
-  <div class="t-items" id="t-items"></div>
-  <p class="t-vacio" id="t-vacio">Todavía no agregaste nada.</p>
-
-  <div class="t-panel-pie" id="t-panel-pie" hidden>
-    <div class="t-subtotal"><span>Subtotal</span><span id="t-subtotal"></span></div>
-    <p class="t-nota">Envío calculado en el checkout. Demo sin pagos reales.</p>
-    <button class="t-boton" id="t-comprar" type="button">Finalizar compra</button>
-    <button class="t-boton" id="t-seguir" type="button" style="background:transparent;border-color:var(--line);color:var(--fg)">Seguir viendo</button>
+  <div id="t-carrito-vista">
+    <div class="t-items" id="t-items"></div>
+    <div class="t-panel-pie" id="t-panel-pie" hidden>
+      <div class="t-subtotal"><span>Subtotal</span><span id="t-subtotal"></span></div>
+      <p class="t-nota">Envío y pago se calculan en el checkout. Demo sin pagos reales.</p>
+      <button class="t-cta t-ancho" id="t-comprar" type="button">Finalizar compra</button>
+      <button class="t-secundario" id="t-seguir" type="button">Seguir viendo</button>
+    </div>
   </div>
 
-  <form class="t-checkout" id="t-checkout" hidden style="padding:16px 20px">
+  <form class="t-checkout" id="t-checkout" hidden>
+    <button class="t-link" type="button" id="t-volver-carrito" style="justify-self:start">← Volver al carrito</button>
     <label for="t-co-nombre">Nombre y apellido</label>
     <input id="t-co-nombre" type="text" autocomplete="name" required>
     <label for="t-co-email">Email</label>
     <input id="t-co-email" type="email" autocomplete="email" required>
     <p class="t-nota" id="t-co-error" hidden style="color:#a3241b"></p>
-    <button class="t-boton" type="submit">Confirmar pedido (simulado)</button>
-    <p class="t-nota">No se procesa ningún pago. Es una demostración de la experiencia de compra.</p>
+    <button class="t-cta t-ancho" type="submit">Confirmar pedido (simulado)</button>
+    <p class="t-nota">No se procesa ningún pago ni se piden datos de tarjeta.</p>
   </form>
 
   <div class="t-confirmacion" id="t-confirmacion" hidden>
     <h3>Pedido simulado <span id="t-conf-numero"></span></h3>
     <p>Total: <strong id="t-conf-monto"></strong></p>
     <p>Este es el recorrido completo de una compra. En una tienda real, acá entraría el pago y el pedido al panel de gestión.</p>
-    <a class="t-boton" href="/ecommerce?demo=indumentaria#formulario" data-volver="/ecommerce?demo=indumentaria#formulario">Quiero una tienda así</a>
+    <a class="t-cta t-ancho" id="t-volver-comercial-2" href="/ecommerce?demo=indumentaria#formulario">Quiero una tienda como esta</a>
   </div>
 </aside>
+
+<div class="t-toast" id="t-toast" role="status" aria-live="polite" hidden></div>
 
 <script>
   window.TIENDA = {
     clave: "indumentaria",
-    marca: "Norte",
-    textos: { todas: "Todo", agregar: "Agregar", ver: "Ver" },
-    hero: {
-      etiqueta: "Demo conceptual · Scalability",
-      titulo: "Abrigo y básicos",
-      bajada: "Prendas de todos los días, en materiales que duran. Envíos a todo el país.",
+    marca: {
+      nombre: "Norte",
+      universo: "Indumentaria · Otoño invierno",
+      hero: {
+        titulo: "Abrigo y básicos<br><em>para todos los días</em>.",
+        bajada: "Prendas de materiales nobles, cortes rectos y una paleta que no pasa de moda. Producción local, series cortas.",
+        cta: "Explorar colección",
+      },
+      filosofia: {
+        titulo: "Hacer poco, hacerlo bien.",
+        texto: "Trabajamos con talleres de Buenos Aires en series cortas. Cada prenda está pensada para durar más que la temporada: lana merino, lino lavado y algodón peinado, sin estampas que caducan.",
+      },
     },
-    categorias: [
-      { id: "abrigo", nombre: "Abrigo" },
-      { id: "basicos", nombre: "Básicos" },
-      { id: "pantalones", nombre: "Pantalones" },
-      { id: "accesorios", nombre: "Accesorios" },
+    textos: {
+      destacados: "Selección de la temporada",
+      verTodo: "Ver todo el catálogo",
+      categorias: "Categorías",
+      catalogo: "Catálogo",
+      pieza: "pieza",
+      piezas: "piezas",
+      filtros: "Filtros",
+      categoria: "Categoría",
+      talle: "Talle",
+      color: "Color",
+      precio: "Precio",
+      todos: "Todos",
+      todas: "Todas",
+      limpiar: "Limpiar filtros",
+      ordenar: "Ordenar por",
+      inicio: "Inicio",
+      vistas: "Vistas del producto",
+      vista: "Vista",
+      guia: "Guía de talles",
+      guiaTitulo: "Guía de talles",
+      descripcion: "Descripción",
+      detalle: "Material y cuidado",
+      relacionados: "También te puede interesar",
+      agregar: "Agregar",
+      agregarCarrito: "Agregar al carrito",
+      sinStock: "Sin stock",
+      sinStockAviso: "Esa combinación está agotada.",
+      ultimas: "Últimas unidades:",
+      disponible: "Disponible",
+      stockMaximo: "No hay más stock disponible. Máximo:",
+      elegirTalle: "Elegí un talle para agregar.",
+      carritoVacio: "Todavía no agregaste nada.",
+      checkoutError: "Completá nombre y un email válido para simular el pedido.",
+      sinResultados: "No hay productos con esos filtros.",
+    },
+    ordenamientos: [
+      { id: "destacado", nombre: "Destacados" },
+      { id: "precio-asc", nombre: "Menor precio" },
+      { id: "precio-desc", nombre: "Mayor precio" },
+      { id: "nombre", nombre: "Nombre" },
     ],
+    filtros: {
+      categorias: [
+        { id: "abrigo", nombre: "Abrigo" },
+        { id: "basicos", nombre: "Básicos" },
+        { id: "pantalones", nombre: "Pantalones" },
+        { id: "accesorios", nombre: "Accesorios" },
+      ],
+      talles: [
+        { id: "S", nombre: "S" },
+        { id: "M", nombre: "M" },
+        { id: "L", nombre: "L" },
+        { id: "XL", nombre: "XL" },
+      ],
+      colores: [
+        { id: "negro", nombre: "Negro", hex: "#1d1c1a" },
+        { id: "arena", nombre: "Arena", hex: "#cfc3ae" },
+        { id: "verde", nombre: "Verde seco", hex: "#5d6653" },
+        { id: "crudo", nombre: "Crudo", hex: "#e8e2d6" },
+      ],
+      precios: [
+        { id: "30000", nombre: "Hasta $30.000" },
+        { id: "60000", nombre: "Hasta $60.000" },
+        { id: "100000", nombre: "Hasta $100.000" },
+      ],
+    },
+    guia: `<table class="t-guia-tabla"><thead><tr><th>Talle</th><th>Pecho</th><th>Cintura</th></tr></thead><tbody>
+      <tr><td>S</td><td>94 cm</td><td>78 cm</td></tr>
+      <tr><td>M</td><td>100 cm</td><td>84 cm</td></tr>
+      <tr><td>L</td><td>106 cm</td><td>90 cm</td></tr>
+      <tr><td>XL</td><td>112 cm</td><td>96 cm</td></tr>
+    </tbody></table>`,
     productos: [
-      { id: "campera-sierra", nombre: "Campera Sierra", precio: 89900, cat: "abrigo", variantes: ["S", "M", "L", "XL"], desc: "Campera de abrigo con capucha desmontable y bolsillos internos. Corte recto." },
-      { id: "buzo-oversize", nombre: "Buzo Oversize", precio: 54900, cat: "abrigo", variantes: ["S", "M", "L"], desc: "Buzo de frisa pesada, hombros caídos y puños reforzados." },
-      { id: "remera-pima", nombre: "Remera Pima", precio: 32900, cat: "basicos", variantes: ["S", "M", "L", "XL"], desc: "Algodón peinado de tacto suave, cuello redondo y calce regular." },
-      { id: "camisa-lino", nombre: "Camisa Lino", precio: 58900, cat: "basicos", variantes: ["S", "M", "L"], desc: "Lino lavado, manga larga y botones de nácar. Liviana para media estación." },
-      { id: "pantalon-cargo", nombre: "Pantalón Cargo", precio: 62900, cat: "pantalones", variantes: ["38", "40", "42", "44"], desc: "Sarga resistente con bolsillos laterales y cintura ajustable." },
-      { id: "jean-recto", nombre: "Jean Recto", precio: 68900, cat: "pantalones", variantes: ["38", "40", "42", "44"], desc: "Denim rígido de corte recto, tiro medio. Lava oscura." },
-      { id: "gorro-merino", nombre: "Gorro Merino", precio: 24900, cat: "accesorios", variantes: ["Único"], desc: "Lana merino tejida, doble vuelta. No pica." },
-      { id: "bufanda-lana", nombre: "Bufanda de Lana", precio: 28900, cat: "accesorios", variantes: ["Único"], desc: "Tejido grueso de lana virgen, 180 cm. Tono natural." },
+      {
+        id: "campera-sierra", nombre: "Campera Sierra", orden: 0, tipo: "abrigo", categoria: "abrigo", precio: 89900,
+        coleccion: "Abrigo · Lana", destacado: true, tipoProducto: "abrigo",
+        colores: [{ id: "negro", nombre: "Negro", hex: "#1d1c1a" }, { id: "verde", nombre: "Verde seco", hex: "#5d6653" }],
+        variantes: [
+          { talle: "S", color: "negro", stock: 3 }, { talle: "M", color: "negro", stock: 5 },
+          { talle: "L", color: "negro", stock: 0 }, { talle: "XL", color: "negro", stock: 2 },
+          { talle: "M", color: "verde", stock: 2 }, { talle: "L", color: "verde", stock: 1 },
+        ],
+        descripcion: "Campera de abrigo con capucha desmontable, bolsillos internos y corte recto. Cierre doble para regular la ventilación.",
+        detalle: "Exterior 78% lana virgen, 22% poliamida. Forro de algodón. Lavar en seco. Fabricada en talleres de Buenos Aires.",
+      },
+      {
+        id: "buzo-oversize", nombre: "Buzo Oversize", orden: 1, tipo: "buzo", categoria: "abrigo", precio: 54900,
+        coleccion: "Abrigo · Frisa", destacado: true,
+        colores: [{ id: "crudo", nombre: "Crudo", hex: "#e8e2d6" }, { id: "negro", nombre: "Negro", hex: "#1d1c1a" }],
+        variantes: [
+          { talle: "S", color: "crudo", stock: 4 }, { talle: "M", color: "crudo", stock: 6 },
+          { talle: "L", color: "crudo", stock: 3 }, { talle: "M", color: "negro", stock: 2 },
+          { talle: "L", color: "negro", stock: 4 },
+        ],
+        descripcion: "Frisa pesada de 420 g, hombros caídos y puños reforzados. Calce amplio, pensado para usar encima de una remera.",
+        detalle: "100% algodón peinado. Lavar a 30° con agua fría, secar al aire.",
+      },
+      {
+        id: "remera-pima", nombre: "Remera Pima", orden: 2, tipo: "remera", categoria: "basicos", precio: 32900,
+        coleccion: "Básicos", destacado: true,
+        colores: [{ id: "crudo", nombre: "Crudo", hex: "#e8e2d6" }, { id: "negro", nombre: "Negro", hex: "#1d1c1a" }, { id: "arena", nombre: "Arena", hex: "#cfc3ae" }],
+        variantes: [
+          { talle: "S", color: "crudo", stock: 8 }, { talle: "M", color: "crudo", stock: 9 },
+          { talle: "L", color: "crudo", stock: 6 }, { talle: "M", color: "negro", stock: 5 },
+          { talle: "L", color: "negro", stock: 3 }, { talle: "S", color: "arena", stock: 4 },
+        ],
+        descripcion: "Algodón peinado de tacto suave, cuello redondo y calce regular. La base de cualquier combinación.",
+        detalle: "100% algodón Pima. Lavar a máquina en frío. Tolerancia de encogimiento: 2%.",
+      },
+      {
+        id: "camisa-lino", nombre: "Camisa Lino", orden: 3, tipo: "camisa", categoria: "basicos", precio: 58900,
+        coleccion: "Básicos · Lino", destacado: false,
+        colores: [{ id: "arena", nombre: "Arena", hex: "#cfc3ae" }, { id: "crudo", nombre: "Crudo", hex: "#e8e2d6" }],
+        variantes: [
+          { talle: "S", color: "arena", stock: 3 }, { talle: "M", color: "arena", stock: 4 },
+          { talle: "L", color: "arena", stock: 2 }, { talle: "M", color: "crudo", stock: 3 },
+        ],
+        descripcion: "Lino lavado, manga larga y botones de nácar. Liviana para media estación, gana textura con cada lavado.",
+        detalle: "100% lino. Lavar a 30°, no usar secadora.",
+      },
+      {
+        id: "pantalon-cargo", nombre: "Pantalón Cargo", orden: 4, tipo: "pantalon", categoria: "pantalones", precio: 62900,
+        coleccion: "Pantalones", destacado: true,
+        colores: [{ id: "verde", nombre: "Verde seco", hex: "#5d6653" }, { id: "negro", nombre: "Negro", hex: "#1d1c1a" }],
+        variantes: [
+          { talle: "S", color: "verde", stock: 2 }, { talle: "M", color: "verde", stock: 3 },
+          { talle: "L", color: "verde", stock: 1 }, { talle: "M", color: "negro", stock: 4 },
+          { talle: "XL", color: "negro", stock: 2 },
+        ],
+        descripcion: "Sarga resistente con bolsillos laterales y cintura ajustable. Corte recto, tiro medio.",
+        detalle: "98% algodón, 2% elastano. Lavar del revés a 30°.",
+      },
+      {
+        id: "jean-recto", nombre: "Jean Recto", orden: 5, tipo: "pantalon", categoria: "pantalones", precio: 68900,
+        coleccion: "Pantalones · Denim", destacado: false,
+        colores: [{ id: "negro", nombre: "Negro", hex: "#1d1c1a" }],
+        variantes: [
+          { talle: "S", color: "negro", stock: 3 }, { talle: "M", color: "negro", stock: 2 },
+          { talle: "L", color: "negro", stock: 0 },
+        ],
+        descripcion: "Denim rígido de corte recto y tiro medio. Lava oscura que se asienta con el uso.",
+        detalle: "100% algodón. Lavar poco, a mano y en frío, para conservar el color.",
+      },
+      {
+        id: "gorro-merino", nombre: "Gorro Merino", orden: 6, tipo: "gorro", categoria: "accesorios", precio: 24900,
+        coleccion: "Accesorios", destacado: true,
+        colores: [{ id: "negro", nombre: "Negro", hex: "#1d1c1a" }, { id: "arena", nombre: "Arena", hex: "#cfc3ae" }],
+        variantes: [
+          { talle: "S", color: "negro", stock: 6 }, { talle: "M", color: "negro", stock: 4 },
+          { talle: "M", color: "arena", stock: 3 },
+        ],
+        descripcion: "Lana merino tejida a dos agujas, doble vuelta. No pica y abriga sin volumen.",
+        detalle: "100% lana merino. Lavar a mano con jabón neutro, secar en plano.",
+      },
+      {
+        id: "bufanda-lana", nombre: "Bufanda de Lana", orden: 7, tipo: "bufanda", categoria: "accesorios", precio: 28900,
+        coleccion: "Accesorios", destacado: false,
+        colores: [{ id: "arena", nombre: "Arena", hex: "#cfc3ae" }],
+        variantes: [{ talle: "S", color: "arena", stock: 5 }],
+        descripcion: "Tejido grueso de lana virgen, 180 cm de largo. Tono natural, sin teñir.",
+        detalle: "100% lana virgen. Lavar a mano, secar en plano y a la sombra.",
+      },
     ],
   };
 </script>
-<script src="/demos/tienda.js?v=ee7ec8bc" defer></script>
+<script src="/demos/tienda.js?v=3fa0d674" defer></script>
 </body>
 </html>
