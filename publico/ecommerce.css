@@ -1,0 +1,562 @@
+/* Landing de e-commerce (/ecommerce).
+   Todo va con prefijo ec- para no tocar la web institucional: este archivo se
+   carga sólo en esta página y en ningún otro lado. Los tokens y la tipografía
+   vienen de estilo.css. */
+
+/* El sitio institucional usa una columna de lectura de 760px. Esta landing
+   necesita más ancho: se ensancha sólo acá, con la clase body.ec. */
+body.ec .wrap {
+  max-width: 1080px;
+}
+
+.ec-cabecera nav .btn {
+  padding: 9px 16px;
+  font-size: 14px;
+}
+
+.ec-hero {
+  padding: 64px 0 48px;
+  max-width: 760px;
+}
+
+.ec-hero h1 {
+  font-size: clamp(2.2rem, 5.6vw, 3.9rem);
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
+}
+
+.ec-sellos {
+  list-style: none;
+  margin: 32px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ec-sellos li {
+  font-size: 13px;
+  color: var(--mut, #6b655c);
+  border: 1px solid var(--line, #e3dcd2);
+  border-radius: 999px;
+  padding: 6px 12px;
+  background: #fff;
+}
+
+/* ── Por qué con Scalability ───────────────────────────────────────────── */
+.ec-porque {
+  padding: 48px 0;
+  border-top: 1px solid var(--line, #e3dcd2);
+}
+
+.ec-porque h2 {
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  margin-bottom: 28px;
+}
+
+.ec-porque-grilla {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.ec-porque-grilla h3 {
+  font-family: var(--sans, -apple-system, "Segoe UI", sans-serif);
+  font-size: 15.5px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+
+.ec-porque-grilla p {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--mut, #6b655c);
+}
+
+/* ── Planes ────────────────────────────────────────────────────────────── */
+.ec-planes-seccion {
+  padding: 56px 0;
+  border-top: 1px solid var(--line, #e3dcd2);
+}
+
+.ec-encabezado {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px 48px;
+  align-items: end;
+  margin-bottom: 36px;
+}
+
+.ec-encabezado h2 {
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+}
+
+.ec-planes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
+
+.ec-plan {
+  border: 1px solid var(--line, #e3dcd2);
+  border-radius: 10px;
+  padding: 28px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ec-plan.destacado {
+  border-color: var(--fg, #131211);
+}
+
+.ec-etiqueta {
+  display: inline-block;
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8f4600;
+  background: var(--acc-soft, #fff1de);
+  border-radius: 999px;
+  padding: 4px 10px;
+  margin-bottom: 10px;
+}
+
+.ec-plan-cabeza h3 {
+  font-family: var(--serif, Georgia, serif);
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.ec-precio {
+  font-family: var(--serif, Georgia, serif);
+  font-size: clamp(1.9rem, 3.4vw, 2.4rem);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+.ec-precio span {
+  font-size: 0.55em;
+  letter-spacing: 0;
+  color: var(--mut, #6b655c);
+}
+
+.ec-precio-nota {
+  font-size: 12.5px;
+  color: var(--mut, #6b655c);
+  margin-top: 4px;
+}
+
+.ec-incluye {
+  font-size: 13px;
+  color: var(--mut, #6b655c);
+  border-top: 1px solid var(--line-soft, #efeae2);
+  padding-top: 14px;
+}
+
+.ec-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+  font-size: 14.5px;
+}
+
+.ec-lista li {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+}
+
+.ec-lista li::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--acc, #fc8301);
+  margin-top: 9px;
+  flex: none;
+}
+
+.ec-plan .btn {
+  margin-top: auto;
+  width: 100%;
+}
+
+.ec-condiciones {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line, #e3dcd2);
+  display: grid;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--mut, #6b655c);
+  max-width: 82ch;
+}
+
+.ec-condiciones strong {
+  color: var(--fg, #131211);
+}
+
+/* ── Demos ─────────────────────────────────────────────────────────────── */
+.ec-demos-seccion {
+  padding: 56px 0;
+  border-top: 1px solid var(--line, #e3dcd2);
+}
+
+.ec-aviso {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 14px;
+  padding: 12px 16px;
+  border: 1px solid #efd9bd;
+  border-radius: 6px;
+  background: var(--acc-soft, #fff1de);
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.ec-aviso strong {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8f4600;
+}
+
+.ec-demos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.ec-demo {
+  border: 1px solid var(--line, #e3dcd2);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.ec-demo-preview {
+  aspect-ratio: 16 / 9;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 6px;
+  padding: 24px;
+  text-align: center;
+}
+
+.ec-demo-preview.tema-indumentaria {
+  background: linear-gradient(150deg, #1c1b19, #33302b 62%, #161513);
+  color: #f3efe8;
+}
+
+.ec-demo-preview.tema-cosmetica {
+  background: linear-gradient(150deg, #f3e6e2, #e8d3cc 55%, #dcc0b6);
+  color: #4a2f27;
+}
+
+.ec-demo-marca {
+  font-family: var(--serif, Georgia, serif);
+  font-size: 1.7rem;
+  letter-spacing: 0.04em;
+}
+
+.ec-demo-preview.tema-indumentaria .ec-demo-marca {
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 1.15rem;
+}
+
+.ec-demo-linea {
+  font-size: 12px;
+  opacity: 0.75;
+  letter-spacing: 0.04em;
+}
+
+.ec-demo-cuerpo {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.ec-demo-cuerpo h3 {
+  font-family: var(--serif, Georgia, serif);
+  font-size: 1.3rem;
+}
+
+.ec-demo-cuerpo p {
+  font-size: 14.5px;
+  color: var(--mut, #6b655c);
+}
+
+.ec-demo-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 6px;
+}
+
+.ec-demo-acciones .btn {
+  font-size: 14px;
+  padding: 11px 16px;
+}
+
+/* ── Formulario ────────────────────────────────────────────────────────── */
+.ec-form-seccion {
+  padding: 56px 0;
+  border-top: 1px solid var(--line, #e3dcd2);
+}
+
+.ec-form-grilla {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 48px;
+  align-items: start;
+}
+
+.ec-form-info h2 {
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  margin-bottom: 14px;
+}
+
+.ec-form-info .micro {
+  margin-top: 18px;
+}
+
+.ec-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.ec-form .campo {
+  display: grid;
+  gap: 6px;
+}
+
+.ec-form .campo:nth-child(3),
+.ec-form .campo:nth-child(4),
+.ec-form .campo:nth-child(5) {
+  grid-column: 1 / -1;
+}
+
+.ec-form label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ec-form input,
+.ec-form select {
+  width: 100%;
+  font: inherit;
+  font-size: 15px;
+  padding: 11px 13px;
+  border: 1px solid var(--line, #e3dcd2);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--fg, #131211);
+}
+
+.ec-form input:focus,
+.ec-form select:focus {
+  outline: none;
+  border-color: var(--fg, #131211);
+  box-shadow: 0 0 0 3px rgba(19, 18, 17, 0.07);
+}
+
+.ec-form input[aria-invalid="true"],
+.ec-form select[aria-invalid="true"] {
+  border-color: #a3241b;
+  background: #fdf6f5;
+}
+
+.ec-opcional {
+  font-weight: 400;
+  color: var(--mut, #6b655c);
+  font-size: 12.5px;
+}
+
+.ec-error {
+  color: #a3241b;
+  font-size: 12.5px;
+}
+
+.ec-consentimiento {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--mut, #6b655c);
+}
+
+.ec-consentimiento input {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  flex: none;
+  accent-color: var(--acc, #fc8301);
+}
+
+.ec-aviso-form {
+  grid-column: 1 / -1;
+  padding: 12px 14px;
+  border-radius: 6px;
+  font-size: 14.5px;
+  background: #fbf1ee;
+  border: 1px solid #ebcfc9;
+  color: #7e1d15;
+}
+
+.ec-aviso-form[data-tipo="info"] {
+  background: #f4f1ea;
+  border-color: var(--line, #e3dcd2);
+  color: #3b3530;
+}
+
+.ec-enviar {
+  grid-column: 1 / -1;
+  justify-self: start;
+  min-width: 220px;
+}
+
+.ec-exito {
+  border: 1px solid var(--line, #e3dcd2);
+  border-top: 2px solid var(--fg, #131211);
+  border-radius: 10px;
+  padding: 28px;
+  background: #fff;
+  display: grid;
+  gap: 10px;
+}
+
+.ec-exito h3 {
+  font-size: 1.5rem;
+}
+
+.ec-exito p {
+  color: var(--mut, #6b655c);
+  max-width: 44ch;
+}
+
+/* ── Preguntas ─────────────────────────────────────────────────────────── */
+.ec-faq-seccion {
+  padding: 56px 0;
+  border-top: 1px solid var(--line, #e3dcd2);
+}
+
+.ec-faq-seccion h2 {
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  margin-bottom: 20px;
+}
+
+.ec-faq {
+  border-top: 1px solid var(--line, #e3dcd2);
+  max-width: 74ch;
+}
+
+.ec-faq details {
+  border-bottom: 1px solid var(--line, #e3dcd2);
+}
+
+.ec-faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 0;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  list-style: none;
+}
+
+.ec-faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.ec-faq summary svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  color: var(--mut, #6b655c);
+  transition: transform 140ms ease;
+}
+
+.ec-faq details[open] summary svg {
+  transform: rotate(180deg);
+}
+
+.ec-respuesta {
+  padding: 0 0 20px;
+}
+
+.ec-respuesta p {
+  font-size: 15px;
+  color: var(--mut, #6b655c);
+  max-width: 66ch;
+}
+
+/* ── Cierre ────────────────────────────────────────────────────────────── */
+.ec-cierre {
+  padding: 64px 0 72px;
+  border-top: 1px solid var(--line, #e3dcd2);
+}
+
+.ec-cierre h2 {
+  font-size: clamp(1.9rem, 3.8vw, 2.8rem);
+  margin-bottom: 14px;
+}
+
+.ec-cierre .copete {
+  margin-bottom: 26px;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .ec-porque-grilla {
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+  }
+  .ec-encabezado,
+  .ec-planes,
+  .ec-demos,
+  .ec-form-grilla {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .ec-form {
+    grid-template-columns: 1fr;
+  }
+  .ec-form .campo:nth-child(3),
+  .ec-form .campo:nth-child(4),
+  .ec-form .campo:nth-child(5) {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .ec-porque-grilla {
+    grid-template-columns: 1fr;
+  }
+  .ec-hero {
+    padding: 40px 0 32px;
+  }
+  .ec-plan,
+  .ec-demo-cuerpo {
+    padding: 20px;
+  }
+}

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es-AR" data-tema="cosmetica">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aurea — demo de tienda de cosmética</title>
+<meta name="description" content="Demo conceptual de tienda online de cosmética desarrollada por Scalability: catálogo con filtros, fichas, carrito y checkout simulado.">
+<meta name="robots" content="noindex,follow">
+<link rel="icon" href="/icono.png">
+<link rel="stylesheet" href="/demos/tienda.css?v=1">
+</head>
+<body>
+
+<div class="t-demo-barra">
+  <div class="t-wrap">
+    <span><strong>Demo conceptual</strong> — tienda de ejemplo, no es un cliente real. El checkout es simulado.</span>
+    <span>
+      <a href="/ecommerce#demos" data-volver="/ecommerce#demos">Volver a Scalability</a> ·
+      <a href="/ecommerce?demo=cosmetica#formulario" data-volver="/ecommerce?demo=cosmetica#formulario">Quiero una tienda así</a>
+    </span>
+  </div>
+</div>
+
+<header class="t-cabecera">
+  <div class="t-wrap">
+    <a class="t-marca" id="t-marca" href="/ecommerce#demos">Aurea</a>
+    <nav class="t-nav" aria-label="Tienda">
+      <a href="#catalogo">Catálogo</a>
+      <a href="/ecommerce#demos">Sobre esta demo</a>
+    </nav>
+    <button class="t-carrito-boton" id="t-carrito-abrir" type="button">
+      Carrito <span class="t-contador" id="t-contador" hidden>0</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="t-wrap">
+    <section class="t-portada">
+      <p class="t-etiqueta" id="t-portada-etiqueta">Demo conceptual</p>
+      <h1 id="t-portada-titulo">Cuidado diario</h1>
+      <p id="t-portada-texto">Fórmulas simples, para todos los días.</p>
+    </section>
+
+    <h2 class="t-solo-lectores">Catálogo</h2>
+    <div class="t-filtros" id="t-filtros" role="group" aria-label="Filtrar por tipo de producto"></div>
+    <div class="t-grilla" id="t-grilla"></div>
+  </div>
+
+  <section class="t-volver">
+    <div class="t-wrap">
+      <p>Esta tienda la armamos como ejemplo de lo que se puede construir. Si querés una para tu marca, se cotiza según catálogo y pagos.</p>
+      <a class="t-boton" href="/ecommerce?demo=cosmetica#formulario" data-volver="/ecommerce?demo=cosmetica#formulario">Quiero una tienda para mi negocio</a>
+    </div>
+  </section>
+</main>
+
+<!-- Ficha de producto -->
+<div class="t-ficha" id="t-ficha" role="dialog" aria-modal="true" aria-labelledby="t-ficha-nombre" hidden>
+  <div class="t-ficha-caja">
+    <div class="t-ficha-foto" aria-hidden="true"></div>
+    <div class="t-ficha-cuerpo">
+      <h2 id="t-ficha-nombre"></h2>
+      <p class="t-ficha-precio" id="t-ficha-precio"></p>
+      <p id="t-ficha-desc"></p>
+      <div class="t-variantes" id="t-variantes" role="group" aria-label="Tamaño"></div>
+      <button class="t-boton" id="t-ficha-agregar" type="button">Agregar al carrito</button>
+      <button class="t-cerrar" id="t-ficha-cerrar" type="button" aria-label="Cerrar ficha">×</button>
+    </div>
+  </div>
+</div>
+
+<!-- Carrito -->
+<aside class="t-panel" id="t-panel" aria-label="Carrito" hidden>
+  <div class="t-panel-cabeza">
+    <h2>Tu carrito</h2>
+    <button class="t-cerrar" id="t-panel-cerrar" type="button" aria-label="Cerrar carrito" style="position:static">×</button>
+  </div>
+
+  <div class="t-items" id="t-items"></div>
+  <p class="t-vacio" id="t-vacio">Todavía no agregaste nada.</p>
+
+  <div class="t-panel-pie" id="t-panel-pie" hidden>
+    <div class="t-subtotal"><span>Subtotal</span><span id="t-subtotal"></span></div>
+    <p class="t-nota">Envío calculado en el checkout. Demo sin pagos reales.</p>
+    <button class="t-boton" id="t-comprar" type="button">Finalizar compra</button>
+    <button class="t-boton" id="t-seguir" type="button" style="background:transparent;border-color:var(--line);color:var(--fg)">Seguir viendo</button>
+  </div>
+
+  <form class="t-checkout" id="t-checkout" hidden style="padding:16px 20px">
+    <label for="t-co-nombre">Nombre y apellido</label>
+    <input id="t-co-nombre" type="text" autocomplete="name" required>
+    <label for="t-co-email">Email</label>
+    <input id="t-co-email" type="email" autocomplete="email" required>
+    <p class="t-nota" id="t-co-error" hidden style="color:#a3241b"></p>
+    <button class="t-boton" type="submit">Confirmar pedido (simulado)</button>
+    <p class="t-nota">No se procesa ningún pago. Es una demostración de la experiencia de compra.</p>
+  </form>
+
+  <div class="t-confirmacion" id="t-confirmacion" hidden>
+    <h3>Pedido simulado <span id="t-conf-numero"></span></h3>
+    <p>Total: <strong id="t-conf-monto"></strong></p>
+    <p>Este es el recorrido completo de una compra. En una tienda real, acá entraría el pago y el pedido al panel de gestión.</p>
+    <a class="t-boton" href="/ecommerce?demo=cosmetica#formulario" data-volver="/ecommerce?demo=cosmetica#formulario">Quiero una tienda así</a>
+  </div>
+</aside>
+
+<script>
+  window.TIENDA = {
+    clave: "cosmetica",
+    marca: "Aurea",
+    textos: { todas: "Todo", agregar: "Agregar", ver: "Ver" },
+    hero: {
+      etiqueta: "Demo conceptual · Scalability",
+      titulo: "Cuidado diario",
+      bajada: "Fórmulas simples, sin promesas raras. Envío gratis desde $60.000.",
+    },
+    categorias: [
+      { id: "rostro", nombre: "Rostro" },
+      { id: "cuerpo", nombre: "Cuerpo" },
+      { id: "color", nombre: "Color" },
+      { id: "kits", nombre: "Kits" },
+    ],
+    productos: [
+      { id: "serum-vit-c", nombre: "Sérum Vitamina C", precio: 28900, cat: "rostro", variantes: ["30 ml", "50 ml"], desc: "Sérum liviano con vitamina C estabilizada. Se usa a la mañana, antes del protector solar." },
+      { id: "crema-hidratante", nombre: "Crema Hidratante", precio: 24900, cat: "rostro", variantes: ["50 ml", "100 ml"], desc: "Hidratación de absorción rápida con ácido hialurónico de bajo peso molecular." },
+      { id: "limpiador-suave", nombre: "Limpiador Suave", precio: 19900, cat: "rostro", variantes: ["150 ml"], desc: "Gel sin sulfatos para limpiar sin dejar la piel tirante." },
+      { id: "bruma-facial", nombre: "Bruma Facial", precio: 21900, cat: "rostro", variantes: ["100 ml"], desc: "Agua de rosas y pantenol. Refresca y prepara la piel antes del sérum." },
+      { id: "aceite-corporal", nombre: "Aceite Corporal", precio: 26900, cat: "cuerpo", variantes: ["200 ml"], desc: "Mezcla de jojoba y almendras. Se absorbe sin dejar residuo." },
+      { id: "manteca-karite", nombre: "Manteca de Karité", precio: 22900, cat: "cuerpo", variantes: ["250 ml"], desc: "Textura densa para zonas secas: codos, rodillas y talones." },
+      { id: "labial-mate", nombre: "Labial Mate", precio: 18900, cat: "color", variantes: ["Nude", "Terracota", "Vino"], desc: "Larga duración, acabado mate y textura cremosa que no reseca." },
+      { id: "kit-viaje", nombre: "Kit Viaje", precio: 34900, cat: "kits", variantes: ["4 piezas"], desc: "Limpiador, sérum, hidratante y bruma en formato de 30 ml, en estuche de lino." },
+    ],
+  };
+</script>
+<script src="/demos/tienda.js?v=1" defer></script>
+</body>
+</html>

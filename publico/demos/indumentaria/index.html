@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es-AR" data-tema="indumentaria">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Norte — demo de tienda de indumentaria</title>
+<meta name="description" content="Demo conceptual de tienda online de indumentaria desarrollada por Scalability: catálogo, ficha de producto, carrito y checkout simulado.">
+<meta name="robots" content="noindex,follow">
+<link rel="icon" href="/icono.png">
+<link rel="stylesheet" href="/demos/tienda.css?v=1">
+</head>
+<body>
+
+<div class="t-demo-barra">
+  <div class="t-wrap">
+    <span><strong>Demo conceptual</strong> — tienda de ejemplo, no es un cliente real. El checkout es simulado.</span>
+    <span>
+      <a href="/ecommerce#demos" data-volver="/ecommerce#demos">Volver a Scalability</a> ·
+      <a href="/ecommerce?demo=indumentaria#formulario" data-volver="/ecommerce?demo=indumentaria#formulario">Quiero una tienda así</a>
+    </span>
+  </div>
+</div>
+
+<header class="t-cabecera">
+  <div class="t-wrap">
+    <a class="t-marca" id="t-marca" href="/ecommerce#demos">Norte</a>
+    <nav class="t-nav" aria-label="Tienda">
+      <a href="#catalogo">Catálogo</a>
+      <a href="/ecommerce#demos">Sobre esta demo</a>
+    </nav>
+    <button class="t-carrito-boton" id="t-carrito-abrir" type="button">
+      Carrito <span class="t-contador" id="t-contador" hidden>0</span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <div class="t-wrap">
+    <section class="t-portada">
+      <p class="t-etiqueta" id="t-portada-etiqueta">Demo conceptual</p>
+      <h1 id="t-portada-titulo">Abrigo y básicos</h1>
+      <p id="t-portada-texto">Prendas de todos los días, en materiales que duran.</p>
+    </section>
+
+    <h2 class="t-solo-lectores">Catálogo</h2>
+    <div class="t-filtros" id="t-filtros" role="group" aria-label="Filtrar por categoría"></div>
+    <div class="t-grilla" id="t-grilla"></div>
+  </div>
+
+  <section class="t-volver">
+    <div class="t-wrap">
+      <p>Esta tienda la armamos como ejemplo de lo que se puede construir. Si querés una para tu marca, se cotiza según catálogo y pagos.</p>
+      <a class="t-boton" href="/ecommerce?demo=indumentaria#formulario" data-volver="/ecommerce?demo=indumentaria#formulario">Quiero una tienda para mi negocio</a>
+    </div>
+  </section>
+</main>
+
+<!-- Ficha de producto -->
+<div class="t-ficha" id="t-ficha" role="dialog" aria-modal="true" aria-labelledby="t-ficha-nombre" hidden>
+  <div class="t-ficha-caja">
+    <div class="t-ficha-foto" aria-hidden="true"></div>
+    <div class="t-ficha-cuerpo">
+      <h2 id="t-ficha-nombre"></h2>
+      <p class="t-ficha-precio" id="t-ficha-precio"></p>
+      <p id="t-ficha-desc"></p>
+      <div class="t-variantes" id="t-variantes" role="group" aria-label="Talle"></div>
+      <button class="t-boton" id="t-ficha-agregar" type="button">Agregar al carrito</button>
+      <button class="t-cerrar" id="t-ficha-cerrar" type="button" aria-label="Cerrar ficha">×</button>
+    </div>
+  </div>
+</div>
+
+<!-- Carrito -->
+<aside class="t-panel" id="t-panel" aria-label="Carrito" hidden>
+  <div class="t-panel-cabeza">
+    <h2>Tu carrito</h2>
+    <button class="t-cerrar" id="t-panel-cerrar" type="button" aria-label="Cerrar carrito" style="position:static">×</button>
+  </div>
+
+  <div class="t-items" id="t-items"></div>
+  <p class="t-vacio" id="t-vacio">Todavía no agregaste nada.</p>
+
+  <div class="t-panel-pie" id="t-panel-pie" hidden>
+    <div class="t-subtotal"><span>Subtotal</span><span id="t-subtotal"></span></div>
+    <p class="t-nota">Envío calculado en el checkout. Demo sin pagos reales.</p>
+    <button class="t-boton" id="t-comprar" type="button">Finalizar compra</button>
+    <button class="t-boton" id="t-seguir" type="button" style="background:transparent;border-color:var(--line);color:var(--fg)">Seguir viendo</button>
+  </div>
+
+  <form class="t-checkout" id="t-checkout" hidden style="padding:16px 20px">
+    <label for="t-co-nombre">Nombre y apellido</label>
+    <input id="t-co-nombre" type="text" autocomplete="name" required>
+    <label for="t-co-email">Email</label>
+    <input id="t-co-email" type="email" autocomplete="email" required>
+    <p class="t-nota" id="t-co-error" hidden style="color:#a3241b"></p>
+    <button class="t-boton" type="submit">Confirmar pedido (simulado)</button>
+    <p class="t-nota">No se procesa ningún pago. Es una demostración de la experiencia de compra.</p>
+  </form>
+
+  <div class="t-confirmacion" id="t-confirmacion" hidden>
+    <h3>Pedido simulado <span id="t-conf-numero"></span></h3>
+    <p>Total: <strong id="t-conf-monto"></strong></p>
+    <p>Este es el recorrido completo de una compra. En una tienda real, acá entraría el pago y el pedido al panel de gestión.</p>
+    <a class="t-boton" href="/ecommerce?demo=indumentaria#formulario" data-volver="/ecommerce?demo=indumentaria#formulario">Quiero una tienda así</a>
+  </div>
+</aside>
+
+<script>
+  window.TIENDA = {
+    clave: "indumentaria",
+    marca: "Norte",
+    textos: { todas: "Todo", agregar: "Agregar", ver: "Ver" },
+    hero: {
+      etiqueta: "Demo conceptual · Scalability",
+      titulo: "Abrigo y básicos",
+      bajada: "Prendas de todos los días, en materiales que duran. Envíos a todo el país.",
+    },
+    categorias: [
+      { id: "abrigo", nombre: "Abrigo" },
+      { id: "basicos", nombre: "Básicos" },
+      { id: "pantalones", nombre: "Pantalones" },
+      { id: "accesorios", nombre: "Accesorios" },
+    ],
+    productos: [
+      { id: "campera-sierra", nombre: "Campera Sierra", precio: 89900, cat: "abrigo", variantes: ["S", "M", "L", "XL"], desc: "Campera de abrigo con capucha desmontable y bolsillos internos. Corte recto." },
+      { id: "buzo-oversize", nombre: "Buzo Oversize", precio: 54900, cat: "abrigo", variantes: ["S", "M", "L"], desc: "Buzo de frisa pesada, hombros caídos y puños reforzados." },
+      { id: "remera-pima", nombre: "Remera Pima", precio: 32900, cat: "basicos", variantes: ["S", "M", "L", "XL"], desc: "Algodón peinado de tacto suave, cuello redondo y calce regular." },
+      { id: "camisa-lino", nombre: "Camisa Lino", precio: 58900, cat: "basicos", variantes: ["S", "M", "L"], desc: "Lino lavado, manga larga y botones de nácar. Liviana para media estación." },
+      { id: "pantalon-cargo", nombre: "Pantalón Cargo", precio: 62900, cat: "pantalones", variantes: ["38", "40", "42", "44"], desc: "Sarga resistente con bolsillos laterales y cintura ajustable." },
+      { id: "jean-recto", nombre: "Jean Recto", precio: 68900, cat: "pantalones", variantes: ["38", "40", "42", "44"], desc: "Denim rígido de corte recto, tiro medio. Lava oscura." },
+      { id: "gorro-merino", nombre: "Gorro Merino", precio: 24900, cat: "accesorios", variantes: ["Único"], desc: "Lana merino tejida, doble vuelta. No pica." },
+      { id: "bufanda-lana", nombre: "Bufanda de Lana", precio: 28900, cat: "accesorios", variantes: ["Único"], desc: "Tejido grueso de lana virgen, 180 cm. Tono natural." },
+    ],
+  };
+</script>
+<script src="/demos/tienda.js?v=1" defer></script>
+</body>
+</html>
