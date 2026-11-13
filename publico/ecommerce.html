@@ -4,16 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Tiendas online a medida — Scalability</title>
-<meta name="description" content="Desarrollamos tu tienda online con carrito, pagos integrados y gestión de stock. Desde $375.000 ARS, sin comisiones de Scalability por venta.">
+<meta name="description" content="Desarrollamos experiencias de compra digitales adaptadas a tu marca: catálogo, pagos, stock y pedidos funcionando. Desde $375.000 ARS, sin comisiones de Scalability por venta.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://scalabilitysystems.com.ar/ecommerce">
 <link rel="icon" href="icono.png?v=b0fe41f4">
 <link rel="apple-touch-icon" href="icono-180.png?v=ccfa14c1">
 <link rel="stylesheet" href="estilo.css?v=f92513f0">
-<link rel="stylesheet" href="ecommerce.css?v=1ea4c7de">
+<link rel="stylesheet" href="ecommerce.css?v=84816691">
+<noscript><style>.rev{opacity:1 !important;transform:none !important}</style></noscript>
 <meta property="og:type" content="website">
-<meta property="og:title" content="Tu tienda online, diseñada para tu negocio — Scalability">
-<meta property="og:description" content="Carrito, pagos integrados y gestión de stock. Desde $375.000 ARS. Sin comisiones de Scalability por venta.">
+<meta property="og:title" content="Tu próxima tienda online merece algo más que una plantilla — Scalability">
+<meta property="og:description" content="Experiencias de compra diseñadas para tu marca. Desde $375.000 ARS. Sin comisiones de Scalability por venta.">
 <meta property="og:url" content="https://scalabilitysystems.com.ar/ecommerce">
 <meta property="og:image" content="https://scalabilitysystems.com.ar/og.png">
 <meta property="og:locale" content="es_AR">
@@ -28,8 +29,10 @@
   <div class="wrap">
     <a class="marca" href="index.html"><img src="icono.png?v=b0fe41f4" alt="" width="30" height="30">Scalability</a>
     <nav aria-label="Principal">
-      <a class="sec" href="#planes">Planes</a>
+      <a class="sec" href="#propuesta">Propuesta</a>
       <a class="sec" href="#demos">Demos</a>
+      <a class="sec" href="#planes">Planes</a>
+      <a class="sec" href="#proceso">Proceso</a>
       <a class="sec" href="#preguntas">Preguntas</a>
       <a class="btn ec-nav-cta" href="#formulario">Quiero mi tienda</a>
     </nav>
@@ -39,161 +42,293 @@
 <main id="contenido">
 <div class="wrap">
 
-  <!-- 1. Propuesta de valor -->
-  <section class="ec-hero">
-    <h1>Tu tienda online, <span class="acc">diseñada para tu negocio</span>.</h1>
-    <p class="copete">
-      Vendé online con carrito, pagos integrados y gestión de stock.
-      Sin comisiones adicionales de Scalability por venta.
-    </p>
-    <div class="acciones">
-      <a class="btn" href="#formulario" data-plan="">Quiero mi tienda online
-        <svg aria-hidden="true" viewBox="0 0 16 16" fill="none"><path d="M2.5 8h10M8.8 3.6L13.2 8l-4.4 4.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
-      <a class="btn btn-ghost" href="#planes">Ver planes y precios</a>
+  <!-- ── Hero ─────────────────────────────────────────────────────────── -->
+  <section class="ec-hero" id="hero">
+    <div class="ec-hero-texto">
+      <h1 class="rev">
+        Tu próxima tienda online merece
+        <em>algo más que una plantilla</em>.
+      </h1>
+      <p class="ec-bajada rev">
+        Desarrollamos experiencias de compra digitales adaptadas a tu marca, con todas las
+        herramientas que necesitás para vender y crecer.
+      </p>
+
+      <div class="ec-hero-datos rev">
+        <p><strong>E-commerce desde $375.000 ARS.</strong></p>
+        <p>Sin comisiones adicionales de Scalability por venta.</p>
+      </div>
+
+      <div class="acciones rev">
+        <a class="btn" href="#formulario" data-plan="">Quiero mi tienda online
+          <svg aria-hidden="true" viewBox="0 0 16 16" fill="none"><path d="M2.5 8h10M8.8 3.6L13.2 8l-4.4 4.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="ec-enlace" href="#demos">Explorar nuestros desarrollos</a>
+      </div>
     </div>
-    <ul class="ec-sellos">
-      <li>Desde $375.000 ARS</li>
-      <li>Pagos integrados</li>
-      <li>Stock automático</li>
-      <li>Sin comisión por venta</li>
+
+    <!-- Composición de dispositivos: no es una imagen, es interfaz -->
+    <div class="ec-hero-mock rev" aria-hidden="true">
+      <div class="ec-mock-escritorio tema-cosmetica">
+        <div class="ec-mock-barra"><i></i><i></i><i></i><span>aurea.com.ar</span></div>
+        <div class="ec-mock-nav"><strong>Aurea</strong><span>Rostro · Cuerpo · Kits</span><span class="ec-mock-pill">Carrito 2</span></div>
+        <div class="ec-mock-cuerpo">
+          <p class="ec-mock-et">Cuidado diario</p>
+          <h2>Fórmulas simples,<br>para todos los días.</h2>
+          <div class="ec-mock-grilla">
+            <span class="ec-mock-tile t1">SV</span>
+            <span class="ec-mock-tile t2">CH</span>
+            <span class="ec-mock-tile t3">LS</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ec-mock-telefono tema-indumentaria">
+        <div class="ec-mock-notch"></div>
+        <div class="ec-mock-nav ec-mock-nav-mini"><strong>Norte</strong><span>Carrito</span></div>
+        <div class="ec-mock-tile grande t4">CS</div>
+        <div class="ec-mock-lineas"><span></span><span class="corto"></span></div>
+        <div class="ec-mock-pill ec-mock-pill-oscuro">Agregar al carrito</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── El problema ──────────────────────────────────────────────────── -->
+  <section class="ec-problema" id="problema">
+    <h2 class="rev">Tu negocio ya tiene identidad.<br>Tu tienda también debería tenerla.</h2>
+    <div class="ec-problema-cuerpo">
+      <p class="rev">
+        Una tienda online no es un catálogo con un logo arriba. Es el lugar donde alguien decide
+        comprarte: cómo se ve, cómo se navega y qué tan rápido llega al pago pesa más que la
+        cantidad de productos.
+      </p>
+      <p class="rev">
+        Cuando la tienda se arma sobre una plantilla, la marca queda en segundo plano y el
+        recorrido de compra se adapta a la herramienta, no a tus clientes. Lo que se siente
+        genérico no se compra dos veces.
+      </p>
+    </div>
+    <ul class="ec-hechos rev" role="list">
+      <li><span>01</span> La identidad se pierde en el tema</li>
+      <li><span>02</span> El carrito trabaja contra la compra</li>
+      <li><span>03</span> El stock y los pedidos se administran a mano</li>
     </ul>
   </section>
 
-  <!-- 2. Por qué con Scalability -->
-  <section class="ec-porque">
-    <h2>No es una plantilla. Es tu tienda.</h2>
-    <div class="ec-porque-grilla">
-      <div>
-        <h3>Diseño propio</h3>
-        <p>La tienda se arma sobre tu identidad: cómo vendés, qué mostrás primero y cómo querés que te vean. No un tema genérico que hay que adaptar a la fuerza.</p>
-      </div>
-      <div>
-        <h3>Pagos y stock conectados</h3>
-        <p>Carrito y checkout funcionando, con la pasarela de pagos que uses, y el stock que se descuenta al confirmar cada venta.</p>
-      </div>
-      <div>
-        <h3>Sin comisiones nuestras</h3>
-        <p>Cobramos el desarrollo, no un porcentaje de lo que vendés. Las comisiones del procesador de pagos son aparte y las define el proveedor.</p>
-      </div>
-      <div>
-        <h3>Medición desde el día uno</h3>
-        <p>En el plan Growth queda configurado el seguimiento para saber qué producto se ve, cuál se agrega al carrito y dónde se abandona.</p>
-      </div>
+  <!-- ── Propuesta ────────────────────────────────────────────────────── -->
+  <section class="ec-propuesta" id="propuesta">
+    <h2 class="rev">Diseñamos experiencias. <em>Desarrollamos negocios.</em></h2>
+
+    <div class="ec-pilares">
+      <article class="ec-pilar rev">
+        <span class="ec-num">01</span>
+        <div>
+          <h3>Identidad</h3>
+          <p>Una tienda diseñada para representar tu marca: tipografía, color, fotografía y tono, resueltos como una pieza y no como un tema que se adapta a la fuerza.</p>
+        </div>
+      </article>
+      <article class="ec-pilar rev">
+        <span class="ec-num">02</span>
+        <div>
+          <h3>Funcionalidad</h3>
+          <p>Catálogo, carrito, pagos, pedidos y stock funcionando de manera integrada. Si se confirma una venta, el stock baja y el pedido entra a un lugar donde alguien lo ve.</p>
+        </div>
+      </article>
+      <article class="ec-pilar rev">
+        <span class="ec-num">03</span>
+        <div>
+          <h3>Crecimiento</h3>
+          <p>Herramientas para entender a tus clientes y mejorar tus resultados comerciales: qué se ve, qué se agrega al carrito, dónde se abandona y qué producto sostiene la venta.</p>
+        </div>
+      </article>
     </div>
   </section>
 
-  <!-- 3. Planes -->
-  <section id="planes" class="ec-planes-seccion">
-    <div class="ec-encabezado">
-      <h2>Dos formas de empezar a vender</h2>
-      <p class="copete">El alcance de cada plan está detallado abajo. Lo que no figura se presupuesta aparte.</p>
+  <!-- ── Portfolio ────────────────────────────────────────────────────── -->
+  <section class="ec-portfolio" id="demos">
+    <div class="ec-portfolio-cabeza">
+      <h2 class="rev">No te lo imagines. <em>Exploralo.</em></h2>
+      <p class="rev">Descubrí cómo puede verse y funcionar una experiencia de compra desarrollada para tu negocio.</p>
+    </div>
+
+    <p class="ec-aviso rev">
+      <strong>Demos conceptuales</strong>
+      <span>Son tiendas de ejemplo, no proyectos de clientes. El carrito funciona y el checkout es simulado: no se procesan pagos reales.</span>
+    </p>
+
+    <article class="ec-caso rev">
+      <div class="ec-caso-visual">
+        <div class="ec-mock-escritorio grande tema-cosmetica">
+          <div class="ec-mock-barra"><i></i><i></i><i></i><span>aurea.com.ar</span></div>
+          <div class="ec-mock-nav"><strong>Aurea</strong><span>Rostro · Cuerpo · Kits</span><span class="ec-mock-pill">Carrito</span></div>
+          <div class="ec-mock-cuerpo">
+            <p class="ec-mock-et">Cosmética · Cuidado diario</p>
+            <h2>Cuidado diario</h2>
+            <div class="ec-mock-grilla cuatro">
+              <span class="ec-mock-tile t1">SV</span>
+              <span class="ec-mock-tile t2">CH</span>
+              <span class="ec-mock-tile t3">LS</span>
+              <span class="ec-mock-tile t5">BF</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ec-caso-texto">
+        <p class="ec-eyebrow">Demo 01 · Cosmética</p>
+        <h3>Aurea</h3>
+        <p class="ec-caso-desc">
+          Catálogo con filtros por tipo de producto, fichas con variantes de tamaño, carrito que
+          persiste y un checkout que explica cada paso. Paleta cálida, tipografía serif y una
+          jerarquía pensada para que el producto se vea.
+        </p>
+        <ul class="ec-caso-piezas">
+          <li>Filtros por categoría</li>
+          <li>Ficha con variantes</li>
+          <li>Carrito persistente</li>
+        </ul>
+        <div class="ec-caso-acciones">
+          <a class="btn" href="demos/cosmetica/" data-demo="cosmetica">Explorar tienda</a>
+          <a class="ec-enlace" href="#formulario" data-plan="">Quiero una tienda para mi negocio</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="ec-caso invertido rev">
+      <div class="ec-caso-visual">
+        <div class="ec-mock-escritorio grande tema-indumentaria">
+          <div class="ec-mock-barra"><i></i><i></i><i></i><span>norte.com.ar</span></div>
+          <div class="ec-mock-nav"><strong>Norte</strong><span>Abrigo · Básicos · Accesorios</span><span class="ec-mock-pill">Carrito</span></div>
+          <div class="ec-mock-cuerpo">
+            <p class="ec-mock-et">Indumentaria</p>
+            <h2>Abrigo y básicos</h2>
+            <div class="ec-mock-grilla cuatro">
+              <span class="ec-mock-tile oscuro t6">CS</span>
+              <span class="ec-mock-tile oscuro t7">BO</span>
+              <span class="ec-mock-tile oscuro t8">RP</span>
+              <span class="ec-mock-tile oscuro t9">CL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ec-caso-texto">
+        <p class="ec-eyebrow">Demo 02 · Indumentaria</p>
+        <h3>Norte</h3>
+        <p class="ec-caso-desc">
+          Otra identidad, el mismo motor: grilla editorial, fichas con talle, carrito que
+          sobrevive a la recarga y checkout simulado hasta la confirmación del pedido. Fondo
+          oscuro, mayúsculas espaciadas y foco en la prenda.
+        </p>
+        <ul class="ec-caso-piezas">
+          <li>Grilla editorial</li>
+          <li>Talles por producto</li>
+          <li>Checkout completo</li>
+        </ul>
+        <div class="ec-caso-acciones">
+          <a class="btn" href="demos/indumentaria/" data-demo="indumentaria">Explorar tienda</a>
+          <a class="ec-enlace" href="#formulario" data-plan="">Quiero una tienda para mi negocio</a>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ── Planes ───────────────────────────────────────────────────────── -->
+  <section class="ec-planes-seccion" id="planes">
+    <div class="ec-planes-cabeza">
+      <h2 class="rev">Dos formas de empezar a vender.</h2>
+      <p class="rev">El alcance de cada plan está detallado abajo. Lo que no figura se presupuesta aparte, con su costo a la vista.</p>
     </div>
 
     <div class="ec-planes">
-      <article class="ec-plan">
+      <article class="ec-plan rev">
         <div class="ec-plan-cabeza">
           <h3>E-commerce Inicial</h3>
           <p class="ec-precio">$375.000 <span>ARS</span></p>
-          <p class="ec-precio-nota">Pago único de implementación</p>
+          <p class="ec-precio-nota">Pago único por desarrollo</p>
         </div>
         <ul class="ec-lista">
-          <li>Diseño adaptado a la identidad de marca y a dispositivos móviles</li>
-          <li>Catálogo organizado por categorías y fichas de productos</li>
-          <li>Carrito de compras y checkout funcional</li>
-          <li>Pasarela de pagos integrada</li>
+          <li>Diseño adaptado a la identidad del negocio</li>
+          <li>Experiencia optimizada para dispositivos móviles</li>
+          <li>Catálogo y categorías</li>
+          <li>Fichas de producto</li>
+          <li>Carrito de compras</li>
+          <li>Checkout funcional</li>
+          <li>Pasarela de pagos</li>
           <li>Gestión de productos y pedidos</li>
-          <li>Stock básico con actualización automática al confirmar ventas</li>
-          <li>Configuración básica de entregas y retiros</li>
+          <li>Sistema básico de stock</li>
+          <li>Configuración básica de envíos y retiros</li>
           <li>Integración con WhatsApp</li>
         </ul>
         <a class="btn btn-ghost" href="#formulario" data-plan="Inicial">Quiero mi E-commerce Inicial</a>
       </article>
 
-      <article class="ec-plan destacado">
+      <article class="ec-plan destacado rev">
         <div class="ec-plan-cabeza">
           <span class="ec-etiqueta">Más completo</span>
           <h3>E-commerce Growth</h3>
           <p class="ec-precio">$575.000 <span>ARS</span></p>
-          <p class="ec-precio-nota">Pago único de implementación</p>
+          <p class="ec-precio-nota">Pago único por desarrollo</p>
         </div>
         <p class="ec-incluye">Incluye todo lo del plan Inicial, más:</p>
         <ul class="ec-lista">
           <li>Diseño optimizado para conversión</li>
-          <li>Historial de compras y seguimiento de clientes</li>
-          <li>Email marketing: configuración, plantilla y campaña inicial</li>
-          <li>Recuperación de carritos abandonados por email, cuando se disponga del contacto y corresponda su uso</li>
-          <li>Meta Pixel y Google Analytics 4</li>
-          <li>Dashboard de ventas, pedidos, ticket promedio y productos destacados</li>
-          <li>Cupones, descuentos y promociones</li>
-          <li>Enlaces directos y códigos QR de productos</li>
+          <li>Seguimiento e historial de clientes</li>
+          <li>Dashboard comercial</li>
+          <li>Google Analytics 4</li>
+          <li>Meta Pixel y medición de conversiones</li>
+          <li>Configuración inicial de email marketing</li>
+          <li>Recuperación de carritos abandonados</li>
+          <li>Herramientas de promociones y descuentos</li>
+          <li>Enlaces comerciales y códigos QR</li>
           <li>Diagnóstico y recomendaciones comerciales iniciales</li>
         </ul>
         <a class="btn" href="#formulario" data-plan="Growth">Quiero mi E-commerce Growth</a>
       </article>
     </div>
 
-    <div class="ec-condiciones">
-      <p><strong>Condiciones de contratación.</strong> 50% al iniciar y 50% contra entrega. Dominio, hosting, servicios externos, publicidad y comisiones de procesamiento de pagos se presupuestan aparte.</p>
-      <p>La sincronización avanzada entre sucursales, las integraciones complejas, el CRM personalizado y las automatizaciones a medida también se presupuestan aparte. Los plazos, la carga inicial de contenido y las revisiones se definen antes de contratar.</p>
+    <div class="ec-condiciones rev">
+      <p><strong>Condiciones.</strong> 50% al iniciar y 50% contra entrega. Hosting, dominio, mantenimiento y servicios externos se cotizan por separado.</p>
+      <p>Las pasarelas de pago pueden cobrar sus propias comisiones: Scalability no cobra comisiones adicionales por venta. Las funcionalidades fuera del alcance acordado se presupuestan aparte.</p>
     </div>
   </section>
 
-  <!-- 4. Demos -->
-  <section id="demos" class="ec-demos-seccion">
-    <div class="ec-encabezado">
-      <h2>Explorá cómo podría verse tu tienda online</h2>
-      <p class="copete">Cada negocio es diferente. Descubrí algunas de las experiencias de compra que podemos desarrollar para tu marca.</p>
-    </div>
+  <!-- ── Proceso ──────────────────────────────────────────────────────── -->
+  <section class="ec-proceso" id="proceso">
+    <h2 class="rev">De una idea a una tienda <em>lista para vender</em>.</h2>
 
-    <p class="ec-aviso">
-      <strong>Demos conceptuales</strong>
-      <span>Son tiendas de ejemplo, no proyectos de clientes. El carrito funciona y el checkout es simulado: no se procesan pagos reales.</span>
-    </p>
-
-    <div class="ec-demos">
-      <article class="ec-demo">
-        <div class="ec-demo-preview tema-indumentaria" aria-hidden="true">
-          <span class="ec-demo-marca">Norte</span>
-          <span class="ec-demo-linea">Indumentaria · Temporada</span>
-        </div>
-        <div class="ec-demo-cuerpo">
-          <h3>Indumentaria</h3>
-          <p>Tienda con identidad visual propia, categorías por prenda, fichas de producto, carrito y checkout simulado.</p>
-          <div class="ec-demo-acciones">
-            <a class="btn" href="demos/indumentaria/" data-demo="indumentaria">Explorar tienda</a>
-            <a class="btn btn-ghost" href="#formulario" data-plan="">Quiero una tienda para mi negocio</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="ec-demo">
-        <div class="ec-demo-preview tema-cosmetica" aria-hidden="true">
-          <span class="ec-demo-marca">Aurea</span>
-          <span class="ec-demo-linea">Cosmética · Cuidado diario</span>
-        </div>
-        <div class="ec-demo-cuerpo">
-          <h3>Cosmética</h3>
-          <p>Otra identidad visual, catálogo con filtros por tipo de producto, fichas, carrito y checkout simulado.</p>
-          <div class="ec-demo-acciones">
-            <a class="btn" href="demos/cosmetica/" data-demo="cosmetica">Explorar tienda</a>
-            <a class="btn btn-ghost" href="#formulario" data-plan="">Quiero una tienda para mi negocio</a>
-          </div>
-        </div>
-      </article>
-    </div>
+    <ol class="ec-linea">
+      <li class="rev">
+        <span class="ec-num">01</span>
+        <h3>Descubrimiento</h3>
+        <p>Entendemos tu negocio, tus productos y tu identidad.</p>
+      </li>
+      <li class="rev">
+        <span class="ec-num">02</span>
+        <h3>Diseño</h3>
+        <p>Definimos la experiencia visual y el recorrido de compra.</p>
+      </li>
+      <li class="rev">
+        <span class="ec-num">03</span>
+        <h3>Desarrollo</h3>
+        <p>Implementamos el catálogo, pagos, stock y funcionalidades.</p>
+      </li>
+      <li class="rev">
+        <span class="ec-num">04</span>
+        <h3>Lanzamiento</h3>
+        <p>Probamos el funcionamiento y preparamos la tienda para operar.</p>
+      </li>
+    </ol>
   </section>
 
-  <!-- 5. Formulario -->
+  <!-- ── Formulario ───────────────────────────────────────────────────── -->
   <section id="formulario" class="ec-form-seccion">
     <div class="ec-form-grilla">
       <div class="ec-form-info">
-        <h2>Contanos qué querés vender</h2>
-        <p class="copete">Con estos datos podemos decirte qué plan encaja y qué falta para arrancar. Sin compromiso.</p>
-        <p class="micro">Si preferís, también podés escribirnos por <a href="https://wa.me/5493417124688" target="_blank" rel="noopener">WhatsApp</a>.</p>
+        <h2 class="rev">Contanos qué querés vender.</h2>
+        <p class="copete rev">Con estos datos podemos decirte qué plan encaja y qué falta para arrancar. Sin compromiso.</p>
+        <p class="micro rev">Si preferís, también podés escribirnos por <a href="https://wa.me/5493417124688" target="_blank" rel="noopener">WhatsApp</a>.</p>
       </div>
 
-      <div>
+      <div class="rev">
         <form id="ec-form" class="ec-form" novalidate>
           <div class="campo">
             <label for="ec-nombre">Nombre</label>
@@ -202,20 +337,20 @@
           </div>
 
           <div class="campo">
-            <label for="ec-negocio">Negocio o marca</label>
+            <label for="ec-negocio">Nombre del negocio</label>
             <input id="ec-negocio" name="negocio" type="text" autocomplete="organization" required aria-describedby="ec-e-negocio">
             <p class="ec-error" id="ec-e-negocio" hidden></p>
           </div>
 
-          <div class="campo">
-            <label for="ec-contacto">WhatsApp o email</label>
+          <div class="campo ancho">
+            <label for="ec-contacto">WhatsApp o correo electrónico</label>
             <input id="ec-contacto" name="contacto" type="text" inputmode="email" required aria-describedby="ec-e-contacto ec-ayuda-contacto">
             <p class="micro" id="ec-ayuda-contacto" style="font-size:12.5px">Con uno de los dos alcanza para responderte.</p>
             <p class="ec-error" id="ec-e-contacto" hidden></p>
           </div>
 
           <div class="campo">
-            <label for="ec-plan">Plan de interés</label>
+            <label for="ec-plan">Plan seleccionado</label>
             <select id="ec-plan" name="plan" required aria-describedby="ec-e-plan">
               <option value="">Elegí un plan</option>
               <option value="Inicial">E-commerce Inicial — $375.000</option>
@@ -226,7 +361,7 @@
           </div>
 
           <div class="campo">
-            <label for="ec-sitio">Sitio web o Instagram <span class="ec-opcional">(opcional)</span></label>
+            <label for="ec-sitio">Instagram o web actual <span class="ec-opcional">(opcional)</span></label>
             <input id="ec-sitio" name="sitio" type="text" autocomplete="url">
           </div>
 
@@ -253,44 +388,52 @@
     </div>
   </section>
 
-  <!-- 6. Preguntas -->
+  <!-- ── Preguntas ────────────────────────────────────────────────────── -->
   <section id="preguntas" class="ec-faq-seccion">
-    <h2>Preguntas frecuentes</h2>
-    <div class="ec-faq">
-      <details open>
-        <summary>¿Qué métodos de pago se pueden integrar?<svg aria-hidden="true" viewBox="0 0 16 16" fill="none"><path d="M3 6.5L8 11.5L13 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-        <div class="ec-respuesta"><p>Se integra la pasarela de pagos que uses en tu negocio. La disponibilidad de medios de pago depende de esa pasarela y de la situación fiscal de tu empresa; se define antes de contratar, no después.</p></div>
-      </details>
-      <details>
-        <summary>¿Cuánto tarda el desarrollo?<svg aria-hidden="true" viewBox="0 0 16 16" fill="none"><path d="M3 6.5L8 11.5L13 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-        <div class="ec-respuesta"><p>Depende del catálogo y de las integraciones. El plazo se fija en la propuesta, después de ver cuántos productos hay, cómo se cargan y qué pagos se integran. No prometemos una fecha antes de conocer eso.</p></div>
-      </details>
-      <details>
-        <summary>¿Cómo funciona el stock?<svg aria-hidden="true" viewBox="0 0 16 16" fill="none"><path d="M3 6.5L8 11.5L13 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-        <div class="ec-respuesta"><p>En el plan Inicial el stock se descuenta automáticamente cuando se confirma una venta. La sincronización avanzada entre sucursales o depósitos se presupuesta aparte.</p></div>
-      </details>
-      <details>
-        <summary>¿Qué costos hay además del plan?<svg aria-hidden="true" viewBox="0 0 16 16" fill="none"><path d="M3 6.5L8 11.5L13 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-        <div class="ec-respuesta"><p>Dominio, hosting, servicios externos, publicidad y las comisiones del procesador de pagos se presupuestan aparte. Scalability no cobra comisión por venta: cobra el desarrollo.</p></div>
-      </details>
-      <details>
-        <summary>¿Hay mantenimiento mensual?<svg aria-hidden="true" viewBox="0 0 16 16" fill="none"><path d="M3 6.5L8 11.5L13 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-        <div class="ec-respuesta"><p>El plan cubre la implementación. Si querés soporte, actualizaciones o mejoras continuas, se acuerda un esquema aparte según lo que necesite la tienda.</p></div>
-      </details>
-      <details>
-        <summary>¿Puedo cargar los productos yo?<svg aria-hidden="true" viewBox="0 0 16 16" fill="none"><path d="M3 6.5L8 11.5L13 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-        <div class="ec-respuesta"><p>Sí. La tienda queda con un panel para gestionar productos y pedidos. La carga inicial se coordina antes de empezar: cuántos productos son y quién los sube forma parte del alcance.</p></div>
-      </details>
+    <div class="ec-faq-grilla">
+      <h2 class="rev">Preguntas frecuentes</h2>
+      <div class="ec-faq rev">
+        <details open>
+          <summary>¿Qué métodos de pago se pueden integrar?<svg aria-hidden="true" viewBox="0 0 16 16" fill="none"><path d="M3 6.5L8 11.5L13 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div class="ec-respuesta"><p>Se integra la pasarela de pagos que uses en tu negocio. La disponibilidad de medios de pago depende de esa pasarela y de la situación fiscal de tu empresa; se define antes de contratar, no después.</p></div>
+        </details>
+        <details>
+          <summary>¿Cuánto tarda el desarrollo?<svg aria-hidden="true" viewBox="0 0 16 16" fill="none"><path d="M3 6.5L8 11.5L13 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div class="ec-respuesta"><p>Depende del catálogo y de las integraciones. El plazo se fija en la propuesta, después de ver cuántos productos hay, cómo se cargan y qué pagos se integran.</p></div>
+        </details>
+        <details>
+          <summary>¿Cómo funciona el stock?<svg aria-hidden="true" viewBox="0 0 16 16" fill="none"><path d="M3 6.5L8 11.5L13 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div class="ec-respuesta"><p>En el plan Inicial el stock se descuenta cuando se confirma una venta. La sincronización avanzada entre sucursales o depósitos se presupuesta aparte.</p></div>
+        </details>
+        <details>
+          <summary>¿Qué costos hay además del plan?<svg aria-hidden="true" viewBox="0 0 16 16" fill="none"><path d="M3 6.5L8 11.5L13 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div class="ec-respuesta"><p>Dominio, hosting, mantenimiento, servicios externos, publicidad y las comisiones del procesador de pagos se cotizan por separado. Scalability no cobra comisión por venta: cobra el desarrollo.</p></div>
+        </details>
+        <details>
+          <summary>¿El dominio y el hosting están incluidos?<svg aria-hidden="true" viewBox="0 0 16 16" fill="none"><path d="M3 6.5L8 11.5L13 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div class="ec-respuesta"><p>No. Se cotizan aparte porque dependen del proveedor y del plan. Antes de empezar te pasamos las opciones con su costo, y si ya tenés dominio lo usamos.</p></div>
+        </details>
+        <details>
+          <summary>¿Hay mantenimiento mensual?<svg aria-hidden="true" viewBox="0 0 16 16" fill="none"><path d="M3 6.5L8 11.5L13 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div class="ec-respuesta"><p>El plan cubre la implementación. Si querés soporte, actualizaciones o mejoras continuas, se acuerda un esquema aparte según lo que necesite la tienda.</p></div>
+        </details>
+        <details>
+          <summary>¿Puedo cargar los productos yo?<svg aria-hidden="true" viewBox="0 0 16 16" fill="none"><path d="M3 6.5L8 11.5L13 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div class="ec-respuesta"><p>Sí. La tienda queda con un panel para gestionar productos y pedidos. La carga inicial se coordina antes de empezar: cuántos productos son y quién los sube forma parte del alcance.</p></div>
+        </details>
+      </div>
     </div>
   </section>
 
-  <!-- 7. CTA final -->
+  <!-- ── Cierre ───────────────────────────────────────────────────────── -->
   <section class="ec-cierre">
-    <h2>Hablemos de tu proyecto.</h2>
-    <p class="copete">Contanos qué vendés y te decimos qué plan encaja, qué incluye y qué queda por definir.</p>
-    <div class="acciones">
-      <a class="btn" href="#formulario" data-plan="">Quiero mi tienda online</a>
-      <a class="btn btn-ghost" href="https://wa.me/5493417124688" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+    <div class="ec-cierre-cuerpo">
+      <h2 class="rev">Hablemos de tu proyecto.</h2>
+      <p class="rev">Contanos qué vendés y te decimos qué plan encaja, qué incluye y qué queda por definir.</p>
+      <div class="acciones rev">
+        <a class="btn" href="#formulario" data-plan="">Quiero mi tienda online</a>
+        <a class="ec-enlace" href="https://wa.me/5493417124688" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+      </div>
     </div>
   </section>
 
@@ -309,6 +452,6 @@
   </div>
 </footer>
 
-<script src="ecommerce.js?v=0bd64479" defer></script>
+<script src="ecommerce.js?v=baddae68" defer></script>
 </body>
 </html>

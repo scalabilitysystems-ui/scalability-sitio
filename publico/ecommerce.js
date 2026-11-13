@@ -233,3 +233,25 @@ const demoOrigen = new URLSearchParams(location.search).get("demo");
 if (demoOrigen) evento("ecommerce_desde_demo", { demo: demoOrigen });
 
 evento("ecommerce_vista", { plan_url: planUrl || "", demo_origen: demoOrigen || "" });
+
+// ── Aparición editorial ────────────────────────────────────────────────────
+// Los bloques .rev entran al hacerse visibles. Con movimiento reducido (o sin
+// soporte), quedan visibles desde el arranque: nunca se esconde contenido.
+const bloques = document.querySelectorAll(".rev");
+const prefiereQuieto = matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (prefiereQuieto || !("IntersectionObserver" in window)) {
+  bloques.forEach((b) => b.classList.add("visible"));
+} else {
+  const observador = new IntersectionObserver(
+    (entradas) => {
+      entradas.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add("visible");
+          observador.unobserve(e.target);
+        }
+      });
+    },
+    { rootMargin: "0px 0px -6% 0px", threshold: 0.06 },
+  );
+  bloques.forEach((b) => observador.observe(b));
+}
