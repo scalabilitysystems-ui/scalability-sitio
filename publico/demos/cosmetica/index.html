@@ -3,30 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Aurea — demo de tienda de cosmética</title>
-<meta name="description" content="Demo conceptual de tienda online de cosmética desarrollada por Scalability: catálogo con filtros, fichas, carrito y checkout simulado.">
+<title>Aurea — cosmética | demo de Scalability</title>
+<meta name="description" content="Demo conceptual de tienda de cosmética desarrollada por Scalability: catálogo con filtros, fichas con ingredientes, carrito y checkout simulado.">
 <meta name="robots" content="noindex,follow">
 <link rel="icon" href="/icono.png?v=b0fe41f4">
-<link rel="stylesheet" href="/demos/tienda.css?v=9f40f9b7">
+<link rel="stylesheet" href="/demos/tienda.css?v=e39aec35">
 </head>
 <body>
 
 <div class="t-demo-barra">
   <div class="t-wrap">
-    <span><strong>Demo conceptual</strong> — tienda de ejemplo, no es un cliente real. El checkout es simulado.</span>
-    <span>
-      <a href="/ecommerce#demos" data-volver="/ecommerce#demos">Volver a Scalability</a> ·
-      <a href="/ecommerce?demo=cosmetica#formulario" data-volver="/ecommerce?demo=cosmetica#formulario">Quiero una tienda así</a>
-    </span>
+    <span><strong>Experiencia de demostración</strong> desarrollada por Scalability. Tienda de ejemplo, no es un cliente real.</span>
+    <a href="/ecommerce#demos">Volver a Scalability</a>
   </div>
 </div>
 
 <header class="t-cabecera">
   <div class="t-wrap">
-    <a class="t-marca" id="t-marca" href="/ecommerce#demos">Aurea</a>
+    <a class="t-marca" id="t-marca" href="#/">Aurea</a>
     <nav class="t-nav" aria-label="Tienda">
-      <a href="#catalogo">Catálogo</a>
-      <a href="/ecommerce#demos">Sobre esta demo</a>
+      <a href="#/catalogo">Catálogo</a>
+      <a href="#/catalogo/rostro">Rostro</a>
+      <a href="#/catalogo/cuerpo">Cuerpo</a>
+      <a href="#/catalogo/kits">Kits</a>
     </nav>
     <button class="t-carrito-boton" id="t-carrito-abrir" type="button">
       Carrito <span class="t-contador" id="t-contador" hidden>0</span>
@@ -34,105 +33,222 @@
   </div>
 </header>
 
-<main>
+<main id="t-main" class="t-wrap"></main>
+
+<footer class="t-comercial">
   <div class="t-wrap">
-    <section class="t-portada">
-      <p class="t-etiqueta" id="t-portada-etiqueta">Demo conceptual</p>
-      <h1 id="t-portada-titulo">Cuidado diario</h1>
-      <p id="t-portada-texto">Fórmulas simples, para todos los días.</p>
-    </section>
-
-    <h2 class="t-solo-lectores">Catálogo</h2>
-    <div class="t-filtros" id="t-filtros" role="group" aria-label="Filtrar por tipo de producto"></div>
-    <div class="t-grilla" id="t-grilla"></div>
-  </div>
-
-  <section class="t-volver">
-    <div class="t-wrap">
-      <p>Esta tienda la armamos como ejemplo de lo que se puede construir. Si querés una para tu marca, se cotiza según catálogo y pagos.</p>
-      <a class="t-boton" href="/ecommerce?demo=cosmetica#formulario" data-volver="/ecommerce?demo=cosmetica#formulario">Quiero una tienda para mi negocio</a>
-    </div>
-  </section>
-</main>
-
-<!-- Ficha de producto -->
-<div class="t-ficha" id="t-ficha" role="dialog" aria-modal="true" aria-labelledby="t-ficha-nombre" hidden>
-  <div class="t-ficha-caja">
-    <div class="t-ficha-foto" aria-hidden="true"></div>
-    <div class="t-ficha-cuerpo">
-      <h2 id="t-ficha-nombre"></h2>
-      <p class="t-ficha-precio" id="t-ficha-precio"></p>
-      <p id="t-ficha-desc"></p>
-      <div class="t-variantes" id="t-variantes" role="group" aria-label="Tamaño"></div>
-      <button class="t-boton" id="t-ficha-agregar" type="button">Agregar al carrito</button>
-      <button class="t-cerrar" id="t-ficha-cerrar" type="button" aria-label="Cerrar ficha">×</button>
+    <p><strong>Experiencia de demostración desarrollada por Scalability.</strong> Productos, precios e ingredientes son ficticios. El carrito funciona y el pago es simulado.</p>
+    <div class="t-comercial-acciones">
+      <a class="t-link" href="/ecommerce#demos">Volver a Scalability</a>
+      <a class="t-cta" id="t-volver-comercial" href="/ecommerce?demo=cosmetica#formulario">Quiero una tienda como esta</a>
     </div>
   </div>
-</div>
+</footer>
 
 <!-- Carrito -->
 <aside class="t-panel" id="t-panel" aria-label="Carrito" hidden>
   <div class="t-panel-cabeza">
     <h2>Tu carrito</h2>
-    <button class="t-cerrar" id="t-panel-cerrar" type="button" aria-label="Cerrar carrito" style="position:static">×</button>
+    <button class="t-cerrar" id="t-panel-cerrar" type="button" aria-label="Cerrar carrito">×</button>
   </div>
 
-  <div class="t-items" id="t-items"></div>
-  <p class="t-vacio" id="t-vacio">Todavía no agregaste nada.</p>
-
-  <div class="t-panel-pie" id="t-panel-pie" hidden>
-    <div class="t-subtotal"><span>Subtotal</span><span id="t-subtotal"></span></div>
-    <p class="t-nota">Envío calculado en el checkout. Demo sin pagos reales.</p>
-    <button class="t-boton" id="t-comprar" type="button">Finalizar compra</button>
-    <button class="t-boton" id="t-seguir" type="button" style="background:transparent;border-color:var(--line);color:var(--fg)">Seguir viendo</button>
+  <div id="t-carrito-vista">
+    <div class="t-items" id="t-items"></div>
+    <div class="t-panel-pie" id="t-panel-pie" hidden>
+      <div class="t-subtotal"><span>Subtotal</span><span id="t-subtotal"></span></div>
+      <p class="t-nota">Envío y pago se calculan en el checkout. Demo sin pagos reales.</p>
+      <button class="t-cta t-ancho" id="t-comprar" type="button">Finalizar compra</button>
+      <button class="t-secundario" id="t-seguir" type="button">Seguir viendo</button>
+    </div>
   </div>
 
-  <form class="t-checkout" id="t-checkout" hidden style="padding:16px 20px">
+  <form class="t-checkout" id="t-checkout" hidden>
+    <button class="t-link" type="button" id="t-volver-carrito" style="justify-self:start">← Volver al carrito</button>
     <label for="t-co-nombre">Nombre y apellido</label>
     <input id="t-co-nombre" type="text" autocomplete="name" required>
     <label for="t-co-email">Email</label>
     <input id="t-co-email" type="email" autocomplete="email" required>
     <p class="t-nota" id="t-co-error" hidden style="color:#a3241b"></p>
-    <button class="t-boton" type="submit">Confirmar pedido (simulado)</button>
-    <p class="t-nota">No se procesa ningún pago. Es una demostración de la experiencia de compra.</p>
+    <button class="t-cta t-ancho" type="submit">Confirmar pedido (simulado)</button>
+    <p class="t-nota">No se procesa ningún pago ni se piden datos de tarjeta.</p>
   </form>
 
   <div class="t-confirmacion" id="t-confirmacion" hidden>
     <h3>Pedido simulado <span id="t-conf-numero"></span></h3>
     <p>Total: <strong id="t-conf-monto"></strong></p>
     <p>Este es el recorrido completo de una compra. En una tienda real, acá entraría el pago y el pedido al panel de gestión.</p>
-    <a class="t-boton" href="/ecommerce?demo=cosmetica#formulario" data-volver="/ecommerce?demo=cosmetica#formulario">Quiero una tienda así</a>
+    <a class="t-cta t-ancho" id="t-volver-comercial-2" href="/ecommerce?demo=cosmetica#formulario">Quiero una tienda como esta</a>
   </div>
 </aside>
+
+<div class="t-toast" id="t-toast" role="status" aria-live="polite" hidden></div>
 
 <script>
   window.TIENDA = {
     clave: "cosmetica",
-    marca: "Aurea",
-    textos: { todas: "Todo", agregar: "Agregar", ver: "Ver" },
-    hero: {
-      etiqueta: "Demo conceptual · Scalability",
-      titulo: "Cuidado diario",
-      bajada: "Fórmulas simples, sin promesas raras. Envío gratis desde $60.000.",
+    marca: {
+      nombre: "Aurea",
+      universo: "Cosmética · Cuidado diario",
+      hero: {
+        titulo: "Fórmulas simples,<br><em>para todos los días</em>.",
+        bajada: "Pocos productos, bien formulados. Sin promesas raras ni rutinas de diez pasos: lo que la piel necesita, en el orden correcto.",
+        cta: "Explorar productos",
+      },
+      filosofia: {
+        titulo: "Menos pasos, mejor piel.",
+        texto: "Cada fórmula tiene entre cinco y nueve ingredientes, todos declarados en la ficha. Sin perfume agregado, sin alcohol, sin promesas de resultados que no se puedan sostener.",
+      },
     },
-    categorias: [
-      { id: "rostro", nombre: "Rostro" },
-      { id: "cuerpo", nombre: "Cuerpo" },
-      { id: "color", nombre: "Color" },
-      { id: "kits", nombre: "Kits" },
+    textos: {
+      destacados: "Selección de la casa",
+      verTodo: "Ver todo el catálogo",
+      categorias: "Categorías",
+      catalogo: "Catálogo",
+      pieza: "producto",
+      piezas: "productos",
+      filtros: "Filtros",
+      categoria: "Categoría",
+      necesidad: "Necesidad",
+      talle: "Formato",
+      color: "Color",
+      precio: "Precio",
+      todos: "Todas",
+      todas: "Todas",
+      limpiar: "Limpiar filtros",
+      ordenar: "Ordenar por",
+      inicio: "Inicio",
+      vistas: "Vistas del producto",
+      vista: "Vista",
+      guia: "Guía de uso",
+      guiaTitulo: "Modo de uso",
+      descripcion: "Descripción",
+      detalle: "Ingredientes",
+      relacionados: "Se suele comprar junto",
+      agregar: "Agregar",
+      agregarCarrito: "Agregar al carrito",
+      sinStock: "Sin stock",
+      sinStockAviso: "Ese formato está agotado.",
+      ultimas: "Últimas unidades:",
+      disponible: "Disponible",
+      stockMaximo: "No hay más stock disponible. Máximo:",
+      elegirTalle: "Elegí un formato para agregar.",
+      carritoVacio: "Todavía no agregaste nada.",
+      checkoutError: "Completá nombre y un email válido para simular el pedido.",
+      sinResultados: "No hay productos con esos filtros.",
+    },
+    ordenamientos: [
+      { id: "destacado", nombre: "Destacados" },
+      { id: "precio-asc", nombre: "Menor precio" },
+      { id: "precio-desc", nombre: "Mayor precio" },
+      { id: "nombre", nombre: "Nombre" },
     ],
+    filtros: {
+      categorias: [
+        { id: "rostro", nombre: "Rostro" },
+        { id: "cuerpo", nombre: "Cuerpo" },
+        { id: "color", nombre: "Color" },
+        { id: "kits", nombre: "Kits" },
+      ],
+      necesidades: [
+        { id: "hidratacion", nombre: "Hidratación" },
+        { id: "limpieza", nombre: "Limpieza" },
+        { id: "firmeza", nombre: "Firmeza" },
+        { id: "proteccion", nombre: "Protección" },
+      ],
+      colores: [
+        { id: "neutro", nombre: "Neutro", hex: "#e6cdbd" },
+        { id: "terracota", nombre: "Terracota", hex: "#b56a52" },
+        { id: "vino", nombre: "Vino", hex: "#7d3a3f" },
+      ],
+      precios: [
+        { id: "20000", nombre: "Hasta $20.000" },
+        { id: "30000", nombre: "Hasta $30.000" },
+        { id: "40000", nombre: "Hasta $40.000" },
+      ],
+    },
+    guia: null,
     productos: [
-      { id: "serum-vit-c", nombre: "Sérum Vitamina C", precio: 28900, cat: "rostro", variantes: ["30 ml", "50 ml"], desc: "Sérum liviano con vitamina C estabilizada. Se usa a la mañana, antes del protector solar." },
-      { id: "crema-hidratante", nombre: "Crema Hidratante", precio: 24900, cat: "rostro", variantes: ["50 ml", "100 ml"], desc: "Hidratación de absorción rápida con ácido hialurónico de bajo peso molecular." },
-      { id: "limpiador-suave", nombre: "Limpiador Suave", precio: 19900, cat: "rostro", variantes: ["150 ml"], desc: "Gel sin sulfatos para limpiar sin dejar la piel tirante." },
-      { id: "bruma-facial", nombre: "Bruma Facial", precio: 21900, cat: "rostro", variantes: ["100 ml"], desc: "Agua de rosas y pantenol. Refresca y prepara la piel antes del sérum." },
-      { id: "aceite-corporal", nombre: "Aceite Corporal", precio: 26900, cat: "cuerpo", variantes: ["200 ml"], desc: "Mezcla de jojoba y almendras. Se absorbe sin dejar residuo." },
-      { id: "manteca-karite", nombre: "Manteca de Karité", precio: 22900, cat: "cuerpo", variantes: ["250 ml"], desc: "Textura densa para zonas secas: codos, rodillas y talones." },
-      { id: "labial-mate", nombre: "Labial Mate", precio: 18900, cat: "color", variantes: ["Nude", "Terracota", "Vino"], desc: "Larga duración, acabado mate y textura cremosa que no reseca." },
-      { id: "kit-viaje", nombre: "Kit Viaje", precio: 34900, cat: "kits", variantes: ["4 piezas"], desc: "Limpiador, sérum, hidratante y bruma en formato de 30 ml, en estuche de lino." },
+      {
+        id: "serum-vit-c", nombre: "Sérum Vitamina C", orden: 0, tipo: "serum", categoria: "rostro", necesidad: "firmeza",
+        precio: 28900, coleccion: "Rostro · Tratamiento", destacado: true,
+        colores: [{ id: "neutro", nombre: "Neutro", hex: "#e6cdbd" }],
+        variantes: [
+          { talle: "30 ml", color: "neutro", stock: 6 },
+          { talle: "50 ml", color: "neutro", stock: 2 },
+        ],
+        descripcion: "Sérum liviano con vitamina C estabilizada al 8%. Se usa a la mañana, sobre la piel limpia y antes del protector solar.",
+        detalle: "Aqua, ascorbil glucósido, glicerina, pantenol, hialuronato de sodio, fenoxietanol. Sin perfume agregado.",
+      },
+      {
+        id: "crema-hidratante", nombre: "Crema Hidratante", orden: 1, tipo: "crema", categoria: "rostro", necesidad: "hidratacion",
+        precio: 24900, coleccion: "Rostro · Hidratación", destacado: true,
+        colores: [{ id: "neutro", nombre: "Neutro", hex: "#e6cdbd" }],
+        variantes: [
+          { talle: "50 ml", color: "neutro", stock: 8 },
+          { talle: "100 ml", color: "neutro", stock: 3 },
+        ],
+        descripcion: "Hidratación de absorción rápida con ácido hialurónico de bajo peso molecular. No deja residuo grasoso.",
+        detalle: "Aqua, glicerina, escualano vegetal, hialuronato de sodio, tocoferol, fenoxietanol.",
+      },
+      {
+        id: "limpiador-suave", nombre: "Limpiador Suave", orden: 2, tipo: "limpiador", categoria: "rostro", necesidad: "limpieza",
+        precio: 19900, coleccion: "Rostro · Limpieza", destacado: false,
+        colores: [{ id: "neutro", nombre: "Neutro", hex: "#e6cdbd" }],
+        variantes: [{ talle: "150 ml", color: "neutro", stock: 10 }],
+        descripcion: "Gel sin sulfatos que limpia sin dejar la piel tirante. Sirve para mañana y noche.",
+        detalle: "Aqua, coco-glucósido, glicerina, aloe barbadensis, ácido cítrico, fenoxietanol.",
+      },
+      {
+        id: "bruma-facial", nombre: "Bruma Facial", orden: 3, tipo: "aceite", categoria: "rostro", necesidad: "hidratacion",
+        precio: 21900, coleccion: "Rostro · Bruma", destacado: false,
+        colores: [{ id: "neutro", nombre: "Neutro", hex: "#e6cdbd" }],
+        variantes: [{ talle: "100 ml", color: "neutro", stock: 5 }],
+        descripcion: "Agua de rosas y pantenol. Refresca, prepara la piel antes del sérum y se puede usar sobre el maquillaje.",
+        detalle: "Rosa damascena flower water, aqua, pantenol, glicerina, fenoxietanol.",
+      },
+      {
+        id: "aceite-corporal", nombre: "Aceite Corporal", orden: 4, tipo: "aceite", categoria: "cuerpo", necesidad: "hidratacion",
+        precio: 26900, coleccion: "Cuerpo · Hidratación", destacado: true,
+        colores: [{ id: "neutro", nombre: "Neutro", hex: "#e6cdbd" }],
+        variantes: [{ talle: "200 ml", color: "neutro", stock: 4 }],
+        descripcion: "Mezcla de jojoba y almendras. Se absorbe sin dejar residuo y se puede usar sobre la piel húmeda.",
+        detalle: "Simmondsia chinensis seed oil, prunus amygdalus dulcis oil, tocoferol, helianthus annuus seed oil.",
+      },
+      {
+        id: "manteca-karite", nombre: "Manteca de Karité", orden: 5, tipo: "crema", categoria: "cuerpo", necesidad: "proteccion",
+        precio: 22900, coleccion: "Cuerpo · Nutrición", destacado: false,
+        colores: [{ id: "neutro", nombre: "Neutro", hex: "#e6cdbd" }],
+        variantes: [{ talle: "250 ml", color: "neutro", stock: 0 }],
+        descripcion: "Textura densa para zonas secas: codos, rodillas y talones. Se derrite con el calor de la mano.",
+        detalle: "Butyrospermum parkii butter, cocos nucifera oil, tocoferol.",
+      },
+      {
+        id: "labial-mate", nombre: "Labial Mate", orden: 6, tipo: "labial", categoria: "color", necesidad: "proteccion",
+        precio: 18900, coleccion: "Color · Labios", destacado: true,
+        colores: [
+          { id: "neutro", nombre: "Nude", hex: "#cf9f8a" },
+          { id: "terracota", nombre: "Terracota", hex: "#b56a52" },
+          { id: "vino", nombre: "Vino", hex: "#7d3a3f" },
+        ],
+        variantes: [
+          { talle: "4 g", color: "neutro", stock: 7 },
+          { talle: "4 g", color: "terracota", stock: 5 },
+          { talle: "4 g", color: "vino", stock: 1 },
+        ],
+        descripcion: "Acabado mate, textura cremosa y larga duración. No reseca porque tiene manteca de karité en la base.",
+        detalle: "Ricinus communis seed oil, butyrospermum parkii butter, cera alba, tocoferol. Pigmentos según tono.",
+      },
+      {
+        id: "kit-viaje", nombre: "Kit Viaje", orden: 7, tipo: "kit", categoria: "kits", necesidad: "hidratacion",
+        precio: 34900, coleccion: "Kits · Viaje", destacado: false,
+        colores: [{ id: "neutro", nombre: "Neutro", hex: "#e6cdbd" }],
+        variantes: [{ talle: "4 piezas", color: "neutro", stock: 3 }],
+        descripcion: "Limpiador, sérum, hidratante y bruma en formato de 30 ml, en estuche de lino. Todo lo necesario para cuatro pasos.",
+        detalle: "Incluye: limpiador 30 ml, sérum 15 ml, hidratante 30 ml y bruma 30 ml. Estuche de lino lavado.",
+      },
     ],
   };
 </script>
-<script src="/demos/tienda.js?v=ee7ec8bc" defer></script>
+<script src="/demos/tienda.js?v=3fa0d674" defer></script>
 </body>
 </html>
