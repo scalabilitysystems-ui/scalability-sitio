@@ -23,7 +23,10 @@ def versionar(html: str) -> str:
     # excluye, el archivo deja de detectarse y nunca se actualiza su versión.
     assets = sorted({m for m in re.findall(r'(?:href|src)="((?:img/)?[^"?]+\.(?:css|js|jpg|png))', html)})
     for rel in assets:
-        ruta = RAIZ / rel
+        # Las páginas de /demos/ referencian con barra inicial ("/demos/tienda.css"):
+        # sin sacarla, pathlib arma una ruta absoluta del sistema y el asset nunca
+        # se encuentra.
+        ruta = RAIZ / rel.lstrip("/")
         if not ruta.exists():
             continue
         html = re.sub(rf'(?P<attr>href|src)="{re.escape(rel)}(?:\?v=[a-f0-9]+)?"',
